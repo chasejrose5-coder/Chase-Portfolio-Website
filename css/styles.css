@@ -296,7 +296,7 @@ a:focus-visible,
 }
 
 /* First screen holds the hero and intro. Quotes start after it.
-   The arrow sits at the bottom of that screen and fades on scroll. */
+   The arrow sits directly under the intro and fades on scroll. */
 .home-fold {
   min-height: calc(100vh - var(--header));
   min-height: calc(100svh - var(--header));
@@ -304,10 +304,18 @@ a:focus-visible,
   flex-direction: column;
 }
 
+.home-fold::after {
+  content: "";
+  flex: 1 0 auto;
+}
+
+.home-fold .intro {
+  padding-bottom: 0;
+}
+
 .scroll-hint {
-  margin-top: auto;
   align-self: center;
-  margin-bottom: clamp(1.15rem, 3.5vh, 2rem);
+  margin-top: clamp(1rem, 2vw, 1.5rem);
   color: #8D99AE;
   font-family: "Inter Tight", Inter, "Segoe UI", system-ui, sans-serif;
   font-size: 1.55rem;
