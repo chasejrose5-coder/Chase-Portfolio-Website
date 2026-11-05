@@ -32,6 +32,7 @@ def show_home() -> None:
         )
     main = (
         '<main id="main"><div class="wrap">'
+        '<div class="home-fold">'
         '<section class="hero">'
         f'<h1 class="rise">{html.escape(NAME)}</h1>'
         f'<p class="tagline rise d1">{html.escape(TAGLINE)}</p>'
@@ -43,6 +44,8 @@ def show_home() -> None:
         "</div>"
         f'<div class="intro-copy stagger">{paragraphs}</div>'
         "</section>"
+        '<div class="scroll-hint" aria-hidden="true">&#8595;</div>'
+        "</div>"
         f'<section class="quotes stagger" aria-label="Quotes">{"".join(quotes)}</section>'
         "</div></main>"
     )
