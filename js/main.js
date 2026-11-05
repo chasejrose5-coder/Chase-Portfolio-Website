@@ -18,6 +18,29 @@
     });
   }
 
+  // Home only. Streamlit scrolls an inner container, so listen in the capture phase.
+  var hint = document.querySelector(".scroll-hint");
+  if (hint) {
+    var hideHint = function () {
+      var moved = (window.pageYOffset || document.documentElement.scrollTop || 0) > 12;
+      if (!moved) {
+        var node = hint.parentElement;
+        while (node) {
+          if (node.scrollTop > 12) {
+            moved = true;
+            break;
+          }
+          node = node.parentElement;
+        }
+      }
+      if (!moved) return;
+      hint.classList.add("is-away");
+      document.removeEventListener("scroll", hideHint, true);
+    };
+    document.addEventListener("scroll", hideHint, { capture: true, passive: true });
+    hideHint();
+  }
+
   var items = document.querySelectorAll(".reveal");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
