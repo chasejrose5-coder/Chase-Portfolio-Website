@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chase Rose</title>
+  <meta name="description" content="Personal portfolio of Chase Rose. Introduction, projects, and resume.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      document.documentElement.classList.add("js");
+    }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- EDIT: name (also in the footer and the <title>) and email -->
+  <header class="site-header">
+    <div class="header-inner wrap">
+      <a class="brand" href="index.html">Chase Rose</a>
+      <input class="nav-check" type="checkbox" id="nav-toggle">
+      <label class="nav-toggle" for="nav-toggle" aria-expanded="false">
+        <span class="sr-only">Menu</span>
+        <span class="bars" aria-hidden="true"></span>
+      </label>
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="resume.html">Resume</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap">
+      <section class="hero">
+        <!-- EDIT: name -->
+        <h1 class="rise">Chase Rose</h1>
+        <!-- EDIT: tagline -->
+        <p class="tagline rise d1">A short tagline about what you do.</p>
+      </section>
+
+      <section class="intro" aria-labelledby="intro-label">
+        <div class="intro-kicker reveal">
+          <span class="rule" aria-hidden="true"></span>
+          <span id="intro-label">Intro</span>
+        </div>
+        <div class="intro-copy stagger">
+          <!-- EDIT: bio -->
+          <p class="reveal">Write a short paragraph about where you are from and what you care about. Two or three sentences is enough. This is the first thing people read after your name.</p>
+          <p class="reveal">Use this second paragraph for school, the work you want, or what you are focused on right now. Then delete these sentences and add your own.</p>
+        </div>
+      </section>
+
+      <!-- EDIT: quotes and attributions -->
+      <section class="quotes stagger" aria-label="Quotes">
+        <figure class="quote reveal">
+          <blockquote>
+            <p>&ldquo;I thought I&rsquo;d solved a problem when really I was creating new ones by taking the path of least resistance.&rdquo;</p>
+          </blockquote>
+          <figcaption>David Goggins, Can&rsquo;t Hurt Me: Master Your Mind and Defy the Odds</figcaption>
+        </figure>
+        <figure class="quote reveal">
+          <blockquote>
+            <p>&ldquo;Those times when you get up early and you work hard; those times when you stay up late and you work hard; those times when you don&rsquo;t feel like working, you&rsquo;re too tired, you don&rsquo;t want to push yourself, but you do it anyway; that is actually the dream. That&rsquo;s the dream. It&rsquo;s not the destination, it&rsquo;s the journey.&rdquo;</p>
+          </blockquote>
+          <figcaption>Kobe Bryant</figcaption>
+        </figure>
+        <figure class="quote reveal">
+          <blockquote>
+            <p>&ldquo;The mind is everything. What you think you become.&rdquo;</p>
+          </blockquote>
+          <figcaption>Buddha</figcaption>
+        </figure>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <!-- EDIT: name and email -->
+      <p class="footer-name">Chase Rose</p>
+      <a href="mailto:Chasejrose5@gmail.com">Chasejrose5@gmail.com</a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects — Chase Rose</title>
+  <meta name="description" content="Selected projects by Chase Rose.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      document.documentElement.classList.add("js");
+    }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- EDIT: name (also in the footer and the <title>) and email -->
+  <header class="site-header">
+    <div class="header-inner wrap">
+      <a class="brand" href="index.html">Chase Rose</a>
+      <input class="nav-check" type="checkbox" id="nav-toggle">
+      <label class="nav-toggle" for="nav-toggle" aria-expanded="false">
+        <span class="sr-only">Menu</span>
+        <span class="bars" aria-hidden="true"></span>
+      </label>
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html" aria-current="page">Projects</a></li>
+          <li><a href="resume.html">Resume</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap">
+      <header class="page-head">
+        <h1 class="page-title rise">My Projects</h1>
+        <p class="page-kicker rise d1">(both serious and fun!)</p>
+      </header>
+
+      <!-- EDIT: each project is one <article>. Change the title, role, paragraphs, link text, and href. -->
+      <div class="project-list">
+        <article class="project reveal">
+          <div class="project-meta">
+            <h2>Field Guide</h2>
+            <p class="role">Founder, Editor</p>
+            <a class="text-btn" href="https://github.com" target="_blank" rel="noopener noreferrer">Visit Website<span class="sr-only"> (opens in a new tab)</span></a>
+          </div>
+          <div class="project-body">
+            <p>Replace this with what the project is. Say who it is for, when it started, and why it exists. One short paragraph is the right length.</p>
+            <p>Use a second paragraph for your role now. Mention what you edit, design, or keep running.</p>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-meta">
+            <h2>Listening Notes</h2>
+            <p class="role">Music project</p>
+            <a class="text-btn" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">Visit Account<span class="sr-only"> (opens in a new tab)</span></a>
+          </div>
+          <div class="project-body">
+            <p>A sample side project. Describe a personal account, channel, or hobby you share in public, and what got you started.</p>
+            <p>Then say what someone will find if they follow the link: songs, notes, videos, or a list you keep up to date.</p>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-meta">
+            <h2>Name That Tune</h2>
+            <p class="role">Creator</p>
+            <a class="text-btn" href="https://codepen.io" target="_blank" rel="noopener noreferrer">View Project<span class="sr-only"> (opens in a new tab)</span></a>
+          </div>
+          <div class="project-body">
+            <p>A sample for a small game, tool, or experiment. Explain the premise in plain language so a new reader gets it immediately.</p>
+            <p>Add one result if you have it: people who used it, something you learned, or why you still keep it online.</p>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-meta">
+            <h2>Studio Markup</h2>
+            <p class="role">Website design</p>
+            <a class="text-btn" href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+          </div>
+          <div class="project-body">
+            <p>A sample client or collaboration project. Name who you worked with and what you were asked to make.</p>
+            <p>Close with what the site includes and where the work lives now. Swap the button label if &ldquo;GitHub&rdquo; is not the right word.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <!-- EDIT: name and email -->
+      <p class="footer-name">Chase Rose</p>
+      <a href="mailto:Chasejrose5@gmail.com">Chasejrose5@gmail.com</a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

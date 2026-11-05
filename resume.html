@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resume — Chase Rose</title>
+  <meta name="description" content="Resume of Chase Rose. Education, experience, leadership, and skills.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+      document.documentElement.classList.add("js");
+    }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- EDIT: name (also in the footer and the <title>) and email -->
+  <header class="site-header">
+    <div class="header-inner wrap">
+      <a class="brand" href="index.html">Chase Rose</a>
+      <input class="nav-check" type="checkbox" id="nav-toggle">
+      <label class="nav-toggle" for="nav-toggle" aria-expanded="false">
+        <span class="sr-only">Menu</span>
+        <span class="bars" aria-hidden="true"></span>
+      </label>
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="resume.html" aria-current="page">Resume</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap resume-layout">
+      <div class="resume-title">
+        <h1 class="page-title rise">My Resume</h1>
+      </div>
+
+      <!-- EDIT: resume entries. Bold names are the h3s. Bullets are the list items. -->
+      <div class="resume-sections">
+        <section class="resume-section" aria-labelledby="education">
+          <h2 id="education" class="reveal">Education</h2>
+
+          <article class="entry">
+            <h3>Your University &mdash; Class of 20XX</h3>
+            <p class="degree">Bachelor of Arts in Your Major</p>
+            <ul class="stagger">
+              <li class="reveal">Add a GPA, honor, or concentration.</li>
+              <li class="reveal">Add a second detail if you want one.</li>
+            </ul>
+          </article>
+
+          <article class="entry">
+            <h3>Another School &mdash; Class of 20XX</h3>
+            <p class="degree">Degree or program name</p>
+            <ul class="stagger">
+              <li class="reveal">A course, award, or activity worth listing.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="resume-section" aria-labelledby="experience">
+          <h2 id="experience" class="reveal">Work Experience</h2>
+
+          <article class="entry">
+            <h3>Role Title @ Company Name | City, ST (Month Year &ndash; Present)</h3>
+            <ul class="stagger">
+              <li class="reveal">Describe a responsibility or a result in one line.</li>
+              <li class="reveal">Add another bullet the way you would on a resume.</li>
+            </ul>
+          </article>
+
+          <article class="entry">
+            <h3>Earlier Role @ Earlier Company | City, ST (Month Year &ndash; Month Year)</h3>
+            <ul class="stagger">
+              <li class="reveal">What you worked on, who it was for, or what changed because of it.</li>
+              <li class="reveal">A tool, team, or skill this role used.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="resume-section" aria-labelledby="leadership">
+          <h2 id="leadership" class="reveal">Leadership &amp; Extracurriculars</h2>
+
+          <article class="entry">
+            <h3>Organization Name, Your Role (Year &ndash; Year)</h3>
+            <ul class="stagger">
+              <li class="reveal">What you led, built, or showed up for.</li>
+              <li class="reveal">A result, a team size, or a thing you are proud of.</li>
+            </ul>
+          </article>
+
+          <article class="entry">
+            <h3>Club or Team, Role (Year &ndash; Year)</h3>
+            <ul class="stagger">
+              <li class="reveal">One concrete detail is better than a long list of duties.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="resume-section" aria-labelledby="skills">
+          <h2 id="skills" class="reveal">Skills</h2>
+          <article class="entry">
+            <ul class="stagger">
+              <li class="reveal">Design tool or software you actually use</li>
+              <li class="reveal">A writing, research, or technical skill</li>
+              <li class="reveal">Another tool or strength to swap in</li>
+            </ul>
+          </article>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <!-- EDIT: name and email -->
+      <p class="footer-name">Chase Rose</p>
+      <a href="mailto:Chasejrose5@gmail.com">Chasejrose5@gmail.com</a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
