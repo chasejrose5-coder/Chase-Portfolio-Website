@@ -1,0 +1,103 @@
+/* Bridge the static portfolio CSS into Streamlit's app shell.
+   The visual rules stay in styles.css. This file only clears Streamlit chrome
+   and stops Streamlit's wrapper styles from fighting that stylesheet.
+   The font import is prepended by portfolio.layout so it stays the first rule. */
+
+html,
+body,
+.stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+section.main {
+  background: #ffffff;
+  color: #1a1a2e;
+}
+
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stSidebar"],
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="stFooter"],
+#MainMenu {
+  display: none !important;
+}
+
+[data-testid="stMainBlockContainer"],
+.block-container,
+[data-testid="stAppViewBlockContainer"] {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+[data-testid="stVerticalBlock"],
+[data-testid="stVerticalBlockBorderWrapper"] {
+  gap: 0 !important;
+}
+
+[data-testid="stElementContainer"] {
+  margin: 0 !important;
+}
+
+[data-testid="stHtml"] {
+  width: 100%;
+  line-height: inherit;
+}
+
+[data-testid="stHtml"] ul,
+[data-testid="stHtml"] ol,
+[data-testid="stHtml"] dl {
+  padding-left: 0;
+  margin: 0;
+}
+
+[data-testid="stHtml"] .entry ul {
+  margin-top: 0.45rem;
+  padding-left: 1.15rem;
+  list-style: disc;
+}
+
+[data-testid="stHtml"] a {
+  color: inherit;
+}
+
+[data-testid="stHtml"] .nav-links a {
+  color: #8d99ae;
+}
+
+[data-testid="stHtml"] .text-btn {
+  color: #8d99ae;
+  text-decoration: none;
+}
+
+[data-testid="stHtml"] .text-btn:hover,
+[data-testid="stHtml"] .text-btn:focus-visible {
+  color: #ffffff;
+}
+
+[data-testid="stHtml"] .site-footer a {
+  color: #8d99ae;
+}
+
+[data-testid="stHtml"] .hero h1,
+[data-testid="stHtml"] .page-title {
+  font-size: clamp(3.4rem, 9vw, 6.4rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+  margin: 0;
+  color: #1a1a2e;
+}
+
+[data-testid="stHtml"] .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@media (max-width: 720px) {
+  [data-testid="stHtml"] .nav-links {
+    padding: 0.4rem 1.25rem 1rem;
+  }
+}
