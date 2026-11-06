@@ -38,7 +38,7 @@ TAGLINE = "Captain. Researcher. Builder. Chasing excellence on the track, the pi
 
 INTRO = (
     "My name is Chase Rose. I am a senior at Bentley Upper School in Lafayette, CA. My primary focus is on entrepreneurship and leadership. I have served as a three-year captain of both the track & field and soccer teams. I have set school records in both the 400m and 800m, earned multiple All-League honors, and was named Team MVP in both sports as well as All-League MVP in the 2026 soccer season. Aside from sports, I participate in student government, paper research, and building programs to solve problems.",
-    "I founded a local mobile detailing business, wrote a research thesis on West African soccer academies, and am currently building an 800m training app. I care about leadership that is forward-thinking and intentional, whether that’s being part of a relay, managing a student store and its inventory, interviewing nationally recognized figures on stage, or organizing community service. I’m looking to carry that same standard into college and beyond.",
+    "I founded a local mobile detailing business, wrote a research thesis on West African soccer academies, and am currently building a runner training app named RIO. I care about leadership that is forward-thinking and intentional, whether that’s being part of a relay, managing a student store and its inventory, interviewing nationally recognized figures on stage, or organizing community service. I’m looking to carry that same standard into college and beyond.",
 )
 
 QUOTES = (
