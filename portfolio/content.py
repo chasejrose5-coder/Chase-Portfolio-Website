@@ -1,7 +1,7 @@
 """Visible copy for the Streamlit pages.
 
-Home, the quotes, and the resume are the placeholder text from the static
-pages. Project entries are empty slots for the work index and detail pages.
+Home and Resume use Chase's wording. Project entries are empty slots
+for the work index and detail pages.
 """
 
 from __future__ import annotations
@@ -24,13 +24,11 @@ PAGE_COPY = {
     },
 }
 
-TAGLINE = "A short tagline about what you do."
+TAGLINE = "Captain. Researcher. Builder. Chasing excellence on the track, the pitch, and beyond."
 
 INTRO = (
-    "Write a short paragraph about where you are from and what you care about. "
-    "Two or three sentences is enough. This is the first thing people read after your name.",
-    "Use this second paragraph for school, the work you want, or what you are focused on right now. "
-    "Then delete these sentences and add your own.",
+    "I’m Chase Rose, a senior at Bentley Upper School in Lafayette, California, where I have served as a three-year captain of both the track & field and soccer teams. I have set school records in both the 400m and 800m, earned multiple All-League honors, and was named Team MVP in both sports as well as All league MVP in the 2026 soccer season. Aside from sports, I participate in student government, paper research, and building programs to fix issues that help athletes.",
+    "Outside of sports I founded a local mobile detailing business, wrote a research thesis on West African soccer academies (JRP Honorable Mention), and am currently building an 800m training app. I care about leadership that actually shows up, whether that’s being part of a relay, managing a student store and its inventory, interviewing nationally recognized figures on stage, or organizing community service. I’m looking to carry that same standard into college and beyond.",
 )
 
 QUOTES = (
@@ -105,38 +103,11 @@ RESUME_SECTIONS = (
         "heading": "Education",
         "entries": (
             {
-                "title": "Your University — Class of 20XX",
-                "degree": "Bachelor of Arts in Your Major",
+                "title": "Bentley Upper School, Lafayette, CA — Class of 2027",
+                "degree": "High School Diploma / College Preparatory Program",
                 "bullets": (
-                    "Add a GPA, honor, or concentration.",
-                    "Add a second detail if you want one.",
-                ),
-            },
-            {
-                "title": "Another School — Class of 20XX",
-                "degree": "Degree or program name",
-                "bullets": ("A course, award, or activity worth listing.",),
-            },
-        ),
-    },
-    {
-        "id": "experience",
-        "heading": "Work Experience",
-        "entries": (
-            {
-                "title": "Role Title @ Company Name | City, ST (Month Year – Present)",
-                "degree": None,
-                "bullets": (
-                    "Describe a responsibility or a result in one line.",
-                    "Add another bullet the way you would on a resume.",
-                ),
-            },
-            {
-                "title": "Earlier Role @ Earlier Company | City, ST (Month Year – Month Year)",
-                "degree": None,
-                "bullets": (
-                    "What you worked on, who it was for, or what changed because of it.",
-                    "A tool, team, or skill this role used.",
+                    "3.92 unweighted / 4.42 weighted GPA",
+                    "Junior Research Program (JRP) Honorable Mention; 400m/800m school record holder",
                 ),
             },
         ),
@@ -146,17 +117,69 @@ RESUME_SECTIONS = (
         "heading": "Leadership & Extracurriculars",
         "entries": (
             {
-                "title": "Organization Name, Your Role (Year – Year)",
+                "title": "Bentley Track & Field — Team Captain (Grades 10–12)",
                 "degree": None,
                 "bullets": (
-                    "What you led, built, or showed up for.",
-                    "A result, a team size, or a thing you are proud of.",
+                    "Team MVP (2025–26); 2× All-League (400m, 4×100m); 400m/800m school record holder; NCS finalist",
+                    "Led workouts, pacing, and relays as 3-year captain; 400m/800m specialist",
                 ),
             },
             {
-                "title": "Club or Team, Role (Year – Year)",
+                "title": "Bentley Soccer — Varsity Team Captain (Grades 10–12), Striker",
                 "degree": None,
-                "bullets": ("One concrete detail is better than a long list of duties.",),
+                "bullets": (
+                    "2026 League Offensive Player of the Year; 2026 BCL Championship MVP; Team MVP (’24–’25); 2× All-League (’24, ’25); Phoenix Award (’23–’24)",
+                    "3-year captain",
+                ),
+            },
+            {
+                "title": "Student Body Treasurer (former Class President & Ambassador)",
+                "degree": None,
+                "bullets": (
+                    "Managed the student store (inventory restocking + revenue tracking); organized class spirit events; led campus tours.",
+                ),
+            },
+            {
+                "title": "ProWash & Detail Co. — Founder & Managing Partner",
+                "degree": None,
+                "bullets": (
+                    "Founded a local mobile detailing & power washing business; managed 3 employees, client scheduling, and equipment.",
+                ),
+            },
+            {
+                "title": "800m Training App — Creator / Coder / Researcher",
+                "degree": None,
+                "bullets": (
+                    "Building an 800m training app; researched physiological and neurological body systems while utilizing a coding agent to build workout algorithms and classifier algorithms for athlete session data.",
+                ),
+            },
+            {
+                "title": "Bentley Junior Research Program — Independent Student Researcher",
+                "degree": None,
+                "bullets": (
+                    "Wrote a 12-page thesis on colonial origins & labor migration in West African soccer academies; awarded JRP Honorable Mention.",
+                ),
+            },
+            {
+                "title": "Bentley Student Life & Mental Wellness Programming — Co-Facilitator & Stage Moderator",
+                "degree": None,
+                "bullets": (
+                    "Co-facilitated mental health assembly; led live onstage interview with former MLB player Drew Robinson.",
+                ),
+            },
+            {
+                "title": "Alameda County Community Food Bank — Community Volunteer",
+                "degree": None,
+                "bullets": (
+                    "Sorted, weighed, and boxed produce/dry goods; Supported East Bay residents.",
+                ),
+            },
+            {
+                "title": "Lamorinda Orthopedics and Sport PT — Volunteer Service Worker",
+                "degree": None,
+                "bullets": (
+                    "Assisted PTs with rehab setups, cleaning, and equipment prep; I also helped by guiding patients through exercises",
+                ),
             },
         ),
     },
@@ -168,9 +191,16 @@ RESUME_SECTIONS = (
                 "title": None,
                 "degree": None,
                 "bullets": (
-                    "Design tool or software you actually use",
-                    "A writing, research, or technical skill",
-                    "Another tool or strength to swap in",
+                    "Leadership & Team Captaining",
+                    "Public Speaking / On-stage Moderation",
+                    "Event Organization & Campus Tours",
+                    "Student Store Operations / Basic Revenue Tracking",
+                    "Small Business Operations (scheduling, employees, marketing, equipment)",
+                    "Research Writing & Thesis Development",
+                    "Coding / App Development (workout algorithms, athlete data classification)",
+                    "Physiological & Training Knowledge (track/soccer)",
+                    "Inventory Management & Logistics",
+                    "Community Service & Patient Interaction Support",
                 ),
             },
         ),
