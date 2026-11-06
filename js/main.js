@@ -1,20 +1,37 @@
-(function () {
-  var toggle = document.getElementById("nav-toggle");
-  var label = document.querySelector(".nav-toggle");
+function portfolioPath(pathname) {
+  var path = pathname || "/";
+  var marker = "/~/+/";
+  var at = path.indexOf(marker);
+  if (at !== -1) path = "/" + path.slice(at + marker.length);
+  if (path.length > 1 && path.charAt(path.length - 1) === "/") {
+    path = path.slice(0, -1);
+  }
+  return path || "/";
+}
 
-  if (toggle && label) {
-    var sync = function () {
-      label.setAttribute("aria-expanded", toggle.checked ? "true" : "false");
-    };
-    toggle.addEventListener("change", sync);
-    sync();
+(function () {
+  var menuButton = document.querySelector(".nav-toggle");
+  var siteNav = document.getElementById("site-nav");
+
+  function setMenu(open) {
+    if (!menuButton || !siteNav) return;
+    menuButton.setAttribute("aria-expanded", open ? "true" : "false");
+    siteNav.classList.toggle("is-open", open);
+  }
+
+  if (menuButton && siteNav) {
+    menuButton.addEventListener("click", function () {
+      setMenu(menuButton.getAttribute("aria-expanded") !== "true");
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") setMenu(false);
+    });
   }
 
   var links = document.querySelectorAll(".site-nav a");
   for (var i = 0; i < links.length; i++) {
     links[i].addEventListener("click", function () {
-      if (toggle) toggle.checked = false;
-      if (label) label.setAttribute("aria-expanded", "false");
+      setMenu(false);
     });
   }
 
@@ -60,7 +77,7 @@
       if (!path || !rect.width || !rect.height) return;
       try {
         sessionStorage.setItem("project-morph", JSON.stringify({
-          path: path,
+          path: portfolioPath(path),
           top: rect.top,
           left: rect.left,
           width: rect.width,
@@ -70,15 +87,6 @@
       } catch (err) {
         return;
       }
-      event.preventDefault();
-      document.documentElement.classList.add("work-leaving");
-      var href = this.href;
-      window.setTimeout(function () {
-        window.location.href = href;
-      }, 280);
-      window.setTimeout(function () {
-        document.documentElement.classList.remove("work-leaving");
-      }, 2000);
     });
   }
 
@@ -100,12 +108,9 @@
       } catch (err4) {
         morph = null;
       }
-      var pathNow = location.pathname;
-      if (pathNow.length > 1 && pathNow.charAt(pathNow.length - 1) === "/") {
-        pathNow = pathNow.slice(0, -1);
-      }
+      var pathNow = portfolioPath(location.pathname);
       var fresh = morph && typeof morph.t === "number" && (Date.now() - morph.t) < 15000;
-      var samePath = morph && morph.path === pathNow;
+      var samePath = morph && portfolioPath(morph.path) === pathNow;
       var boxOk = morph
         && typeof morph.width === "number" && morph.width > 0
         && typeof morph.height === "number" && morph.height > 0
@@ -160,9 +165,15 @@
 
   var items = document.querySelectorAll(".reveal");
 
-  if (reduce || !("IntersectionObserver" in window)) {
-    for (var j = 0; j < items.length; j++) items[j].classList.add("is-in");
+  if (reduce || !("IntersectionObserver" in window) || !items.length) {
     return;
+  }
+
+  var armed = false;
+  function armReveal() {
+    if (armed) return;
+    armed = true;
+    document.documentElement.classList.add("js-reveal");
   }
 
   var io = new IntersectionObserver(
@@ -172,6 +183,7 @@
         entry.target.classList.add("is-in");
         io.unobserve(entry.target);
       });
+      armReveal();
     },
     { threshold: 0.14, rootMargin: "0px 0px -8% 0px" }
   );
@@ -179,4 +191,9 @@
   items.forEach(function (el) {
     io.observe(el);
   });
+
+  window.setTimeout(function () {
+    if (armed) return;
+    for (var j = 0; j < items.length; j++) items[j].classList.add("is-in");
+  }, 1000);
 })();

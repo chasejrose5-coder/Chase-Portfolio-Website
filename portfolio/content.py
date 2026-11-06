@@ -17,6 +17,13 @@ HOME_PORTRAIT = {
     "alt": "Chase Rose in a tuxedo on a boat at night, with the San Francisco skyline and a bridge behind him",
     "width": 3448,
     "height": 3389,
+    # Display size is about 23.5rem. These are the 1x / 2x / 3x files.
+    "sizes": "(max-width: 860px) min(19.25rem, 80vw), (max-height: 740px) min(17rem, 72vw), 23.5rem",
+    "srcset": (
+        {"src": "static/home/chase-home-photo-352.jpg", "width": 352},
+        {"src": "static/home/chase-home-photo-704.jpg", "width": 704},
+        {"src": "static/home/chase-home-photo-1056.jpg", "width": 1056},
+    ),
 }
 
 PAGE_COPY = {
@@ -30,11 +37,11 @@ PAGE_COPY = {
     },
     "resume": {
         "title": "Resume — Chase Rose",
-        "description": "Resume of Chase Rose. Education, experience, leadership, and skills.",
+        "description": "Resume of Chase Rose. Education, experience, and leadership.",
     },
 }
 
-TAGLINE = "Captain. Researcher. Builder. Chasing excellence on the track, the pitch, and beyond."
+TAGLINE = "Captain. Researcher. Builder."
 
 INTRO = (
     "My name is Chase Rose. I am a senior at Bentley Upper School in Lafayette, CA. My primary focus is on entrepreneurship and leadership. I have served as a three-year captain of both the track & field and soccer teams. I have set school records in both the 400m and 800m, earned multiple All-League honors, and was named Team MVP in both sports as well as All-League MVP in the 2026 soccer season. Aside from sports, I participate in student government, paper research, and building programs to solve problems.",
@@ -71,6 +78,7 @@ PROJECTS = (
         "dates": "Early 2026 – Present",
         "role": "Founder",
         "year": "Early 2026 – Present",
+        "blurb": "An 800m training app that adapts the plan to what you actually run.",
         "href": "https://riotraining.streamlit.app",
         "link_label": "Open RIO",
         "code_href": "https://github.com/chasejrose5-coder/rio",
@@ -99,7 +107,7 @@ PROJECTS = (
             },
             {
                 "src": "static/projects/rio/goal.png",
-                "alt": "1:55.0 at the Stanford Invitational, March 2027",
+                "alt": "Goal: 1:55.0 around the Stanford Invitational, March 2027",
                 "width": 1600,
                 "height": 760,
             },
@@ -122,18 +130,35 @@ PROJECTS = (
         ),
         "ahead": {
             "title": "Where I want RIO to go",
-            "lead": "I am still shipping RIO, and I am building it while I train toward March. Here is where I want the app to go:",
-            "items": (
-                "A fuller Insights place to read the season back, beyond the note that appears after a hard day.",
-                "A clearer picture of whether the training is on track for 1:55.0 at the Stanford Invitational, updated as hard days are done.",
-                "Sharper session classifiers, so the app gets better at understanding what a workout really was and what that means for the next one.",
-                "A stronger why on every session. Every rep has a reason, and that reason should stay visible as the plan changes.",
-                "I want to leave Strava and connect instead to key health-data figures, like Apple Health or Garmin.",
-                "Keep the product and the racing on the same calendar through the Stanford Invitational in March 2027.",
-                "I want a goal-completion probability: a clear read on how likely the athlete is to hit their goal time. For me that is 1:55.0, and the read should move as the season goes. It is not a number I show the public yet.",
-                "I want a language model in the program, so the app can explain the season, the sessions, and what comes next in plain language, not as a dump of raw data. An athlete can talk back and forth with it if they choose to.",
-                "I want the plan and the logic to work for different kinds of 800m runners, a speedier 800 and a more endurance-oriented 800.",
-                "I want a lot of other events beyond the 800m, with the plan, the scoring, and the adaptation working for those events too.",
+            "lead": "I am still shipping RIO, and I am building it while I train toward March. Here is what the app already does, and where I want it to go.",
+            "groups": (
+                {
+                    "label": "Shipped now",
+                    "items": (
+                        "It connects to Strava.",
+                        "After a planned hard day, it scores the session.",
+                        "Plan lays the season out by phase.",
+                        "Start session runs the workout, and the debrief follows.",
+                    ),
+                },
+                {
+                    "label": "Next",
+                    "items": (
+                        "Deeper adaptation, with the why shown on every session as the plan changes.",
+                        "A fuller Insights view, beyond the note that appears after a hard day.",
+                        "Sharper session classifiers, so the app gets better at reading what a workout was and what that means for the next one.",
+                    ),
+                },
+                {
+                    "label": "Later",
+                    "items": (
+                        "I want to leave Strava and connect instead to key health-data figures, like Apple Health or Garmin.",
+                        "A goal-completion probability: a clear read on how likely the athlete is to hit their goal time. For me that is 1:55.0, and the read should move as the season goes.",
+                        "A language model that can explain the season and the sessions in plain language, and that an athlete can talk back and forth with if they choose to.",
+                        "Support for different kinds of 800m runners, a speedier 800 and a more endurance-oriented 800, then other events, with the plan, the scoring, and the adaptation working for them.",
+                        "Keep the product and the racing on the same calendar through the Stanford Invitational in March 2027, the target meet around the 1:55.0 goal.",
+                    ),
+                },
             ),
         },
     },
@@ -143,6 +168,7 @@ PROJECTS = (
         "dates": "Early 2026 – Present",
         "role": "Founder & Managing Partner",
         "year": "Early 2026 – Present",
+        "blurb": "A local mobile detailing and power-washing business with online booking.",
         "href": "https://prowash.streamlit.app",
         "link_label": "Open ProWash",
         "code_href": "https://github.com/chasejrose5-coder/prowash-site",
@@ -163,8 +189,18 @@ PROJECTS = (
         },
         "frames": (
             None,
-            None,
-            None,
+            {
+                "src": "static/projects/prowash/curb.png",
+                "alt": "Car detailing and power washing",
+                "width": 1600,
+                "height": 460,
+            },
+            {
+                "src": "static/projects/prowash/property.png",
+                "alt": "Solar panel cleaning and trash can cleaning",
+                "width": 1600,
+                "height": 460,
+            },
             {
                 "src": "static/projects/prowash/book.jpg",
                 "alt": "ProWash booking form",
@@ -173,30 +209,23 @@ PROJECTS = (
             },
             {
                 "src": "static/projects/prowash/calendar.jpg",
-                "alt": "Open appointment times, Saturday November 7 through Thursday November 12",
+                "alt": "Public calendar showing open appointment times.",
                 "width": 1420,
                 "height": 1300,
             },
-            {
-                "src": "static/projects/prowash/staff.jpg",
-                "alt": "Staff appointments for Mason, Luke, Noah, and Chase",
-                "width": 1424,
-                "height": 1656,
-            },
         ),
         "paragraphs": (
-            "I founded ProWash & Detail Co. in early 2026. It is a local mobile detailing and power washing business. We detail cars, power wash, clean solar panels, and clean trash cans. The mark is PW&D, short enough to sit next to the work.",
+            "I founded ProWash & Detail Co. in early 2026. It is a local mobile detailing and power washing business. We detail cars, power wash, clean solar panels, and clean trash cans. I built the booking site for the business I run.",
             "Car detailing and power washing are the jobs at the curb.",
             "Solar panel cleaning and trash can cleaning are the rest of the property.",
-            "Clients book online. I built the site so a request lands in one place instead of getting lost in texts. The public calendar shows open appointment times. That is the whole view: when we can come, not who else is booked.",
-            "The staff side is how the crew actually runs. Visitors get a Staff sign-in. Once someone is signed in, they see the appointments: pending requests waiting for a yes, and the times that have been accepted show as booked on the public calendar.",
-            "Mason, Luke, Noah, and I each have a schedule page, and there is a Completed archive. Staff can search and filter the jobs, accept or decline a request, and claim a shift. Names, shifts, and blackout dates stay on those pages. This page is separate from the public site. Visitors never see this list.",
-            "That is a crew of about three, plus me. The jobs live there instead of in a string of texts. I would rather keep the work local and careful than pretend the business is bigger than it is.",
+            "Clients book open times online, and my crew of three gets a private page to accept jobs and manage shifts. I built the site so a request lands in one place instead of getting lost in texts.",
+            "The public calendar shows open appointment times. That is the public view: when we can come.",
+            "That is a crew of about three, plus me. The jobs live on that page instead of in a string of texts. I keep the work local so each job gets personal attention.",
         ),
     },
 )
 
-RESUME_TITLE = "My Resume"
+RESUME_TITLE = "Resume"
 
 RESUME_SECTIONS = (
     {
@@ -208,7 +237,7 @@ RESUME_SECTIONS = (
                 "degree": "High School Diploma / College Preparatory Program",
                 "bullets": (
                     "3.92 unweighted / 4.42 weighted GPA",
-                    "SAT: 700 English · 780 Math",
+                    "SAT: 780 Math · 700 English",
                     "Selected coursework: AP Physics C: Mechanics, AP Calculus BC, AP Computer Science, AP Statistics, Honors Engineering, and additional honors courses",
                 ),
             },
@@ -252,7 +281,7 @@ RESUME_SECTIONS = (
                 "title": "RIO Training App — Creator / Coder / Researcher",
                 "degree": None,
                 "bullets": (
-                    "Building a Distance training app; researched physiological and neurological body systems while utilizing a coding agent to build workout algorithms and classifier algorithms for athlete session data.",
+                    "Building an 800m training app; researched physiological and neurological body systems while using a coding agent to build workout algorithms and classifier algorithms for athlete session data.",
                 ),
             },
             {
@@ -273,36 +302,14 @@ RESUME_SECTIONS = (
                 "title": "Alameda County Community Food Bank — Community Volunteer",
                 "degree": None,
                 "bullets": (
-                    "Sorted, weighed, and boxed produce/dry goods; Supported East Bay residents.",
+                    "Sorted, weighed, and boxed produce/dry goods; supported East Bay residents.",
                 ),
             },
             {
                 "title": "Lamorinda Orthopedics and Sport PT — Volunteer Service Worker",
                 "degree": None,
                 "bullets": (
-                    "Assisted PTs with rehab setups, cleaning, and equipment prep; I also helped by guiding patients through exercises",
-                ),
-            },
-        ),
-    },
-    {
-        "id": "skills",
-        "heading": "Skills",
-        "entries": (
-            {
-                "title": None,
-                "degree": None,
-                "bullets": (
-                    "Leadership & Team Captaining",
-                    "Public Speaking / On-stage Moderation",
-                    "Event Organization & Campus Tours",
-                    "Student Store Operations / Basic Revenue Tracking",
-                    "Small Business Operations (scheduling, employees, marketing, equipment)",
-                    "Research Writing & Thesis Development",
-                    "Coding / App Development (workout algorithms, athlete data classification)",
-                    "Physiological & Training Knowledge (track/soccer)",
-                    "Inventory Management & Logistics",
-                    "Community Service & Rehabilitation patient support",
+                    "Assisted PTs with rehab setups, cleaning, and equipment prep; supported patient exercises under staff supervision.",
                 ),
             },
         ),

@@ -68,11 +68,16 @@ section.main {
 }
 
 [data-testid="stHtml"] .nav-links a {
-  color: #8d99ae;
+  color: #596579;
+}
+
+[data-testid="stHtml"] .nav-links a:hover,
+[data-testid="stHtml"] .nav-links a:focus-visible {
+  color: #2b2d42;
 }
 
 [data-testid="stHtml"] .text-btn {
-  color: #8d99ae;
+  color: #596579;
   text-decoration: none;
 }
 
@@ -82,11 +87,28 @@ section.main {
 }
 
 [data-testid="stHtml"] .site-footer a {
-  color: #8d99ae;
+  color: #596579;
+}
+
+[data-testid="stHtml"] .site-footer a:hover,
+[data-testid="stHtml"] .site-footer a:focus-visible {
+  color: #2b2d42;
 }
 
 [data-testid="stHtml"] .resume-github {
-  color: #8d99ae;
+  color: #596579;
+}
+
+[data-testid="stHtml"] .resume-github:hover,
+[data-testid="stHtml"] .resume-github:focus-visible {
+  color: #2b2d42;
+}
+
+[data-testid="stHtml"] .work-row-dates,
+[data-testid="stHtml"] .work-meta,
+[data-testid="stHtml"] .work-back,
+[data-testid="stHtml"] .work-live {
+  color: #596579;
 }
 
 [data-testid="stHtml"] .work-title {
@@ -100,12 +122,12 @@ section.main {
 }
 
 [data-testid="stHtml"] .work-kicker {
-  font-size: 1.15rem;
-  font-weight: 500;
-  font-style: italic;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  margin: 0 0 0.85rem;
+  font-size: clamp(2.1rem, 4vw, 3rem);
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 1.35rem;
   color: #1a1a2e;
 }
 
