@@ -170,7 +170,8 @@ RESUME_SECTIONS = (
                 "degree": "High School Diploma / College Preparatory Program",
                 "bullets": (
                     "3.92 unweighted / 4.42 weighted GPA",
-                    "Junior Research Program (JRP) Honorable Mention; 400m/800m school record holder",
+                    "SAT: 700 English · 780 Math",
+                    "Selected coursework: AP Physics C: Mechanics, AP Calculus BC, AP Computer Science, AP Statistics, Honors Engineering, and additional honors courses",
                 ),
             },
         ),
@@ -210,17 +211,17 @@ RESUME_SECTIONS = (
                 ),
             },
             {
-                "title": "800m Training App — Creator / Coder / Researcher",
+                "title": "RIO Training App — Creator / Coder / Researcher",
                 "degree": None,
                 "bullets": (
-                    "Building an 800m training app; researched physiological and neurological body systems while utilizing a coding agent to build workout algorithms and classifier algorithms for athlete session data.",
+                    "Building a Distance training app; researched physiological and neurological body systems while utilizing a coding agent to build workout algorithms and classifier algorithms for athlete session data.",
                 ),
             },
             {
                 "title": "Bentley Junior Research Program — Independent Student Researcher",
                 "degree": None,
                 "bullets": (
-                    "Wrote a 12-page thesis on colonial origins & labor migration in West African soccer academies; awarded JRP Honorable Mention.",
+                    "12-page thesis on colonial origins & labor migration in West African soccer academies; awarded JRP Honorable Mention.",
                 ),
             },
             {
@@ -263,7 +264,7 @@ RESUME_SECTIONS = (
                     "Coding / App Development (workout algorithms, athlete data classification)",
                     "Physiological & Training Knowledge (track/soccer)",
                     "Inventory Management & Logistics",
-                    "Community Service & Patient Interaction Support",
+                    "Community Service & Rehabilitation patient support",
                 ),
             },
         ),
