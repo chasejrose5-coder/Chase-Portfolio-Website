@@ -1,7 +1,7 @@
 """Visible copy for the Streamlit pages.
 
-Home and Resume use Chase's wording. Project entries are empty slots
-for the work index and detail pages.
+Home and Resume use Chase's wording. Projects lists RIO and
+ProWash & Detail Co. Screenshots live under assets/projects/.
 """
 
 from __future__ import annotations
@@ -51,47 +51,109 @@ QUOTES = (
     },
 )
 
-# Empty project slots. Titles, dates, and paragraphs are placeholders.
-# Detail pages alternate these paragraphs with framed image placeholders.
 # Streamlit page paths cannot contain a slash, so each slug is its own route.
-
-_PARAGRAPHS = (
-    "I will replace this with a short note about how this started.",
-    "I will replace this with what I did next, in a sentence or two.",
-    "I will replace this with a constraint, a decision, or a result.",
-    "I will replace this with a closing line in my own words.",
-)
+# Detail pages place a straight frame after each paragraph that has one.
 
 PROJECTS = (
     {
-        "slug": "project-one",
-        "title": "Project one",
-        "dates": "Month Year – Present",
-        "role": "Role",
-        "year": "Year",
-        "href": "https://example.com",
-        "link_label": "Link label",
-        "paragraphs": _PARAGRAPHS,
+        "slug": "rio",
+        "title": "RIO",
+        "dates": "2025 – Present",
+        "role": "Founder",
+        "year": "2025–Present",
+        "href": "https://riotraining.streamlit.app",
+        "link_label": "Open RIO",
+        "thumb": {
+            "src": "assets/projects/rio/thumb.webp",
+            "alt": "RIO splash screen",
+            "width": 960,
+            "height": 600,
+        },
+        "hero": {
+            "src": "assets/projects/rio/hero.webp",
+            "alt": "RIO splash screen: Your Race, Your Plan, Your Result",
+            "width": 1280,
+            "height": 900,
+        },
+        "frames": (
+            {
+                "src": "assets/projects/rio/home.webp",
+                "alt": "RIO home screen, 150 days from a 1:55 goal",
+                "width": 1600,
+                "height": 893,
+            },
+            {
+                "src": "assets/projects/rio/blocks.webp",
+                "alt": "Chase Rose driving out of the blocks",
+                "width": 1600,
+                "height": 1067,
+            },
+            {
+                "src": "assets/projects/rio/plan.webp",
+                "alt": "RIO plan page with the season calendar",
+                "width": 1440,
+                "height": 1100,
+            },
+            {
+                "src": "assets/projects/rio/session.webp",
+                "alt": "RIO start-session screen for a Thursday speed workout",
+                "width": 1600,
+                "height": 893,
+            },
+        ),
+        "paragraphs": (
+            "RIO is the 800m training app I’m building for runners. Plans, hard-day scoring, and insights sit in one place.",
+            "I built it while chasing 1:55.0 at the Stanford Invitational, with the goal set around March 2027.",
+            "It connects to Strava, scores the session after a planned hard day, and Home shows where the season stands.",
+            "I’m still shipping it while I train. The product and the training move together.",
+        ),
     },
     {
-        "slug": "project-two",
-        "title": "Project two",
-        "dates": "Month Year – Month Year",
-        "role": "Role",
-        "year": "Year",
-        "href": "https://example.com",
-        "link_label": "Link label",
-        "paragraphs": _PARAGRAPHS,
-    },
-    {
-        "slug": "project-three",
-        "title": "Project three",
-        "dates": "Year – Year",
-        "role": "Role",
-        "year": "Year",
-        "href": "https://example.com",
-        "link_label": "Link label",
-        "paragraphs": _PARAGRAPHS,
+        "slug": "prowash",
+        "title": "ProWash & Detail Co.",
+        "dates": "Present",
+        "role": "Founder & Managing Partner",
+        "year": "Present",
+        "href": "https://prowash.streamlit.app",
+        "link_label": "Open ProWash",
+        "thumb": {
+            "src": "assets/projects/prowash/thumb.webp",
+            "alt": "ProWash & Detail Co.",
+            "width": 960,
+            "height": 600,
+        },
+        "hero": {
+            "src": "assets/projects/prowash/hero.webp",
+            "alt": "ProWash & Detail Co. site header",
+            "width": 1400,
+            "height": 397,
+        },
+        "frames": (
+            {
+                "src": "assets/projects/prowash/services.webp",
+                "alt": "ProWash services: car detailing, power washing, solar panel cleaning, and trash can cleaning",
+                "width": 1392,
+                "height": 1484,
+            },
+            {
+                "src": "assets/projects/prowash/booking.webp",
+                "alt": "ProWash booking form",
+                "width": 1400,
+                "height": 1888,
+            },
+            {
+                "src": "assets/projects/prowash/calendar.webp",
+                "alt": "ProWash calendar of open appointment times",
+                "width": 1392,
+                "height": 965,
+            },
+        ),
+        "paragraphs": (
+            "I founded ProWash & Detail Co., a local mobile detailing and power washing business.",
+            "We detail cars, power wash, clean solar panels, and clean trash cans. Clients book online.",
+            "I managed the schedule, the equipment, and a small crew of about three people.",
+            "I built the booking site so a request lands in one place instead of getting lost in texts.",
+        ),
     },
 )
 
