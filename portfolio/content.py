@@ -1,7 +1,7 @@
-"""Visible copy ported from the static pages.
+"""Visible copy for the Streamlit pages.
 
-Nothing here is invented. Placeholder sentences are the text already in
-index.html, projects.html, and resume.html.
+Home, the quotes, and the resume are the placeholder text from the static
+pages. Project entries are empty slots for the work index and detail pages.
 """
 
 from __future__ import annotations
@@ -53,49 +53,47 @@ QUOTES = (
     },
 )
 
-PROJECTS_TITLE = "My Projects"
-PROJECTS_KICKER = "(both serious and fun!)"
+# Empty project slots. Titles, dates, and paragraphs are placeholders.
+# Detail pages alternate these paragraphs with framed image placeholders.
+# Streamlit page paths cannot contain a slash, so each slug is its own route.
+
+_PARAGRAPHS = (
+    "I will replace this with a short note about how this started.",
+    "I will replace this with what I did next, in a sentence or two.",
+    "I will replace this with a constraint, a decision, or a result.",
+    "I will replace this with a closing line in my own words.",
+)
 
 PROJECTS = (
     {
-        "title": "Field Guide",
-        "role": "Founder, Editor",
-        "href": "https://github.com",
-        "label": "Visit Website",
-        "paragraphs": (
-            "Replace this with what the project is. Say who it is for, when it started, and why it exists. One short paragraph is the right length.",
-            "Use a second paragraph for your role now. Mention what you edit, design, or keep running.",
-        ),
+        "slug": "project-one",
+        "title": "Project one",
+        "dates": "Month Year – Present",
+        "role": "Role",
+        "year": "Year",
+        "href": "https://example.com",
+        "link_label": "Link label",
+        "paragraphs": _PARAGRAPHS,
     },
     {
-        "title": "Listening Notes",
-        "role": "Music project",
-        "href": "https://www.instagram.com",
-        "label": "Visit Account",
-        "paragraphs": (
-            "A sample side project. Describe a personal account, channel, or hobby you share in public, and what got you started.",
-            "Then say what someone will find if they follow the link: songs, notes, videos, or a list you keep up to date.",
-        ),
+        "slug": "project-two",
+        "title": "Project two",
+        "dates": "Month Year – Month Year",
+        "role": "Role",
+        "year": "Year",
+        "href": "https://example.com",
+        "link_label": "Link label",
+        "paragraphs": _PARAGRAPHS,
     },
     {
-        "title": "Name That Tune",
-        "role": "Creator",
-        "href": "https://codepen.io",
-        "label": "View Project",
-        "paragraphs": (
-            "A sample for a small game, tool, or experiment. Explain the premise in plain language so a new reader gets it immediately.",
-            "Add one result if you have it: people who used it, something you learned, or why you still keep it online.",
-        ),
-    },
-    {
-        "title": "Studio Markup",
-        "role": "Website design",
-        "href": "https://github.com",
-        "label": "GitHub",
-        "paragraphs": (
-            "A sample client or collaboration project. Name who you worked with and what you were asked to make.",
-            "Close with what the site includes and where the work lives now. Swap the button label if “GitHub” is not the right word.",
-        ),
+        "slug": "project-three",
+        "title": "Project three",
+        "dates": "Year – Year",
+        "role": "Role",
+        "year": "Year",
+        "href": "https://example.com",
+        "link_label": "Link label",
+        "paragraphs": _PARAGRAPHS,
     },
 )
 
