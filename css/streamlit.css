@@ -52,10 +52,15 @@ section.main {
   margin: 0;
 }
 
-[data-testid="stHtml"] .entry ul {
-  margin-top: 0.45rem;
+[data-testid="stHtml"] .entry ul,
+[data-testid="stHtml"] .work-ahead ul {
+  margin-top: 0.85rem;
   padding-left: 1.15rem;
   list-style: disc;
+}
+
+[data-testid="stHtml"] .entry ul {
+  margin-top: 0.45rem;
 }
 
 [data-testid="stHtml"] a {
