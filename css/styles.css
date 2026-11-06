@@ -609,14 +609,15 @@ a:focus-visible,
 
 /* Projects
    Quiet index rows and a diary-scale detail column.
+   Wide enough that two projects fill the screen, short of the old 68rem.
    Home and resume keep the rules above.
    ------------------------------------------------------------ */
 
 .work-column {
-  width: min(45rem, calc(100% - 2.5rem));
+  width: min(60rem, calc(100% - 3.5rem));
   margin-inline: auto;
-  padding-top: clamp(2.25rem, 5vw, 3.5rem);
-  padding-bottom: 1.25rem;
+  padding-top: clamp(2.4rem, 5.5vh, 3.75rem);
+  padding-bottom: 1.5rem;
   transition: filter 0.32s var(--ease), opacity 0.32s var(--ease);
 }
 
@@ -637,8 +638,8 @@ a:focus-visible,
 .work-row {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.5rem 0;
+  gap: 1.6rem;
+  padding: 1.35rem 0;
   color: #1A1A2E;
   text-decoration: none;
 }
@@ -650,16 +651,16 @@ a:focus-visible,
 .work-row-title {
   flex: 1;
   min-width: 0;
-  font-size: 0.95rem;
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
   font-weight: 500;
   letter-spacing: -0.02em;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .work-row-dates {
   flex: none;
   color: #8D99AE;
-  font-size: 0.78rem;
+  font-size: 0.98rem;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -667,7 +668,7 @@ a:focus-visible,
 
 .work-thumb {
   flex: none;
-  width: 5.5rem;
+  width: clamp(11rem, 24vw, 20rem);
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border: 1px solid rgba(141, 153, 174, 0.45);
@@ -739,7 +740,7 @@ a:focus-visible,
 }
 
 .work-hero {
-  width: min(100%, 30rem);
+  width: min(100%, 46rem);
   border: 1px solid rgba(141, 153, 174, 0.45);
   background: #FFFFFF;
 }
@@ -756,9 +757,9 @@ a:focus-visible,
 }
 
 .work-title {
-  margin: 1.15rem 0 0;
+  margin: 1.35rem 0 0;
   color: #1A1A2E;
-  font-size: clamp(1.65rem, 3vw, 2.05rem);
+  font-size: clamp(1.9rem, 3.4vw, 2.4rem);
   font-weight: 500;
   font-style: italic;
   letter-spacing: -0.03em;
@@ -792,20 +793,20 @@ a:focus-visible,
 .work-story {
   display: flex;
   flex-direction: column;
-  gap: 1.35rem;
-  padding-top: 1.55rem;
+  gap: 1.75rem;
+  padding-top: 1.9rem;
 }
 
 .work-story p {
-  max-width: 40rem;
+  max-width: 46rem;
   color: #1A1A2E;
-  font-size: 0.94rem;
+  font-size: 1.02rem;
   letter-spacing: -0.015em;
   line-height: 1.6;
 }
 
 .work-frame {
-  width: min(100%, 30rem);
+  width: min(100%, 46rem);
   margin: 0;
 }
 
@@ -853,19 +854,24 @@ html.work-leaving .work-column {
 
 @media (max-width: 720px) {
   .work-column {
-    width: min(45rem, calc(100% - 1.5rem));
+    width: min(60rem, calc(100% - 1.5rem));
   }
 
   .work-thumb {
-    width: 4.25rem;
+    width: 7.25rem;
   }
 
   .work-row {
-    gap: 0.85rem;
+    gap: 1rem;
+    padding: 0.9rem 0;
+  }
+
+  .work-row-title {
+    font-size: 1.05rem;
   }
 
   .work-row-dates {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
   }
 }
 

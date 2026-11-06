@@ -1,7 +1,8 @@
 """Visible copy for the Streamlit pages.
 
 Home and Resume use Chase's wording. Projects lists RIO and
-ProWash & Detail Co. Screenshots live under assets/projects/.
+ProWash & Detail Co. Screenshots live in static/projects/, the folder
+Streamlit serves.
 """
 
 from __future__ import annotations
@@ -64,38 +65,38 @@ PROJECTS = (
         "href": "https://riotraining.streamlit.app",
         "link_label": "Open RIO",
         "thumb": {
-            "src": "assets/projects/rio/thumb.webp",
+            "src": "static/projects/rio/thumb.webp",
             "alt": "RIO splash screen",
             "width": 960,
             "height": 600,
         },
         "hero": {
-            "src": "assets/projects/rio/hero.webp",
+            "src": "static/projects/rio/hero.webp",
             "alt": "RIO splash screen: Your Race, Your Plan, Your Result",
             "width": 1280,
             "height": 900,
         },
         "frames": (
             {
-                "src": "assets/projects/rio/home.webp",
+                "src": "static/projects/rio/home.webp",
                 "alt": "RIO home screen, 150 days from a 1:55 goal",
                 "width": 1600,
                 "height": 893,
             },
             {
-                "src": "assets/projects/rio/blocks.webp",
+                "src": "static/projects/rio/blocks.webp",
                 "alt": "Chase Rose driving out of the blocks",
                 "width": 1600,
                 "height": 1067,
             },
             {
-                "src": "assets/projects/rio/plan.webp",
+                "src": "static/projects/rio/plan.webp",
                 "alt": "RIO plan page with the season calendar",
                 "width": 1440,
                 "height": 1100,
             },
             {
-                "src": "assets/projects/rio/session.webp",
+                "src": "static/projects/rio/session.webp",
                 "alt": "RIO start-session screen for a Thursday speed workout",
                 "width": 1600,
                 "height": 893,
@@ -117,32 +118,32 @@ PROJECTS = (
         "href": "https://prowash.streamlit.app",
         "link_label": "Open ProWash",
         "thumb": {
-            "src": "assets/projects/prowash/thumb.webp",
+            "src": "static/projects/prowash/thumb.webp",
             "alt": "ProWash & Detail Co.",
             "width": 960,
             "height": 600,
         },
         "hero": {
-            "src": "assets/projects/prowash/hero.webp",
+            "src": "static/projects/prowash/hero.webp",
             "alt": "ProWash & Detail Co. site header",
             "width": 1400,
             "height": 397,
         },
         "frames": (
             {
-                "src": "assets/projects/prowash/services.webp",
+                "src": "static/projects/prowash/services.webp",
                 "alt": "ProWash services: car detailing, power washing, solar panel cleaning, and trash can cleaning",
                 "width": 1392,
                 "height": 1484,
             },
             {
-                "src": "assets/projects/prowash/booking.webp",
+                "src": "static/projects/prowash/booking.webp",
                 "alt": "ProWash booking form",
                 "width": 1400,
                 "height": 1888,
             },
             {
-                "src": "assets/projects/prowash/calendar.webp",
+                "src": "static/projects/prowash/calendar.webp",
                 "alt": "ProWash calendar of open appointment times",
                 "width": 1392,
                 "height": 965,

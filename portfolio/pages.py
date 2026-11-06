@@ -67,20 +67,26 @@ def _placeholder(label: str, decorative: bool = False) -> str:
 
 
 def _public_src(path: str | None) -> str | None:
-    """Map an assets/ path to /app/static/, where the static symlink is served."""
+    """URL for a file in the app's static/ directory.
+
+    Streamlit serves that directory at ``<app-root>/app/static/``. Project
+    routes sit one segment under the app root (``/projects``, ``/rio``,
+    ``/prowash``), so a parent-relative URL still resolves when the app is
+    mounted under a prefix. A root-absolute ``/app/static/`` URL skips that
+    prefix and the image 404s.
+    """
     if not path:
         return None
     root = ROOT.resolve()
     file_path = (root / path).resolve()
+    static_root = (root / "static").resolve()
     if not file_path.is_file():
         return None
     try:
-        rel = file_path.relative_to(root).as_posix()
+        rel = file_path.relative_to(static_root).as_posix()
     except ValueError:
         return None
-    if rel.startswith("assets/"):
-        rel = rel[len("assets/") :]
-    return "/app/static/" + rel
+    return "../app/static/" + rel
 
 
 def _picture(image: dict | None, *, decorative: bool = False, loading: str = "lazy") -> str:
