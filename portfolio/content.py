@@ -1,7 +1,8 @@
 """Visible copy for the Streamlit pages.
 
 Home and Resume use Chase's wording. Projects lists RIO and
-ProWash & Detail Co. Screenshots live under assets/projects/.
+ProWash & Detail Co. Screenshots live in static/projects/, the folder
+Streamlit serves.
 """
 
 from __future__ import annotations
@@ -64,38 +65,38 @@ PROJECTS = (
         "href": "https://riotraining.streamlit.app",
         "link_label": "Open RIO",
         "thumb": {
-            "src": "assets/projects/rio/thumb.webp",
+            "src": "static/projects/rio/thumb.webp",
             "alt": "RIO splash screen",
             "width": 960,
             "height": 600,
         },
         "hero": {
-            "src": "assets/projects/rio/hero.webp",
+            "src": "static/projects/rio/hero.webp",
             "alt": "RIO splash screen: Your Race, Your Plan, Your Result",
             "width": 1280,
             "height": 900,
         },
         "frames": (
             {
-                "src": "assets/projects/rio/home.webp",
+                "src": "static/projects/rio/home.webp",
                 "alt": "RIO home screen, 150 days from a 1:55 goal",
                 "width": 1600,
                 "height": 893,
             },
             {
-                "src": "assets/projects/rio/blocks.webp",
+                "src": "static/projects/rio/blocks.webp",
                 "alt": "Chase Rose driving out of the blocks",
                 "width": 1600,
                 "height": 1067,
             },
             {
-                "src": "assets/projects/rio/plan.webp",
+                "src": "static/projects/rio/plan.webp",
                 "alt": "RIO plan page with the season calendar",
                 "width": 1440,
                 "height": 1100,
             },
             {
-                "src": "assets/projects/rio/session.webp",
+                "src": "static/projects/rio/session.webp",
                 "alt": "RIO start-session screen for a Thursday speed workout",
                 "width": 1600,
                 "height": 893,
@@ -117,32 +118,32 @@ PROJECTS = (
         "href": "https://prowash.streamlit.app",
         "link_label": "Open ProWash",
         "thumb": {
-            "src": "assets/projects/prowash/thumb.webp",
+            "src": "static/projects/prowash/thumb.webp",
             "alt": "ProWash & Detail Co.",
             "width": 960,
             "height": 600,
         },
         "hero": {
-            "src": "assets/projects/prowash/hero.webp",
+            "src": "static/projects/prowash/hero.webp",
             "alt": "ProWash & Detail Co. site header",
             "width": 1400,
             "height": 397,
         },
         "frames": (
             {
-                "src": "assets/projects/prowash/services.webp",
+                "src": "static/projects/prowash/services.webp",
                 "alt": "ProWash services: car detailing, power washing, solar panel cleaning, and trash can cleaning",
                 "width": 1392,
                 "height": 1484,
             },
             {
-                "src": "assets/projects/prowash/booking.webp",
+                "src": "static/projects/prowash/booking.webp",
                 "alt": "ProWash booking form",
                 "width": 1400,
                 "height": 1888,
             },
             {
-                "src": "assets/projects/prowash/calendar.webp",
+                "src": "static/projects/prowash/calendar.webp",
                 "alt": "ProWash calendar of open appointment times",
                 "width": 1392,
                 "height": 965,
@@ -169,7 +170,8 @@ RESUME_SECTIONS = (
                 "degree": "High School Diploma / College Preparatory Program",
                 "bullets": (
                     "3.92 unweighted / 4.42 weighted GPA",
-                    "Junior Research Program (JRP) Honorable Mention; 400m/800m school record holder",
+                    "SAT: 700 English · 780 Math",
+                    "Selected coursework: AP Physics C: Mechanics, AP Calculus BC, AP Computer Science, AP Statistics, Honors Engineering, and additional honors courses",
                 ),
             },
         ),
@@ -209,17 +211,17 @@ RESUME_SECTIONS = (
                 ),
             },
             {
-                "title": "800m Training App — Creator / Coder / Researcher",
+                "title": "RIO Training App — Creator / Coder / Researcher",
                 "degree": None,
                 "bullets": (
-                    "Building an 800m training app; researched physiological and neurological body systems while utilizing a coding agent to build workout algorithms and classifier algorithms for athlete session data.",
+                    "Building a Distance training app; researched physiological and neurological body systems while utilizing a coding agent to build workout algorithms and classifier algorithms for athlete session data.",
                 ),
             },
             {
                 "title": "Bentley Junior Research Program — Independent Student Researcher",
                 "degree": None,
                 "bullets": (
-                    "Wrote a 12-page thesis on colonial origins & labor migration in West African soccer academies; awarded JRP Honorable Mention.",
+                    "12-page thesis on colonial origins & labor migration in West African soccer academies; awarded JRP Honorable Mention.",
                 ),
             },
             {
@@ -262,7 +264,7 @@ RESUME_SECTIONS = (
                     "Coding / App Development (workout algorithms, athlete data classification)",
                     "Physiological & Training Knowledge (track/soccer)",
                     "Inventory Management & Logistics",
-                    "Community Service & Patient Interaction Support",
+                    "Community Service & Rehabilitation patient support",
                 ),
             },
         ),
