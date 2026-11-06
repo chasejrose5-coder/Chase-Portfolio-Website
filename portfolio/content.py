@@ -162,27 +162,27 @@ PROJECTS = (
             "mark": True,
         },
         "frames": (
-            {
-                "src": "static/projects/prowash/work.png",
-                "alt": "The work: car detailing, power washing, solar panel cleaning, and trash can cleaning",
-                "width": 1600,
-                "height": 980,
-            },
-            {
-                "src": "static/projects/prowash/curb.png",
-                "alt": "Car detailing and power washing",
-                "width": 1600,
-                "height": 460,
-            },
-            {
-                "src": "static/projects/prowash/property.png",
-                "alt": "Solar panel cleaning and trash can cleaning",
-                "width": 1600,
-                "height": 460,
-            },
             None,
             None,
             None,
+            {
+                "src": "static/projects/prowash/book.jpg",
+                "alt": "ProWash booking form",
+                "width": 1439,
+                "height": 1874,
+            },
+            {
+                "src": "static/projects/prowash/calendar.jpg",
+                "alt": "Open appointment times, Saturday November 7 through Thursday November 12",
+                "width": 1600,
+                "height": 1090,
+            },
+            {
+                "src": "static/projects/prowash/staff.jpg",
+                "alt": "Staff appointments for Mason, Luke, Noah, and Chase",
+                "width": 1440,
+                "height": 1785,
+            },
         ),
         "paragraphs": (
             "I founded ProWash & Detail Co. in early 2026. It is a local mobile detailing and power washing business. We detail cars, power wash, clean solar panels, and clean trash cans. The mark is PW&D, short enough to sit next to the work.",
