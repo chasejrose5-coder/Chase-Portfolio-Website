@@ -385,24 +385,40 @@ a:focus-visible,
 }
 
 .quotes {
-  margin-top: clamp(2rem, 5vw, 3rem);
-  padding-top: clamp(1.75rem, 4vw, 2.5rem);
+  margin-top: clamp(5rem, 12vw, 8.5rem);
+  padding-top: clamp(3.25rem, 8vw, 5.5rem);
   padding-bottom: clamp(1.5rem, 4vw, 2.5rem);
   border-top: 1px solid #8D99AE;
   display: grid;
-  gap: clamp(2.5rem, 6vw, 4rem);
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(5rem, 12vw, 8.5rem);
   min-width: 0;
 }
 
 /* The fold already keeps this section off the first screen. */
 .home-fold + .quotes {
-  margin-top: clamp(1.5rem, 4vw, 2.25rem);
+  margin-top: clamp(1.75rem, 4vw, 2.75rem);
 }
 
 .quote {
-  max-width: min(36rem, 100%);
+  width: min(36rem, 78%);
+  max-width: 100%;
+  min-width: 0;
+}
+
+.quote:nth-child(1) {
   justify-self: start;
   text-align: left;
+}
+
+.quote:nth-child(2) {
+  justify-self: center;
+  text-align: center;
+}
+
+.quote:nth-child(3) {
+  justify-self: end;
+  text-align: right;
 }
 
 .quote p {
