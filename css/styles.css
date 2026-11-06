@@ -361,7 +361,7 @@ a:focus-visible,
 }
 
 .home-portrait {
-  width: min(12.25rem, 100%);
+  width: min(22rem, 100%);
   margin: 0;
   border: 1px solid rgba(141, 153, 174, 0.45);
   background: #ffffff;
@@ -790,6 +790,23 @@ a:focus-visible,
   background: #FFFFFF;
 }
 
+.work-hero.is-mark {
+  display: grid;
+  place-items: center;
+  padding: 1.85rem 1.5rem;
+}
+
+.work-hero.is-mark img {
+  width: min(22rem, 78%);
+  height: auto;
+}
+
+.work-thumb.is-mark img {
+  object-fit: contain;
+  padding: 0.85rem 1.1rem;
+  background: #ffffff;
+}
+
 .work-hero .ph {
   display: grid;
 }
@@ -1011,7 +1028,7 @@ html.work-leaving .work-column {
 
 @media (max-height: 740px) {
   .home-portrait {
-    width: min(9.25rem, 38vw);
+    width: min(16rem, 70vw);
   }
 }
 
@@ -1023,7 +1040,7 @@ html.work-leaving .work-column {
   }
 
   .home-portrait {
-    width: min(9.5rem, 46vw);
+    width: min(18rem, 78vw);
   }
 
   .project {

@@ -134,10 +134,12 @@ def projects_index_html() -> str:
     for index, project in enumerate(PROJECTS):
         slug = html.escape(project["slug"], quote=True)
         fill = _FILLS[index % len(_FILLS)]
+        thumb = project.get("thumb") or {}
+        mark = " is-mark" if thumb.get("mark") else ""
         rows.append(
             f'<a class="work-row" href="/{slug}" data-project-path="/{slug}">'
-            f'<span class="work-thumb" style="--ph-fill:{fill}">'
-            f"{_picture(project.get('thumb'), decorative=True, loading='eager')}"
+            f'<span class="work-thumb{mark}" style="--ph-fill:{fill}">'
+            f"{_picture(thumb, decorative=True, loading='eager')}"
             "</span>"
             f'<span class="work-row-title">{html.escape(project["title"])}</span>'
             f'<span class="work-row-dates">{html.escape(project["dates"])}</span>'
@@ -160,15 +162,17 @@ def project_detail_html(project: dict, index: int) -> str:
     frames = project.get("frames") or ()
     for step, text in enumerate(paragraphs):
         blocks.append(f'<p class="reveal">{html.escape(text)}</p>')
-        if step >= len(frames):
+        frame = frames[step] if step < len(frames) else None
+        if not frame:
             continue
-        frame = frames[step]
         blocks.append(
             '<figure class="work-frame reveal">'
             '<div class="work-print">'
             f"{_picture(frame)}"
             "</div></figure>"
         )
+    hero = project.get("hero") or {}
+    hero_mark = " is-mark" if hero.get("mark") else ""
     return (
         "<main id=\"main\">"
         "<script>"
@@ -183,8 +187,8 @@ def project_detail_html(project: dict, index: int) -> str:
         "</script>"
         f'<article class="work-column work-detail" style="--ph-fill:{fill}" data-project-path="/{slug}">'
         '<p class="work-backline"><a class="work-back" href="/projects">Projects</a></p>'
-        f'<div class="work-hero" data-morph="hero" style="--ph-fill:{fill}">'
-        f"{_picture(project.get('hero'), loading='eager')}"
+        f'<div class="work-hero{hero_mark}" data-morph="hero" style="--ph-fill:{fill}">'
+        f"{_picture(hero, loading='eager')}"
         "</div>"
         f'<h1 class="work-title">{html.escape(project["title"])}</h1>'
         f'<p class="work-meta">{html.escape(project["role"])} · {html.escape(project["year"])}</p>'
