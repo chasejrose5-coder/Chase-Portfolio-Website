@@ -15,7 +15,7 @@ from portfolio.content import (
     TAGLINE,
     NAME,
 )
-from portfolio.layout import ROOT, render_page
+from portfolio.layout import PORTFOLIO_PATH_JS, ROOT, render_page
 
 
 def _external_link(href: str, label: str, class_name: str) -> str:
@@ -116,9 +116,23 @@ def _picture(image: dict | None, *, decorative: bool = False, loading: str = "la
     alt = "" if decorative else html.escape(image.get("alt") or "", quote=True)
     width = int(image["width"])
     height = int(image["height"])
+    extra = ""
+    srcset_parts = []
+    for item in image.get("srcset") or ():
+        url = _public_src(item.get("src"))
+        if not url:
+            continue
+        srcset_parts.append(
+            f"{html.escape(url, quote=True)} {int(item['width'])}w"
+        )
+    if srcset_parts:
+        extra += f' srcset="{", ".join(srcset_parts)}"'
+        sizes = image.get("sizes")
+        if sizes:
+            extra += f' sizes="{html.escape(sizes, quote=True)}"'
     return (
         f'<img src="{html.escape(src, quote=True)}" alt="{alt}" '
-        f'width="{width}" height="{height}" loading="{loading}" decoding="async">'
+        f'width="{width}" height="{height}"{extra} loading="{loading}" decoding="async">'
     )
 
 
@@ -136,13 +150,25 @@ def projects_index_html() -> str:
         fill = _FILLS[index % len(_FILLS)]
         thumb = project.get("thumb") or {}
         mark = " is-mark" if thumb.get("mark") else ""
+        blurb = project.get("blurb") or ""
+        blurb_html = (
+            f'<span class="work-row-blurb">{html.escape(blurb)}</span>' if blurb else ""
+        )
+        live = (
+            '<span class="work-live">Live app</span>' if project.get("href") else ""
+        )
         rows.append(
-            f'<a class="work-row" href="/{slug}" data-project-path="/{slug}">'
+            f'<a class="work-row" href="{slug}" data-project-path="/{slug}">'
             f'<span class="work-thumb{mark}" style="--ph-fill:{fill}">'
             f"{_picture(thumb, decorative=True, loading='eager')}"
             "</span>"
+            '<span class="work-row-main">'
+            '<span class="work-row-heading">'
             f'<span class="work-row-title">{html.escape(project["title"])}</span>'
             f'<span class="work-row-dates">{html.escape(project["dates"])}</span>'
+            "</span>"
+            f"{blurb_html}{live}"
+            "</span>"
             "</a>"
         )
     return (
@@ -175,18 +201,18 @@ def project_detail_html(project: dict, index: int) -> str:
     hero_mark = " is-mark" if hero.get("mark") else ""
     return (
         "<main id=\"main\">"
-        "<script>"
+        f"<script>{PORTFOLIO_PATH_JS}"
         "(function(){try{var raw=sessionStorage.getItem('project-morph');"
         "if(!raw)return;"
         "if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;"
         "var data=JSON.parse(raw);"
-        "if(!data||data.path!==location.pathname)return;"
+        "if(!data||portfolioPath(data.path)!==portfolioPath(location.pathname))return;"
         "if(typeof data.t==='number'&&Date.now()-data.t>15000)return;"
         "document.documentElement.classList.add('project-morphing');"
         "}catch(e){}})();"
         "</script>"
         f'<article class="work-column work-detail" style="--ph-fill:{fill}" data-project-path="/{slug}">'
-        '<p class="work-backline"><a class="work-back" href="/projects">Projects</a></p>'
+        '<p class="work-backline"><a class="work-back" href="projects">Projects</a></p>'
         f'<div class="work-hero{hero_mark}" data-morph="hero" style="--ph-fill:{fill}">'
         f"{_picture(hero, loading='eager')}"
         "</div>"
@@ -207,12 +233,25 @@ def _ahead_html(project: dict) -> str:
     if not ahead:
         return ""
     slug = html.escape(project["slug"], quote=True)
-    items = "".join(f"<li>{html.escape(item)}</li>" for item in ahead["items"])
+    groups = ahead.get("groups")
+    if groups:
+        blocks = []
+        for index, group in enumerate(groups):
+            gid = f"{slug}-ahead-{index}"
+            items = "".join(f"<li>{html.escape(item)}</li>" for item in group["items"])
+            blocks.append(
+                f'<h3 id="{gid}">{html.escape(group["label"])}</h3>'
+                f'<ul aria-labelledby="{gid}">{items}</ul>'
+            )
+        body = "".join(blocks)
+    else:
+        items = "".join(f"<li>{html.escape(item)}</li>" for item in ahead.get("items") or ())
+        body = f"<ul>{items}</ul>"
     return (
         f'<section class="work-ahead" aria-labelledby="{slug}-ahead">'
         f'<h2 id="{slug}-ahead">{html.escape(ahead["title"])}</h2>'
         f'<p>{html.escape(ahead["lead"])}</p>'
-        f"<ul>{items}</ul>"
+        f"{body}"
         "</section>"
     )
 
@@ -226,7 +265,7 @@ def show_project(slug: str) -> None:
     if project is None:
         missing = (
             '<main id="main"><div class="work-column">'
-            '<p class="work-backline"><a class="work-back" href="/projects">Projects</a></p>'
+            '<p class="work-backline"><a class="work-back" href="projects">Projects</a></p>'
             "<p>This project placeholder is not in the list.</p>"
             "</div></main>"
         )

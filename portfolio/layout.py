@@ -19,10 +19,25 @@ FONT_IMPORT = (
 )
 
 NAV = (
-    ("home", "Home", "/"),
-    ("projects", "Projects", "/projects"),
-    ("resume", "Resume", "/resume"),
+    ("home", "Home", "./"),
+    ("projects", "Projects", "projects"),
+    ("resume", "Resume", "resume"),
 )
+
+# One path normalizer for the project morph. Community Cloud mounts the app
+# at /~/+/, so location.pathname is /~/+/rio while data-project-path is /rio.
+PORTFOLIO_PATH_JS = """
+function portfolioPath(pathname) {
+  var path = pathname || "/";
+  var marker = "/~/+/";
+  var at = path.indexOf(marker);
+  if (at !== -1) path = "/" + path.slice(at + marker.length);
+  if (path.length > 1 && path.charAt(path.length - 1) === "/") {
+    path = path.slice(0, -1);
+  }
+  return path || "/";
+}
+"""
 
 
 def combined_css() -> str:
@@ -77,13 +92,12 @@ def _header(active: str) -> str:
     return (
         '<header class="site-header">'
         '<div class="header-inner wrap">'
-        f'<a class="brand" href="/">{html.escape(NAME)}</a>'
-        '<input class="nav-check" type="checkbox" id="nav-toggle">'
-        '<label class="nav-toggle" for="nav-toggle" aria-expanded="false">'
+        f'<a class="brand" href="./">{html.escape(NAME)}</a>'
+        '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">'
         '<span class="sr-only">Menu</span>'
         '<span class="bars" aria-hidden="true"></span>'
-        "</label>"
-        '<nav class="site-nav" aria-label="Primary">'
+        "</button>"
+        '<nav class="site-nav" id="site-nav" aria-label="Primary">'
         f'<ul class="nav-links">{"".join(links)}</ul>'
         "</nav>"
         "</div>"
