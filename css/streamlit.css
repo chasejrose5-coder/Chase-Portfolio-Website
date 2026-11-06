@@ -80,6 +80,35 @@ section.main {
   color: #8d99ae;
 }
 
+[data-testid="stHtml"] .work-title {
+  font-size: clamp(1.9rem, 4vw, 2.35rem);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  margin: 1.7rem 0 0;
+  color: #1a1a2e;
+}
+
+[data-testid="stHtml"] .work-kicker {
+  font-size: 1.15rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 0.85rem;
+  color: #1a1a2e;
+}
+
+[data-testid="stHtml"] .work-link {
+  color: #2b2d42;
+}
+
+[data-testid="stHtml"] .work-back,
+[data-testid="stHtml"] .work-row {
+  text-decoration: none;
+}
+
 [data-testid="stHtml"] .hero h1,
 [data-testid="stHtml"] .page-title {
   font-size: clamp(3.4rem, 9vw, 6.4rem);
