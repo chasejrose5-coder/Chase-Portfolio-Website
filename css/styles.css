@@ -587,12 +587,12 @@ a:focus-visible,
 }
 
 /* Projects
-   Quiet index rows and a narrow detail column.
+   Quiet index rows and a wide detail column.
    Home and resume keep the rules above.
    ------------------------------------------------------------ */
 
 .work-column {
-  width: min(34.5rem, calc(100% - 2.5rem));
+  width: min(68rem, calc(100% - 4rem));
   margin-inline: auto;
   padding-top: clamp(3.25rem, 8vw, 5.25rem);
   padding-bottom: 1.5rem;
@@ -616,8 +616,8 @@ a:focus-visible,
 .work-row {
   display: flex;
   align-items: center;
-  gap: 1.15rem;
-  padding: 0.72rem 0.1rem;
+  gap: 1.35rem;
+  padding: 0.95rem 0.1rem;
   color: #1A1A2E;
   text-decoration: none;
 }
@@ -646,15 +646,11 @@ a:focus-visible,
 
 .work-thumb {
   flex: none;
-  width: 4rem;
+  width: 8.75rem;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border: 2.5px solid #FFFFFF;
+  border: 1px solid rgba(141, 153, 174, 0.45);
   background: #FFFFFF;
-  box-shadow:
-    0 1.5px 2px -0.25px rgba(26, 26, 46, 0.2),
-    inset 0 0 0 1px rgba(26, 26, 46, 0.05);
-  transform: rotate(var(--tilt, -0.6deg));
   transition: transform 0.28s var(--ease);
 }
 
@@ -715,11 +711,8 @@ a:focus-visible,
 }
 
 .work-hero {
-  border: 12px solid #FFFFFF;
+  border: 1px solid rgba(141, 153, 174, 0.45);
   background: #FFFFFF;
-  box-shadow:
-    0 6px 16px -6px rgba(26, 26, 46, 0.28),
-    inset 0 0 0 1px rgba(26, 26, 46, 0.06);
 }
 
 .work-hero .ph {
@@ -768,7 +761,7 @@ a:focus-visible,
 }
 
 .work-story p {
-  max-width: 62ch;
+  max-width: 46rem;
   color: #1A1A2E;
   font-size: 0.94rem;
   letter-spacing: -0.015em;
@@ -776,18 +769,13 @@ a:focus-visible,
 }
 
 .work-frame {
-  width: min(100%, 26rem);
-  margin: 0.35rem auto;
+  width: 100%;
+  margin: 0;
 }
 
-/* Rotation sits inside the reveal wrapper. The reveal class sets its own
-   transform, which would otherwise replace the tilt. */
 .work-print {
-  padding: 0.7rem 0.7rem 0.95rem;
-  border: 1px solid rgba(141, 153, 174, 0.38);
+  border: 1px solid rgba(141, 153, 174, 0.45);
   background: #FFFFFF;
-  box-shadow: 0 10px 22px -12px rgba(26, 26, 46, 0.4);
-  transform: rotate(var(--tilt, 0.8deg));
 }
 
 .work-flyer {
@@ -823,25 +811,25 @@ html.work-leaving .work-column {
   }
 
   .work-row:hover .work-thumb {
-    transform: rotate(var(--tilt, -0.6deg)) scale(1.05);
+    transform: scale(1.03);
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 720px) {
   .work-column {
-    width: min(34.5rem, calc(100% - 1.5rem));
+    width: min(68rem, calc(100% - 1.5rem));
+  }
+
+  .work-thumb {
+    width: 5.75rem;
   }
 
   .work-row {
-    gap: 0.75rem;
+    gap: 0.85rem;
   }
 
   .work-row-dates {
-    font-size: 0.7rem;
-  }
-
-  .work-hero {
-    border-width: 8px;
+    font-size: 0.72rem;
   }
 }
 

@@ -50,8 +50,6 @@ def show_home() -> None:
     render_page("home", main)
 
 
-_FRAME_TILTS = (-1.4, 1.15, -0.95, 1.25)
-_THUMB_TILTS = (-0.7, 0.8, -0.45)
 _FILLS = ("#eef1f4", "#f4f0ea", "#eef3f1")
 
 
@@ -79,11 +77,10 @@ def projects_index_html() -> str:
     rows = []
     for index, project in enumerate(PROJECTS):
         slug = html.escape(project["slug"], quote=True)
-        tilt = _THUMB_TILTS[index % len(_THUMB_TILTS)]
         fill = _FILLS[index % len(_FILLS)]
         rows.append(
             f'<a class="work-row" href="/{slug}" data-project-path="/{slug}">'
-            f'<span class="work-thumb" style="--tilt:{tilt}deg;--ph-fill:{fill}">'
+            f'<span class="work-thumb" style="--ph-fill:{fill}">'
             f"{_placeholder('Image placeholder', decorative=True)}"
             "</span>"
             f'<span class="work-row-title">{html.escape(project["title"])}</span>'
@@ -108,10 +105,9 @@ def project_detail_html(project: dict, index: int) -> str:
         blocks.append(f'<p class="reveal">{html.escape(text)}</p>')
         if step >= len(paragraphs) - 1:
             continue
-        tilt = _FRAME_TILTS[step % len(_FRAME_TILTS)]
         blocks.append(
-            f'<figure class="work-frame reveal">'
-            f'<div class="work-print" style="--tilt:{tilt}deg">'
+            '<figure class="work-frame reveal">'
+            '<div class="work-print">'
             f"{_placeholder('Image placeholder')}"
             "</div></figure>"
         )
