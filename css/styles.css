@@ -675,6 +675,13 @@ a:focus-visible,
   transition: transform 0.28s var(--ease);
 }
 
+.work-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .ph {
   position: relative;
   display: grid;
@@ -739,6 +746,13 @@ a:focus-visible,
 
 .work-hero .ph {
   display: grid;
+}
+
+.work-hero img,
+.work-print img,
+.work-flyer img {
+  width: 100%;
+  height: auto;
 }
 
 .work-title {

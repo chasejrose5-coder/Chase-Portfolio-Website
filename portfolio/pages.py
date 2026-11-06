@@ -13,7 +13,7 @@ from portfolio.content import (
     TAGLINE,
     NAME,
 )
-from portfolio.layout import render_page
+from portfolio.layout import ROOT, render_page
 
 
 def show_home() -> None:
@@ -66,6 +66,37 @@ def _placeholder(label: str, decorative: bool = False) -> str:
     )
 
 
+def _public_src(path: str | None) -> str | None:
+    """Map an assets/ path to /app/static/, where the static symlink is served."""
+    if not path:
+        return None
+    root = ROOT.resolve()
+    file_path = (root / path).resolve()
+    if not file_path.is_file():
+        return None
+    try:
+        rel = file_path.relative_to(root).as_posix()
+    except ValueError:
+        return None
+    if rel.startswith("assets/"):
+        rel = rel[len("assets/") :]
+    return "/app/static/" + rel
+
+
+def _picture(image: dict | None, *, decorative: bool = False, loading: str = "lazy") -> str:
+    src = _public_src(image.get("src")) if image else None
+    if not src:
+        label = (image or {}).get("alt") or "Image"
+        return _placeholder(label, decorative=decorative)
+    alt = "" if decorative else html.escape(image.get("alt") or "", quote=True)
+    width = int(image["width"])
+    height = int(image["height"])
+    return (
+        f'<img src="{html.escape(src, quote=True)}" alt="{alt}" '
+        f'width="{width}" height="{height}" loading="{loading}" decoding="async">'
+    )
+
+
 def _project_by_slug(slug: str) -> dict | None:
     for project in PROJECTS:
         if project["slug"] == slug:
@@ -81,7 +112,7 @@ def projects_index_html() -> str:
         rows.append(
             f'<a class="work-row" href="/{slug}" data-project-path="/{slug}">'
             f'<span class="work-thumb" style="--ph-fill:{fill}">'
-            f"{_placeholder('Image placeholder', decorative=True)}"
+            f"{_picture(project.get('thumb'), decorative=True, loading='eager')}"
             "</span>"
             f'<span class="work-row-title">{html.escape(project["title"])}</span>'
             f'<span class="work-row-dates">{html.escape(project["dates"])}</span>'
@@ -101,14 +132,16 @@ def project_detail_html(project: dict, index: int) -> str:
     slug = html.escape(project["slug"], quote=True)
     blocks = []
     paragraphs = project["paragraphs"]
+    frames = project.get("frames") or ()
     for step, text in enumerate(paragraphs):
         blocks.append(f'<p class="reveal">{html.escape(text)}</p>')
-        if step >= len(paragraphs) - 1:
+        if step >= len(frames):
             continue
+        frame = frames[step]
         blocks.append(
             '<figure class="work-frame reveal">'
             '<div class="work-print">'
-            f"{_placeholder('Image placeholder')}"
+            f"{_picture(frame)}"
             "</div></figure>"
         )
     return (
@@ -126,7 +159,7 @@ def project_detail_html(project: dict, index: int) -> str:
         f'<article class="work-column work-detail" style="--ph-fill:{fill}" data-project-path="/{slug}">'
         '<p class="work-backline"><a class="work-back" href="/projects">Projects</a></p>'
         f'<div class="work-hero" data-morph="hero" style="--ph-fill:{fill}">'
-        f"{_placeholder('Image placeholder')}"
+        f"{_picture(project.get('hero'), loading='eager')}"
         "</div>"
         f'<h1 class="work-title">{html.escape(project["title"])}</h1>'
         f'<p class="work-meta">{html.escape(project["role"])} · {html.escape(project["year"])}</p>'
@@ -161,7 +194,7 @@ def show_project(slug: str) -> None:
         "projects",
         project_detail_html(project, index),
         title=f"{project['title']} — Chase Rose",
-        description="Placeholder project page.",
+        description=project["paragraphs"][0],
     )
 
 
