@@ -1,4 +1,4 @@
-"""HTML for Home, Projects, and Resume, using the static site's class names."""
+"""HTML for Home, Projects, and Resume."""
 
 from __future__ import annotations
 
@@ -7,8 +7,6 @@ import html
 from portfolio.content import (
     INTRO,
     PROJECTS,
-    PROJECTS_KICKER,
-    PROJECTS_TITLE,
     QUOTES,
     RESUME_SECTIONS,
     RESUME_TITLE,
@@ -52,33 +50,119 @@ def show_home() -> None:
     render_page("home", main)
 
 
-def show_projects() -> None:
-    articles = []
-    for project in PROJECTS:
-        body = "".join(f"<p>{html.escape(text)}</p>" for text in project["paragraphs"])
-        articles.append(
-            '<article class="project reveal">'
-            '<div class="project-meta">'
-            f"<h2>{html.escape(project['title'])}</h2>"
-            f'<p class="role">{html.escape(project["role"])}</p>'
-            f'<a class="text-btn" href="{html.escape(project["href"], quote=True)}" '
-            'target="_blank" rel="noopener noreferrer">'
-            f'{html.escape(project["label"])}'
-            '<span class="sr-only"> (opens in a new tab)</span></a>'
-            "</div>"
-            f'<div class="project-body">{body}</div>'
-            "</article>"
+_FILLS = ("#eef1f4", "#f4f0ea", "#eef3f1")
+
+
+def _placeholder(label: str, decorative: bool = False) -> str:
+    name = html.escape(label)
+    if decorative:
+        return (
+            '<span class="ph" aria-hidden="true">'
+            '<span class="ph-label">Image</span></span>'
         )
-    main = (
-        '<main id="main"><div class="wrap">'
-        '<header class="page-head">'
-        f'<h1 class="page-title rise">{html.escape(PROJECTS_TITLE)}</h1>'
-        f'<p class="page-kicker rise d1">{html.escape(PROJECTS_KICKER)}</p>'
-        "</header>"
-        f'<div class="project-list">{"".join(articles)}</div>'
+    return (
+        f'<span class="ph" role="img" aria-label="{name}">'
+        '<span class="ph-label" aria-hidden="true">Image</span></span>'
+    )
+
+
+def _project_by_slug(slug: str) -> dict | None:
+    for project in PROJECTS:
+        if project["slug"] == slug:
+            return project
+    return None
+
+
+def projects_index_html() -> str:
+    rows = []
+    for index, project in enumerate(PROJECTS):
+        slug = html.escape(project["slug"], quote=True)
+        fill = _FILLS[index % len(_FILLS)]
+        rows.append(
+            f'<a class="work-row" href="/{slug}" data-project-path="/{slug}">'
+            f'<span class="work-thumb" style="--ph-fill:{fill}">'
+            f"{_placeholder('Image placeholder', decorative=True)}"
+            "</span>"
+            f'<span class="work-row-title">{html.escape(project["title"])}</span>'
+            f'<span class="work-row-dates">{html.escape(project["dates"])}</span>'
+            "</a>"
+        )
+    return (
+        '<main id="main">'
+        '<div class="work-column">'
+        '<h1 class="work-kicker">Projects</h1>'
+        f'<div class="work-list">{"".join(rows)}</div>'
         "</div></main>"
     )
-    render_page("projects", main)
+
+
+def project_detail_html(project: dict, index: int) -> str:
+    fill = _FILLS[index % len(_FILLS)]
+    slug = html.escape(project["slug"], quote=True)
+    blocks = []
+    paragraphs = project["paragraphs"]
+    for step, text in enumerate(paragraphs):
+        blocks.append(f'<p class="reveal">{html.escape(text)}</p>')
+        if step >= len(paragraphs) - 1:
+            continue
+        blocks.append(
+            '<figure class="work-frame reveal">'
+            '<div class="work-print">'
+            f"{_placeholder('Image placeholder')}"
+            "</div></figure>"
+        )
+    return (
+        "<main id=\"main\">"
+        "<script>"
+        "(function(){try{var raw=sessionStorage.getItem('project-morph');"
+        "if(!raw)return;"
+        "if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;"
+        "var data=JSON.parse(raw);"
+        "if(!data||data.path!==location.pathname)return;"
+        "if(typeof data.t==='number'&&Date.now()-data.t>15000)return;"
+        "document.documentElement.classList.add('project-morphing');"
+        "}catch(e){}})();"
+        "</script>"
+        f'<article class="work-column work-detail" style="--ph-fill:{fill}" data-project-path="/{slug}">'
+        '<p class="work-backline"><a class="work-back" href="/projects">Projects</a></p>'
+        f'<div class="work-hero" data-morph="hero" style="--ph-fill:{fill}">'
+        f"{_placeholder('Image placeholder')}"
+        "</div>"
+        f'<h1 class="work-title">{html.escape(project["title"])}</h1>'
+        f'<p class="work-meta">{html.escape(project["role"])} · {html.escape(project["year"])}</p>'
+        '<p class="work-linkline">'
+        f'<a class="work-link" href="{html.escape(project["href"], quote=True)}" '
+        'target="_blank" rel="noopener noreferrer">'
+        f'{html.escape(project["link_label"])}'
+        '<span class="sr-only"> (opens in a new tab)</span></a>'
+        "</p>"
+        f'<div class="work-story">{"".join(blocks)}</div>'
+        "</article></main>"
+    )
+
+
+def show_projects() -> None:
+    render_page("projects", projects_index_html())
+
+
+def show_project(slug: str) -> None:
+    project = _project_by_slug(slug)
+    if project is None:
+        missing = (
+            '<main id="main"><div class="work-column">'
+            '<p class="work-backline"><a class="work-back" href="/projects">Projects</a></p>'
+            "<p>This project placeholder is not in the list.</p>"
+            "</div></main>"
+        )
+        render_page("projects", missing, title="Projects — Chase Rose")
+        return
+    index = next(i for i, item in enumerate(PROJECTS) if item["slug"] == slug)
+    render_page(
+        "projects",
+        project_detail_html(project, index),
+        title=f"{project['title']} — Chase Rose",
+        description="Placeholder project page.",
+    )
 
 
 def show_resume() -> None:

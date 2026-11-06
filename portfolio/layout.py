@@ -34,21 +34,38 @@ def combined_css() -> str:
     return f"{FONT_IMPORT}\n{body}"
 
 
-def render_page(active: str, main_html: str) -> None:
+def render_page(
+    active: str,
+    main_html: str,
+    *,
+    title: str | None = None,
+    description: str | None = None,
+) -> None:
     # Style-only HTML is mounted outside the page body. A <style> tag inside
     # the page is stripped, and two separate style elements overwrite each other.
     st.html(f"<style>\n{combined_css()}\n</style>")
-    st.html(_document(active, main_html), unsafe_allow_javascript=True)
+    st.html(
+        _document(active, main_html, title=title, description=description),
+        unsafe_allow_javascript=True,
+    )
 
 
-def _document(active: str, main_html: str) -> str:
+def _document(
+    active: str,
+    main_html: str,
+    *,
+    title: str | None = None,
+    description: str | None = None,
+) -> str:
     page = PAGE_COPY[active]
+    title = title or page["title"]
+    description = description or page["description"]
     return (
         f'<a class="skip" href="#main">Skip to content</a>'
         f"{_header(active)}"
         f"{main_html}"
         f"{_footer()}"
-        f"{_script(page['title'], page['description'])}"
+        f"{_script(title, description)}"
     )
 
 
