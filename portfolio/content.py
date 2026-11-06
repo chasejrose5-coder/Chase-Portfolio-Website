@@ -37,14 +37,14 @@ PAGE_COPY = {
     },
     "resume": {
         "title": "Resume — Chase Rose",
-        "description": "Resume of Chase Rose. Education, experience, leadership, and skills.",
+        "description": "Resume of Chase Rose. Education, experience, and leadership.",
     },
 }
 
-TAGLINE = "Captain. Researcher. Builder. Chasing excellence on the track, the pitch, and beyond."
+TAGLINE = "Captain. Researcher. Builder."
 
 INTRO = (
-    "My name is Chase Rose. I am a senior at Bentley Upper School in Lafayette, CA. My primary focus is on entrepreneurship and leadership. I have served as a three-year captain of both the track & field and soccer teams. I have set school records in both the 400m and 800m, earned multiple All-League honors, and was named Team MVP in both sports. In the 2026 soccer season I was named League Offensive Player of the Year and BCL Championship MVP. Aside from sports, I participate in student government, paper research, and building programs to solve problems.",
+    "My name is Chase Rose. I am a senior at Bentley Upper School in Lafayette, CA. My primary focus is on entrepreneurship and leadership. I have served as a three-year captain of both the track & field and soccer teams. I have set school records in both the 400m and 800m, earned multiple All-League honors, and was named Team MVP in both sports as well as All-League MVP in the 2026 soccer season. Aside from sports, I participate in student government, paper research, and building programs to solve problems.",
     "I founded a local mobile detailing business, wrote a research thesis on West African soccer academies, and am currently building a runner training app named RIO. I care about leadership that is forward-thinking and intentional, whether that’s being part of a relay, managing a student store and its inventory, interviewing nationally recognized figures on stage, or organizing community service. I’m looking to carry that same standard into college and beyond.",
 )
 
@@ -52,6 +52,19 @@ QUOTES = (
     {
         "text": "I thought I’d solved a problem when really I was creating new ones by taking the path of least resistance.",
         "attribution": "David Goggins, Can’t Hurt Me: Master Your Mind and Defy the Odds",
+    },
+    {
+        "text": (
+            "Those times when you get up early and you work hard; those times when you stay up late "
+            "and you work hard; those times when you don’t feel like working, you’re too tired, you "
+            "don’t want to push yourself, but you do it anyway; that is actually the dream. That’s the "
+            "dream. It’s not the destination, it’s the journey."
+        ),
+        "attribution": "Kobe Bryant",
+    },
+    {
+        "text": "The mind is everything. What you think you become.",
+        "attribution": "Buddha",
     },
 )
 
@@ -224,7 +237,7 @@ RESUME_SECTIONS = (
                 "degree": "High School Diploma / College Preparatory Program",
                 "bullets": (
                     "3.92 unweighted / 4.42 weighted GPA",
-                    "SAT: 700 Reading and Writing · 780 Math",
+                    "SAT: 780 Math · 700 English",
                     "Selected coursework: AP Physics C: Mechanics, AP Calculus BC, AP Computer Science, AP Statistics, Honors Engineering, and additional honors courses",
                 ),
             },
@@ -238,7 +251,7 @@ RESUME_SECTIONS = (
                 "title": "Bentley Track & Field — Team Captain (Grades 10–12)",
                 "degree": None,
                 "bullets": (
-                    "Team MVP (2025–26); 2× All-League (400m, 4×100m); 400m/800m school record holder; North Coast Section (NCS) finalist",
+                    "Team MVP (2025–26); 2× All-League (400m, 4×100m); 400m/800m school record holder; NCS finalist",
                     "Led workouts, pacing, and relays as 3-year captain; 400m/800m specialist",
                 ),
             },
@@ -246,7 +259,7 @@ RESUME_SECTIONS = (
                 "title": "Bentley Soccer — Varsity Team Captain (Grades 10–12), Striker",
                 "degree": None,
                 "bullets": (
-                    "2026 League Offensive Player of the Year; 2026 Bay Counties League (BCL) Championship MVP; Team MVP (’24–’25); 2× All-League (’24, ’25); Phoenix Award (’23–’24)",
+                    "2026 League Offensive Player of the Year; 2026 BCL Championship MVP; Team MVP (’24–’25); 2× All-League (’24, ’25); Phoenix Award (’23–’24)",
                     "3-year captain",
                 ),
             },
@@ -297,28 +310,6 @@ RESUME_SECTIONS = (
                 "degree": None,
                 "bullets": (
                     "Assisted PTs with rehab setups, cleaning, and equipment prep; supported patient exercises under staff supervision.",
-                ),
-            },
-        ),
-    },
-    {
-        "id": "skills",
-        "heading": "Skills",
-        "entries": (
-            {
-                "title": None,
-                "degree": None,
-                "bullets": (
-                    "Leadership & Team Captaining",
-                    "Public Speaking / On-stage Moderation",
-                    "Event Organization & Campus Tours",
-                    "Student Store Operations / Basic Revenue Tracking",
-                    "Small Business Operations (scheduling, employees, marketing, equipment)",
-                    "Research Writing & Thesis Development",
-                    "Coding / App Development (workout algorithms, athlete data classification)",
-                    "Physiological & Training Knowledge (track/soccer)",
-                    "Inventory Management & Logistics",
-                    "Community Service & Rehabilitation patient support",
                 ),
             },
         ),
