@@ -352,6 +352,26 @@ a:focus-visible,
   padding-bottom: clamp(1rem, 3vw, 2rem);
 }
 
+.intro-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.15rem;
+  min-width: 0;
+}
+
+.home-portrait {
+  width: min(12.25rem, 100%);
+  margin: 0;
+  border: 1px solid rgba(141, 153, 174, 0.45);
+  background: #ffffff;
+}
+
+.home-portrait img {
+  width: 100%;
+  height: auto;
+}
+
 .intro-kicker {
   display: flex;
   align-items: center;
@@ -519,8 +539,25 @@ a:focus-visible,
   align-self: stretch;
 }
 
+.resume-contact {
+  margin: 0.9rem 0 0;
+  font-size: 0.98rem;
+}
+
+.resume-github {
+  color: #8d99ae;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.resume-github:hover,
+.resume-github:focus-visible {
+  color: #2b2d42;
+  border-bottom-color: #8d99ae;
+}
+
 @media (min-width: 861px) {
-  .resume-title h1 {
+  .resume-title {
     position: sticky;
     top: calc(var(--header) + 1.75rem);
   }
@@ -592,6 +629,14 @@ a:focus-visible,
   color: #1A1A2E;
   font-weight: 600;
   letter-spacing: -0.02em;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem 1.15rem;
+  margin: 0;
 }
 
 .site-footer a {
@@ -774,6 +819,9 @@ a:focus-visible,
 }
 
 .work-linkline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
   margin: 0.85rem 0 0;
 }
 
@@ -961,11 +1009,21 @@ html.work-leaving .work-column {
   }
 }
 
+@media (max-height: 740px) {
+  .home-portrait {
+    width: min(9.25rem, 38vw);
+  }
+}
+
 @media (max-width: 860px) {
   .intro,
   .project,
   .resume-layout {
     grid-template-columns: 1fr;
+  }
+
+  .home-portrait {
+    width: min(9.5rem, 46vw);
   }
 
   .project {
@@ -1036,6 +1094,10 @@ html.work-leaving .work-column {
   .footer-inner {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .footer-links {
+    justify-content: flex-start;
   }
 }
 

@@ -5,6 +5,8 @@ from __future__ import annotations
 import html
 
 from portfolio.content import (
+    GITHUB_PROFILE,
+    HOME_PORTRAIT,
     INTRO,
     PROJECTS,
     QUOTES,
@@ -16,8 +18,18 @@ from portfolio.content import (
 from portfolio.layout import ROOT, render_page
 
 
+def _external_link(href: str, label: str, class_name: str) -> str:
+    return (
+        f'<a class="{class_name}" href="{html.escape(href, quote=True)}" '
+        'target="_blank" rel="noopener noreferrer">'
+        f"{html.escape(label)}"
+        '<span class="sr-only"> (opens in a new tab)</span></a>'
+    )
+
+
 def show_home() -> None:
     paragraphs = "".join(f'<p class="reveal">{html.escape(text)}</p>' for text in INTRO)
+    portrait = _picture(HOME_PORTRAIT, loading="eager")
     quotes = []
     for quote in QUOTES:
         quotes.append(
@@ -36,9 +48,12 @@ def show_home() -> None:
         f'<p class="tagline rise d1">{html.escape(TAGLINE)}</p>'
         "</section>"
         '<section class="intro" aria-labelledby="intro-label">'
+        '<div class="intro-aside">'
+        f'<figure class="home-portrait">{portrait}</figure>'
         '<div class="intro-kicker reveal">'
         '<span class="rule" aria-hidden="true"></span>'
         '<span id="intro-label">Intro</span>'
+        "</div>"
         "</div>"
         f'<div class="intro-copy stagger">{paragraphs}</div>'
         "</section>"
@@ -69,11 +84,15 @@ def _placeholder(label: str, decorative: bool = False) -> str:
 def _public_src(path: str | None) -> str | None:
     """URL for a file in the app's static/ directory.
 
-    Streamlit serves that directory at ``<app-root>/app/static/``. Project
-    routes sit one segment under the app root (``/projects``, ``/rio``,
-    ``/prowash``), so a parent-relative URL still resolves when the app is
-    mounted under a prefix. A root-absolute ``/app/static/`` URL skips that
-    prefix and the image 404s.
+    Streamlit serves that directory at ``<app-root>/app/static/``. Each project
+    route is one path segment under the app root (``/projects``, ``/rio``,
+    ``/prowash``). A relative URL with no leading slash replaces that segment,
+    so it still points at the app root when the app is mounted under a prefix.
+
+    Community Cloud mounts the server at ``/~/+/``. From ``/~/+/projects``,
+    ``../app/static/...`` climbs out of that prefix and 404s. A root-absolute
+    ``/app/static/...`` skips the prefix the same way. ``app/static/...`` stays
+    inside it, and at a host root it still resolves to ``/app/static/...``.
     """
     if not path:
         return None
@@ -86,7 +105,7 @@ def _public_src(path: str | None) -> str | None:
         rel = file_path.relative_to(static_root).as_posix()
     except ValueError:
         return None
-    return "../app/static/" + rel
+    return "app/static/" + rel
 
 
 def _picture(image: dict | None, *, decorative: bool = False, loading: str = "lazy") -> str:
@@ -170,10 +189,8 @@ def project_detail_html(project: dict, index: int) -> str:
         f'<h1 class="work-title">{html.escape(project["title"])}</h1>'
         f'<p class="work-meta">{html.escape(project["role"])} · {html.escape(project["year"])}</p>'
         '<p class="work-linkline">'
-        f'<a class="work-link" href="{html.escape(project["href"], quote=True)}" '
-        'target="_blank" rel="noopener noreferrer">'
-        f'{html.escape(project["link_label"])}'
-        '<span class="sr-only"> (opens in a new tab)</span></a>'
+        f'{_external_link(project["href"], project["link_label"], "work-link")}'
+        f'{_external_link(project["code_href"], project["code_label"], "work-link")}'
         "</p>"
         f'<div class="work-story">{"".join(blocks)}</div>'
         "</article></main>"
@@ -236,6 +253,9 @@ def show_resume() -> None:
         '<main id="main"><div class="wrap resume-layout">'
         '<div class="resume-title">'
         f'<h1 class="page-title rise">{html.escape(RESUME_TITLE)}</h1>'
+        '<p class="resume-contact">'
+        f'{_external_link(GITHUB_PROFILE, "github.com/chasejrose5-coder", "resume-github")}'
+        "</p>"
         "</div>"
         f'<div class="resume-sections">{"".join(sections)}</div>'
         "</div></main>"

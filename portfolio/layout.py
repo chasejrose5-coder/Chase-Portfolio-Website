@@ -8,7 +8,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from portfolio.content import EMAIL, NAME, PAGE_COPY
+from portfolio.content import EMAIL, GITHUB_PROFILE, NAME, PAGE_COPY
 
 ROOT = Path(__file__).resolve().parent.parent
 CSS_FILES = (ROOT / "css" / "styles.css", ROOT / "css" / "streamlit.css")
@@ -93,11 +93,16 @@ def _header(active: str) -> str:
 
 def _footer() -> str:
     email = html.escape(EMAIL)
+    github = html.escape(GITHUB_PROFILE, quote=True)
     return (
         '<footer class="site-footer">'
         '<div class="wrap footer-inner">'
         f'<p class="footer-name">{html.escape(NAME)}</p>'
+        '<p class="footer-links">'
         f'<a href="mailto:{email}">{email}</a>'
+        f'<a href="{github}" target="_blank" rel="noopener noreferrer">GitHub'
+        '<span class="sr-only"> (opens in a new tab)</span></a>'
+        "</p>"
         "</div>"
         "</footer>"
     )
