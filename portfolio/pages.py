@@ -197,7 +197,23 @@ def project_detail_html(project: dict, index: int) -> str:
         f'{_external_link(project["code_href"], project["code_label"], "work-link")}'
         "</p>"
         f'<div class="work-story">{"".join(blocks)}</div>'
+        f"{_ahead_html(project)}"
         "</article></main>"
+    )
+
+
+def _ahead_html(project: dict) -> str:
+    ahead = project.get("ahead")
+    if not ahead:
+        return ""
+    slug = html.escape(project["slug"], quote=True)
+    items = "".join(f"<li>{html.escape(item)}</li>" for item in ahead["items"])
+    return (
+        f'<section class="work-ahead" aria-labelledby="{slug}-ahead">'
+        f'<h2 id="{slug}-ahead">{html.escape(ahead["title"])}</h2>'
+        f'<p>{html.escape(ahead["lead"])}</p>'
+        f"<ul>{items}</ul>"
+        "</section>"
     )
 
 
