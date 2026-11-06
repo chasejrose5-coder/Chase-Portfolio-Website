@@ -275,8 +275,8 @@ a:focus-visible,
    ------------------------------------------------------------ */
 
 .hero {
-  padding-top: clamp(3.75rem, 10vw, 7.5rem);
-  padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  padding-top: clamp(2.25rem, 6vh, 6.25rem);
+  padding-bottom: clamp(1.5rem, 3.5vh, 3.25rem);
 }
 
 .hero h1,
@@ -295,8 +295,9 @@ a:focus-visible,
   letter-spacing: -0.02em;
 }
 
-/* First screen holds the hero and intro. Quotes start after it.
-   The arrow sits low on that screen and fades on scroll. */
+/* First screen holds the hero and intro. Quotes start after the fold.
+   The arrow is pinned to the viewport, not the fold, so a long intro
+   cannot push it below the first screen. It fades on scroll. */
 .home-fold {
   min-height: calc(100vh - var(--header));
   min-height: calc(100svh - var(--header));
@@ -305,18 +306,38 @@ a:focus-visible,
 }
 
 .scroll-hint {
-  align-self: center;
-  margin-top: auto;
-  margin-bottom: clamp(2.5rem, 8vh, 4.5rem);
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  bottom: clamp(1rem, 3.5vh, 2rem);
+  margin: 0;
   color: #8D99AE;
   font-family: "Inter Tight", Inter, "Segoe UI", system-ui, sans-serif;
   font-size: 1.55rem;
   font-weight: 400;
   line-height: 1;
+  text-align: center;
   font-variant-emoji: text;
   pointer-events: none;
   user-select: none;
   transition: opacity 0.45s var(--ease);
+}
+
+/* On short or narrow screens the intro still reaches the pinned arrow.
+   A full-width fade keeps the mark clear, and it leaves with the arrow. */
+@media (max-width: 860px), (max-height: 740px) {
+  .scroll-hint::before {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 6.25rem;
+    background: linear-gradient(to top, #ffffff 0 62%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+  }
 }
 
 .scroll-hint.is-away {
@@ -587,15 +608,15 @@ a:focus-visible,
 }
 
 /* Projects
-   Quiet index rows and a wide detail column.
+   Quiet index rows and a diary-scale detail column.
    Home and resume keep the rules above.
    ------------------------------------------------------------ */
 
 .work-column {
-  width: min(68rem, calc(100% - 4rem));
+  width: min(45rem, calc(100% - 2.5rem));
   margin-inline: auto;
-  padding-top: clamp(3.25rem, 8vw, 5.25rem);
-  padding-bottom: 1.5rem;
+  padding-top: clamp(2.25rem, 5vw, 3.5rem);
+  padding-bottom: 1.25rem;
   transition: filter 0.32s var(--ease), opacity 0.32s var(--ease);
 }
 
@@ -616,8 +637,8 @@ a:focus-visible,
 .work-row {
   display: flex;
   align-items: center;
-  gap: 1.35rem;
-  padding: 0.95rem 0.1rem;
+  gap: 0.85rem;
+  padding: 0.5rem 0;
   color: #1A1A2E;
   text-decoration: none;
 }
@@ -646,7 +667,7 @@ a:focus-visible,
 
 .work-thumb {
   flex: none;
-  width: 8.75rem;
+  width: 5.5rem;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border: 1px solid rgba(141, 153, 174, 0.45);
@@ -711,6 +732,7 @@ a:focus-visible,
 }
 
 .work-hero {
+  width: min(100%, 30rem);
   border: 1px solid rgba(141, 153, 174, 0.45);
   background: #FFFFFF;
 }
@@ -720,9 +742,9 @@ a:focus-visible,
 }
 
 .work-title {
-  margin: 1.7rem 0 0;
+  margin: 1.15rem 0 0;
   color: #1A1A2E;
-  font-size: clamp(1.9rem, 4vw, 2.35rem);
+  font-size: clamp(1.65rem, 3vw, 2.05rem);
   font-weight: 500;
   font-style: italic;
   letter-spacing: -0.03em;
@@ -756,12 +778,12 @@ a:focus-visible,
 .work-story {
   display: flex;
   flex-direction: column;
-  gap: 2.15rem;
-  padding-top: 2.35rem;
+  gap: 1.35rem;
+  padding-top: 1.55rem;
 }
 
 .work-story p {
-  max-width: 46rem;
+  max-width: 40rem;
   color: #1A1A2E;
   font-size: 0.94rem;
   letter-spacing: -0.015em;
@@ -769,7 +791,7 @@ a:focus-visible,
 }
 
 .work-frame {
-  width: 100%;
+  width: min(100%, 30rem);
   margin: 0;
 }
 
@@ -817,11 +839,11 @@ html.work-leaving .work-column {
 
 @media (max-width: 720px) {
   .work-column {
-    width: min(68rem, calc(100% - 1.5rem));
+    width: min(45rem, calc(100% - 1.5rem));
   }
 
   .work-thumb {
-    width: 5.75rem;
+    width: 4.25rem;
   }
 
   .work-row {
