@@ -107,14 +107,6 @@ PROJECTS = (
             "It connects to Strava, scores the session after a planned hard day, and Home shows where the season stands.",
             "I’m still shipping it while I train. The product and the training move together.",
         ),
-        "mobile_preview": {
-            "src": "assets/projects/rio/phone.webp",
-            "alt": "RIO Start session screen, cropped inside a phone frame",
-            "width": 700,
-            "height": 893,
-            "kicker": "Mobile preview",
-            "note": "Coming to mobile. This is the Start session screen, cropped into a phone. Not shipped, and not on the App Store.",
-        },
     },
     {
         "slug": "prowash",

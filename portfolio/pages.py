@@ -127,21 +127,6 @@ def projects_index_html() -> str:
     )
 
 
-def _mobile_preview(preview: dict) -> str:
-    return (
-        '<figure class="phone-preview reveal">'
-        "<figcaption>"
-        f'<p class="phone-kicker">{html.escape(preview["kicker"])}</p>'
-        f'<p class="phone-note">{html.escape(preview["note"])}</p>'
-        "</figcaption>"
-        '<div class="phone">'
-        '<div class="phone-screen">'
-        '<span class="phone-island" aria-hidden="true"></span>'
-        f"{_picture(preview)}"
-        "</div></div></figure>"
-    )
-
-
 def project_detail_html(project: dict, index: int) -> str:
     fill = _FILLS[index % len(_FILLS)]
     slug = html.escape(project["slug"], quote=True)
@@ -185,7 +170,6 @@ def project_detail_html(project: dict, index: int) -> str:
         '<span class="sr-only"> (opens in a new tab)</span></a>'
         "</p>"
         f'<div class="work-story">{"".join(blocks)}</div>'
-        f"{_mobile_preview(project['mobile_preview']) if project.get('mobile_preview') else ''}"
         "</article></main>"
     )
 

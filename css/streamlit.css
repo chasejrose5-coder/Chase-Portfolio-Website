@@ -111,17 +111,8 @@ section.main {
 
 [data-testid="stHtml"] .work-thumb img,
 [data-testid="stHtml"] .work-hero img,
-[data-testid="stHtml"] .work-print img,
-[data-testid="stHtml"] .phone-screen img {
+[data-testid="stHtml"] .work-print img {
   max-width: 100%;
-}
-
-[data-testid="stHtml"] .phone {
-  border-radius: 2.15rem;
-}
-
-[data-testid="stHtml"] .phone-screen {
-  border-radius: 1.65rem;
 }
 
 [data-testid="stHtml"] .hero h1,
