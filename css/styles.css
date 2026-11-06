@@ -361,7 +361,7 @@ a:focus-visible,
 }
 
 .home-portrait {
-  width: min(22rem, 100%);
+  width: min(23.5rem, 100%);
   margin: 0;
   border: 1px solid rgba(141, 153, 174, 0.45);
   background: #ffffff;
@@ -1068,7 +1068,7 @@ html.work-leaving .work-column {
 
 @media (max-height: 740px) {
   .home-portrait {
-    width: min(16rem, 70vw);
+    width: min(17rem, 72vw);
   }
 }
 
@@ -1080,7 +1080,7 @@ html.work-leaving .work-column {
   }
 
   .home-portrait {
-    width: min(18rem, 78vw);
+    width: min(19.25rem, 80vw);
   }
 
   .project {
