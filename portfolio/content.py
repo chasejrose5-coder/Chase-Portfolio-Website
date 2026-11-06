@@ -9,6 +9,15 @@ from __future__ import annotations
 
 NAME = "Chase Rose"
 EMAIL = "Chasejrose5@gmail.com"
+GITHUB_PROFILE = "https://github.com/chasejrose5-coder"
+
+# Chase's own portrait. Served from static/ like the project screenshots.
+HOME_PORTRAIT = {
+    "src": "static/home/chase-home-photo.jpg",
+    "alt": "Chase Rose in a tuxedo on a boat at night, with the San Francisco skyline and a bridge behind him",
+    "width": 3448,
+    "height": 3389,
+}
 
 PAGE_COPY = {
     "home": {
@@ -64,6 +73,8 @@ PROJECTS = (
         "year": "2025–Present",
         "href": "https://riotraining.streamlit.app",
         "link_label": "Open RIO",
+        "code_href": "https://github.com/chasejrose5-coder/rio",
+        "code_label": "GitHub",
         "thumb": {
             "src": "static/projects/rio/thumb.webp",
             "alt": "RIO splash screen",
@@ -117,6 +128,8 @@ PROJECTS = (
         "year": "Present",
         "href": "https://prowash.streamlit.app",
         "link_label": "Open ProWash",
+        "code_href": "https://github.com/chasejrose5-coder/prowash-site",
+        "code_label": "GitHub",
         "thumb": {
             "src": "static/projects/prowash/thumb.webp",
             "alt": "ProWash & Detail Co.",
