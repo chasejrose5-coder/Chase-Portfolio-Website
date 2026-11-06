@@ -168,20 +168,20 @@ PROJECTS = (
             {
                 "src": "static/projects/prowash/book.jpg",
                 "alt": "ProWash booking form",
-                "width": 1439,
-                "height": 1874,
+                "width": 1423,
+                "height": 1838,
             },
             {
                 "src": "static/projects/prowash/calendar.jpg",
                 "alt": "Open appointment times, Saturday November 7 through Thursday November 12",
-                "width": 1600,
-                "height": 1090,
+                "width": 1420,
+                "height": 1300,
             },
             {
                 "src": "static/projects/prowash/staff.jpg",
                 "alt": "Staff appointments for Mason, Luke, Noah, and Chase",
-                "width": 1440,
-                "height": 1785,
+                "width": 1424,
+                "height": 1656,
             },
         ),
         "paragraphs": (
