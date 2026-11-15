@@ -79,7 +79,7 @@ PROJECTS = (
         "role": "Founder",
         "year": "Early 2026 – Present",
         "blurb": "An 800m training app that adapts the plan to what you actually run.",
-        "href": "https://riotraining.streamlit.app",
+        "href": "https://www.riorunning.com",
         "link_label": "Open RIO",
         "code_href": "https://github.com/chasejrose5-coder/rio",
         "code_label": "GitHub",
