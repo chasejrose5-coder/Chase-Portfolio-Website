@@ -164,6 +164,14 @@ KOBE_CREDIT = "Kobe Bryant, 2009 (reference photo)"
 USATF_CAPTION = "Met a gold medalist. Asked for tips. Got a photo."
 WORLD_CUP_CAPTION = "South Africa on my face, the World Cup trophy beside me. The thesis was the version with footnotes."
 DRIBBLE_CAPTION = "Number 5. Bentley black and gold."
+GOAL_TITLE = "The goal"
+GOAL_CAPTION = "Eleven crossed it. I hit it out of the air."
+ASSIST_TITLE = "The assist"
+ASSIST_CAPTION = "Right wing. Low cross. He finished it."
+GOAL_VIDEO = "static/meet/goal-loop.mp4"
+GOAL_POSTER = "static/meet/goal-poster.webp"
+ASSIST_VIDEO = "static/meet/assist-loop.mp4"
+ASSIST_POSTER = "static/meet/assist-poster.webp"
 
 def _variants(name, widths, kind):
     return tuple(

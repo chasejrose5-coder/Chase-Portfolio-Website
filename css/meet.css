@@ -1867,6 +1867,7 @@ body {
 .baton-pass,
 .race-go,
 .finish-skip,
+.clip-sound,
 #gun-fire {
   font-family: Anton, Impact, sans-serif;
   letter-spacing: 0.06em;
@@ -1879,6 +1880,7 @@ body {
 .baton-pass,
 .race-go,
 .finish-skip,
+.clip-sound,
 #gun-fire {
   border: 2px solid #fff;
   border-radius: var(--radius);
@@ -1998,6 +2000,29 @@ body {
 }
 
 .infield-copy .pitch { height: 6.5rem; border-radius: var(--radius); }
+
+.match-clip { display: grid; gap: var(--space-2); justify-items: center; }
+.match-clip h3 { margin: 0; }
+.match-clip video {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 26vh;
+  object-fit: contain;
+  background: #14120f;
+  border-radius: var(--radius);
+}
+.infield-copy .clip-sound {
+  width: auto;
+  padding-inline: var(--space-4);
+  border-color: #14120f;
+  color: #14120f;
+  background: transparent;
+}
+.infield-copy .clip-sound[aria-pressed="true"] {
+  background: #14120f;
+  color: #fff;
+}
 
 .infield-copy .recreate-me img { max-height: 22vh; }
 

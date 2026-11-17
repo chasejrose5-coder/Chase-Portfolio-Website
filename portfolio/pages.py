@@ -18,8 +18,16 @@ from portfolio.content import (
     COMING_SOON_LABEL,
     CONTACT_HEADING,
     CURSOR_PACE_LABEL,
+    ASSIST_CAPTION,
+    ASSIST_POSTER,
+    ASSIST_TITLE,
+    ASSIST_VIDEO,
     DRIBBLE,
     DRIBBLE_CAPTION,
+    GOAL_CAPTION,
+    GOAL_POSTER,
+    GOAL_TITLE,
+    GOAL_VIDEO,
     EMAIL,
     CONTACT_LEAD,
     FALSE_START,
@@ -411,6 +419,10 @@ def home_main_html() -> str:
             photo = (
                 f'<figure class="field-photo">{_picture(DRIBBLE)}'
                 f"<figcaption>{html.escape(DRIBBLE_CAPTION)}</figcaption></figure>"
+                + _match_clip("goal-clip", GOAL_TITLE, GOAL_CAPTION, GOAL_VIDEO, GOAL_POSTER, 960, 540,
+                              "Chase Rose, number 5 in a dark blue away kit, scoring from a cross by number 11")
+                + _match_clip("assist-clip", ASSIST_TITLE, ASSIST_CAPTION, ASSIST_VIDEO, ASSIST_POSTER, 960, 718,
+                              "Chase Rose, number 5 in a dark blue away kit, beating a defender on the right wing and crossing for a teammate to score")
             )
         columns.append(
             '<article class="field-card reveal">'
@@ -586,6 +598,24 @@ def _photo_stories() -> str:
         f"{_figure(LOCKER, RECREATE_CAPTION, 'recreate-me')}"
         f"{_figure(KOBE, KOBE_CREDIT, 'recreate-ref')}"
         "</div></div>"
+    )
+
+
+def _match_clip(clip_id: str, title: str, caption: str, video: str, poster: str, width: int, height: int, label: str) -> str:
+    src = _public_src(video) or ""
+    poster_url = _public_src(poster) or ""
+    return (
+        f'<figure class="match-clip">'
+        f"<h3>{html.escape(title)}</h3>"
+        f'<video id="{html.escape(clip_id, quote=True)}" muted loop playsinline controls preload="none" '
+        f'data-src="{html.escape(src, quote=True)}" '
+        f'poster="{html.escape(poster_url, quote=True)}" '
+        f'width="{width}" height="{height}" '
+        f'aria-label="{html.escape(label, quote=True)}"></video>'
+        f'<button type="button" class="clip-sound" aria-pressed="false" '
+        f'aria-controls="{html.escape(clip_id, quote=True)}">Sound off</button>'
+        f"<figcaption>{html.escape(caption)}</figcaption>"
+        "</figure>"
     )
 
 

@@ -413,6 +413,31 @@
         reel.pause();
       }
     }
+    syncMatchClips();
+  }
+
+  function syncMatchClips() {
+    var field = document.getElementById("track-field");
+    var on = field && field.classList.contains("is-shown");
+    var clips = document.querySelectorAll(".match-clip video");
+    for (var i = 0; i < clips.length; i++) {
+      var video = clips[i];
+      if (on && !video.getAttribute("src") && video.dataset.src) video.src = video.dataset.src;
+      if (reduce || !on) {
+        video.pause();
+        if (!on) video.muted = true;
+      } else {
+        var started = video.play();
+        if (started && started.catch) started.catch(function () {});
+      }
+    }
+    if (!on) {
+      var buttons = document.querySelectorAll(".clip-sound");
+      for (var b = 0; b < buttons.length; b++) {
+        buttons[b].setAttribute("aria-pressed", "false");
+        buttons[b].textContent = "Sound off";
+      }
+    }
   }
 
   var pending = false;
@@ -436,6 +461,28 @@
     document.addEventListener("chase-beat", function (event) {
       scrollToBeat(event.detail);
     });
+    var soundButtons = document.querySelectorAll(".clip-sound");
+    for (var s = 0; s < soundButtons.length; s++) {
+      soundButtons[s].addEventListener("click", function () {
+        var video = document.getElementById(this.getAttribute("aria-controls"));
+        if (!video) return;
+        var turningOn = video.muted;
+        var all = document.querySelectorAll(".match-clip video");
+        var allButtons = document.querySelectorAll(".clip-sound");
+        for (var i = 0; i < all.length; i++) all[i].muted = true;
+        for (var j = 0; j < allButtons.length; j++) {
+          allButtons[j].setAttribute("aria-pressed", "false");
+          allButtons[j].textContent = "Sound off";
+        }
+        if (turningOn) {
+          video.muted = false;
+          this.setAttribute("aria-pressed", "true");
+          this.textContent = "Sound on";
+          var started = video.play();
+          if (started && started.catch) started.catch(function () {});
+        }
+      });
+    }
     frame();
   }
 
