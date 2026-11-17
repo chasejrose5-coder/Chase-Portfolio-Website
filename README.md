@@ -1,6 +1,6 @@
 # Chase Rose
 
-Personal portfolio, run as a Streamlit app. Home, Projects, and Resume use the copy and layout from the static site.
+Personal portfolio, run as a Streamlit app. Home, Projects, and Resume use the copy and layout from the static site. Home opens with a starting gun, then the same page, plus a ball you can push.
 
 ## Run locally
 

@@ -5,15 +5,30 @@ from __future__ import annotations
 import html
 
 from portfolio.content import (
+    COMING_SOON,
+    FUN_FACTS,
+    FUN_HEADING,
     GITHUB_PROFILE,
     HOME_PORTRAIT,
     INTRO,
+    LEAN_CAPTION,
+    LEAN_STILL,
+    LEAN_VIDEO,
+    NAME,
+    NOTICE,
+    NOTICE_HEADING,
+    ORIGIN,
+    ORIGIN_HEADING,
     PROJECTS,
     QUOTES,
+    REMEMBER,
+    REMEMBER_LABEL,
     RESUME_SECTIONS,
     RESUME_TITLE,
+    STORIES,
+    STORIES_HEADING,
     TAGLINE,
-    NAME,
+    YOUNG_STORY,
 )
 from portfolio.layout import PORTFOLIO_PATH_JS, ROOT, render_page
 
@@ -27,9 +42,64 @@ def _external_link(href: str, label: str, class_name: str) -> str:
     )
 
 
+def _soon(text: str) -> str:
+    return (
+        '<p class="soon-note">'
+        f'<span class="soon-label">{html.escape(COMING_SOON)}</span>'
+        f"{html.escape(text)}</p>"
+    )
+
+
+def _gun_gate() -> str:
+    return (
+        '<div class="start-gun" id="start-gun" role="dialog" aria-modal="true" '
+        'aria-labelledby="gun-title">'
+        "<script>document.documentElement.classList.add('gun-held');</script>"
+        '<div class="gun-backdrop"></div>'
+        '<canvas class="gun-smoke" id="gun-smoke" aria-hidden="true"></canvas>'
+        '<div class="gun-stage">'
+        '<p class="gun-kicker" id="gun-title">On your marks</p>'
+        '<button class="gun-fire" id="gun-fire" type="button">Go</button>'
+        '<p class="gun-hint">Click, or press Enter.</p>'
+        "</div></div>"
+    )
+
+
+def _lean_dialog() -> str:
+    video = _public_src(LEAN_VIDEO) or ""
+    poster = _public_src(LEAN_STILL["src"]) or ""
+    return (
+        '<dialog class="lean-dialog" id="lean-dialog" aria-labelledby="lean-caption">'
+        '<button class="lean-close" type="button" id="lean-close">Close</button>'
+        f'<video id="lean-video" loop muted playsinline controls preload="none" '
+        f'poster="{html.escape(poster, quote=True)}" '
+        f'width="{LEAN_STILL["width"]}" height="{LEAN_STILL["height"]}">'
+        f'<source src="{html.escape(video, quote=True)}" type="video/mp4">'
+        "</video>"
+        f'<p id="lean-caption">{html.escape(LEAN_CAPTION)}</p>'
+        "</dialog>"
+    )
+
+
+def _ball() -> str:
+    return (
+        '<div class="kick-ball" id="kick-ball" aria-hidden="true">'
+        '<svg viewBox="0 0 64 64" focusable="false">'
+        '<circle cx="32" cy="32" r="30" fill="#f7f7f8" stroke="#1A1A2E" stroke-width="1.5"/>'
+        '<polygon points="32,14 40,26 37,40 27,40 24,26" fill="#1A1A2E"/>'
+        '<path d="M32 14 L18 20 M32 14 L46 20 M24 26 L12 30 M40 26 L52 30 '
+        'M27 40 L16 46 M37 40 L48 46 M27 40 L32 54 M37 40 L32 54" '
+        'fill="none" stroke="#1A1A2E" stroke-width="1.2"/>'
+        "</svg></div>"
+    )
+
+
 def show_home() -> None:
     paragraphs = "".join(f'<p class="reveal">{html.escape(text)}</p>' for text in INTRO)
+    origin = "".join(f"<p>{html.escape(text)}</p>" for text in ORIGIN)
     portrait = _picture(HOME_PORTRAIT, loading="eager")
+    facts = "".join(f"<li>{_soon(text)}</li>" for text in FUN_FACTS)
+    stories = "".join(f"<li>{_soon(text)}</li>" for text in STORIES)
     quotes = []
     for quote in QUOTES:
         quotes.append(
@@ -46,6 +116,13 @@ def show_home() -> None:
         '<section class="hero">'
         f'<h1 class="rise">{html.escape(NAME)}</h1>'
         f'<p class="tagline rise d1">{html.escape(TAGLINE)}</p>'
+        '<p class="remember rise d1">'
+        f'<span class="remember-label">{html.escape(REMEMBER_LABEL)}</span>'
+        f"{html.escape(REMEMBER)}</p>"
+        '<button class="lean-mark" id="lean-mark" type="button" '
+        'aria-haspopup="dialog" aria-controls="lean-dialog">'
+        '<span class="lean-tape" aria-hidden="true"></span>'
+        "The lean</button>"
         "</section>"
         '<section class="intro" aria-labelledby="intro-label">'
         '<div class="intro-aside">'
@@ -59,10 +136,31 @@ def show_home() -> None:
         "</section>"
         '<div class="scroll-hint" aria-hidden="true">&#8595;</div>'
         "</div>"
+        '<div class="home-more">'
+        f'<section class="origin" aria-labelledby="origin-heading">'
+        f'<h2 id="origin-heading">{html.escape(ORIGIN_HEADING)}</h2>'
+        f'<div class="origin-copy">{origin}</div>'
+        f"{_soon(YOUNG_STORY)}"
+        "</section>"
+        f'<section aria-labelledby="notice-heading">'
+        f'<h2 id="notice-heading">{html.escape(NOTICE_HEADING)}</h2>'
+        f"{_soon(NOTICE)}"
+        "</section>"
+        f'<section aria-labelledby="facts-heading">'
+        f'<h2 id="facts-heading">{html.escape(FUN_HEADING)}</h2>'
+        f'<ul class="plain-list">{facts}</ul>'
+        "</section>"
+        f'<section aria-labelledby="stories-heading">'
+        f'<h2 id="stories-heading">{html.escape(STORIES_HEADING)}</h2>'
+        f'<ul class="plain-list">{stories}</ul>'
+        "</section>"
+        "</div>"
         f'<section class="quotes stagger" aria-label="Quotes">{"".join(quotes)}</section>'
         "</div></main>"
+        + _ball()
+        + _lean_dialog()
     )
-    render_page("home", main)
+    render_page("home", main, before=_gun_gate())
 
 
 _FILLS = ("#eef1f4", "#f4f0ea", "#eef3f1")

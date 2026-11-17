@@ -11,8 +11,13 @@ import streamlit as st
 from portfolio.content import EMAIL, GITHUB_PROFILE, NAME, PAGE_COPY
 
 ROOT = Path(__file__).resolve().parent.parent
-CSS_FILES = (ROOT / "css" / "styles.css", ROOT / "css" / "streamlit.css")
+CSS_FILES = (
+    ROOT / "css" / "styles.css",
+    ROOT / "css" / "streamlit.css",
+    ROOT / "css" / "light.css",
+)
 MAIN_JS = ROOT / "js" / "main.js"
+LIGHT_JS = ROOT / "js" / "light.js"
 FONT_IMPORT = (
     '@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:'
     'ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap");'
@@ -55,12 +60,15 @@ def render_page(
     *,
     title: str | None = None,
     description: str | None = None,
+    before: str = "",
 ) -> None:
     # Style-only HTML is mounted outside the page body. A <style> tag inside
     # the page is stripped, and two separate style elements overwrite each other.
+    # `before` is the starting-gun gate. It leads the document so it covers
+    # the page on the first paint.
     st.html(f"<style>\n{combined_css()}\n</style>")
     st.html(
-        _document(active, main_html, title=title, description=description),
+        before + _document(active, main_html, title=title, description=description),
         unsafe_allow_javascript=True,
     )
 
@@ -161,4 +169,5 @@ def _script(title: str, description: str) -> str:
     }})();
     """
     main = MAIN_JS.read_text(encoding="utf-8")
-    return f"<script>{boot}\n{main}</script>"
+    light = LIGHT_JS.read_text(encoding="utf-8") if LIGHT_JS.is_file() else ""
+    return f"<script>{boot}\n{main}\n{light}</script>"

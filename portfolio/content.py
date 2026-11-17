@@ -37,16 +37,52 @@ PAGE_COPY = {
     },
     "resume": {
         "title": "Resume — Chase Rose",
-        "description": "Resume of Chase Rose. Education, experience, and leadership.",
+        "description": "Resume of Chase Rose. Leadership, projects, and the rest of what he does.",
     },
 }
 
 TAGLINE = "Captain. Researcher. Builder."
 
 INTRO = (
-    "My name is Chase Rose. I am a senior at Bentley Upper School in Lafayette, CA. My primary focus is on entrepreneurship and leadership. I have served as a three-year captain of both the track & field and soccer teams. I have set school records in both the 400m and 800m, earned multiple All-League honors, and was named Team MVP in both sports as well as All-League MVP in the 2026 soccer season. Aside from sports, I participate in student government, paper research, and building programs to solve problems.",
-    "I founded a local mobile detailing business, wrote a research thesis on West African soccer academies, and am currently building a runner training app named RIO. I care about leadership that is forward-thinking and intentional, whether that’s being part of a relay, managing a student store and its inventory, interviewing nationally recognized figures on stage, or organizing community service. I’m looking to carry that same standard into college and beyond.",
+    "I'm Chase Rose, a senior at Bentley Upper School in Lafayette. I've captained the track team and the soccer team for three years. I hold the school records in the 400 and the 800, I've been All-League more than once, and I was Team MVP in both. In 2026 I was League Offensive Player of the Year and BCL Championship MVP.",
+    "I also started ProWash, a detailing business, with a crew of three. I wrote a thesis on West African soccer academies and picked up a JRP Honorable Mention. Right now I'm building RIO, a training app, in the middle of my own season. I run the student store, and I've interviewed people on stage in front of the school.",
 )
+
+REMEMBER_LABEL = "What I want you to remember"
+REMEMBER = "I want something of my own to be good at, and I want to be the one steering it."
+
+ORIGIN_HEADING = "Where it started"
+ORIGIN = (
+    "Running is the thing I've always been good at. Everyone I knew had their own niche, and being good at something is what made me feel like I fit in.",
+    "Building started the same way. I wanted something to show for myself that I'd be proud of. I also want to be in control of where my life goes, so I make my own things.",
+)
+YOUNG_STORY = "A story from when I was young."
+
+NOTICE_HEADING = "What people notice"
+NOTICE = "What I'm really good at, and what people find interesting about me."
+
+FUN_HEADING = "Fun facts"
+FUN_FACTS = (
+    "A fun fact goes here.",
+    "Another one goes here.",
+    "One more goes here.",
+)
+
+STORIES_HEADING = "Stories"
+STORIES = (
+    "A crazy story goes here.",
+    "A fun story goes here.",
+)
+COMING_SOON = "Coming soon"
+
+LEAN_CAPTION = "Leaned so hard the track had to catch me."
+LEAN_VIDEO = "static/easter/400m-fall-loop.mp4"
+LEAN_STILL = {
+    "src": "static/easter/400m-fall-still.jpg",
+    "alt": "Chase Rose leaning through the finish of a 400 and tumbling across the line",
+    "width": 1080,
+    "height": 1920,
+}
 
 QUOTES = (
     {
@@ -227,21 +263,6 @@ PROJECTS = (
 RESUME_TITLE = "Resume"
 
 RESUME_SECTIONS = (
-    {
-        "id": "education",
-        "heading": "Education",
-        "entries": (
-            {
-                "title": "Bentley Upper School, Lafayette, CA — Class of 2027",
-                "degree": "High School Diploma / College Preparatory Program",
-                "bullets": (
-                    "3.92 unweighted / 4.42 weighted GPA",
-                    "SAT: 780 Math · 700 English",
-                    "Selected coursework: AP Physics C: Mechanics, AP Calculus BC, AP Computer Science, AP Statistics, Honors Engineering, and additional honors courses",
-                ),
-            },
-        ),
-    },
     {
         "id": "leadership",
         "heading": "Leadership & Extracurriculars",
