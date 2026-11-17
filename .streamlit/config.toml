@@ -8,16 +8,16 @@ toolbarMode = "minimal"
 gatherUsageStats = false
 
 [theme]
-base = "light"
-primaryColor = "#8D99AE"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#FFFFFF"
-textColor = "#1A1A2E"
-linkColor = "#8D99AE"
-borderColor = "#8D99AE"
+base = "dark"
+primaryColor = "#D6FF4A"
+backgroundColor = "#10140F"
+secondaryBackgroundColor = "#10140F"
+textColor = "#F4EFE4"
+linkColor = "#D6FF4A"
+borderColor = "#2A332C"
 baseRadius = "none"
-font = "Inter Tight:https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
-headingFont = "Inter Tight:https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+font = "Literata:https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,650;1,7..72,400&display=swap"
+headingFont = "Anton:https://fonts.googleapis.com/css2?family=Anton&display=swap"
 
 [ui]
 hideTopBar = true

@@ -11,11 +11,11 @@ import streamlit as st
 from portfolio.content import EMAIL, GITHUB_PROFILE, NAME, PAGE_COPY
 
 ROOT = Path(__file__).resolve().parent.parent
-CSS_FILES = (ROOT / "css" / "styles.css", ROOT / "css" / "streamlit.css")
+CSS_FILES = (ROOT / "css" / "meet.css", ROOT / "css" / "streamlit.css")
 MAIN_JS = ROOT / "js" / "main.js"
 FONT_IMPORT = (
-    '@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:'
-    'ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap");'
+    '@import url("https://fonts.googleapis.com/css2?family=Anton&family=Literata:'
+    'ital,opsz,wght@0,7..72,400;0,7..72,650;1,7..72,400;1,7..72,650&display=swap");'
 )
 
 NAV = (

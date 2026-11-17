@@ -1,7 +1,4 @@
-/* Bridge the static portfolio CSS into Streamlit's app shell.
-   The visual rules stay in styles.css. This file only clears Streamlit chrome
-   and stops Streamlit's wrapper styles from fighting that stylesheet.
-   The font import is prepended by portfolio.layout so it stays the first rule. */
+/* Streamlit chrome only. The meet lives in meet.css. */
 
 html,
 body,
@@ -9,8 +6,11 @@ body,
 [data-testid="stAppViewContainer"],
 [data-testid="stMain"],
 section.main {
-  background: #ffffff;
-  color: #1a1a2e;
+  background:
+    linear-gradient(90deg, transparent 0 1.15rem, rgba(214, 255, 74, 0.55) 1.15rem 1.22rem, transparent 1.22rem 1.7rem, rgba(244, 239, 228, 0.28) 1.7rem 1.74rem, transparent 1.74rem),
+    repeating-linear-gradient(180deg, transparent 0 72px, rgba(244, 239, 228, 0.045) 72px 73px),
+    #10140f;
+  color: #f4efe4;
 }
 
 [data-testid="stHeader"],
@@ -43,220 +43,38 @@ section.main {
 [data-testid="stHtml"] {
   width: 100%;
   line-height: inherit;
+  color: #f4efe4;
 }
 
 [data-testid="stHtml"] ul,
-[data-testid="stHtml"] ol,
-[data-testid="stHtml"] dl {
+[data-testid="stHtml"] ol {
   padding-left: 0;
   margin: 0;
 }
 
-[data-testid="stHtml"] .entry ul,
 [data-testid="stHtml"] .work-ahead ul {
-  margin-top: 0.85rem;
+  margin-top: 0.45rem;
   padding-left: 1.15rem;
   list-style: disc;
 }
 
-[data-testid="stHtml"] .entry ul {
-  margin-top: 0.45rem;
-}
-
-[data-testid="stHtml"] a {
+[data-testid="stHtml"] a,
+[data-testid="stHtml"] .build-card-link,
+[data-testid="stHtml"] .work-row,
+[data-testid="stHtml"] .work-back,
+[data-testid="stHtml"] .lap-mark,
+[data-testid="stHtml"] .flip,
+[data-testid="stHtml"] .scoreboard-hit,
+[data-testid="stHtml"] .portrait-btn,
+[data-testid="stHtml"] .lap-runner,
+[data-testid="stHtml"] .finish-break {
   color: inherit;
-}
-
-[data-testid="stHtml"] .nav-links a {
-  color: #596579;
-}
-
-[data-testid="stHtml"] .nav-links a:hover,
-[data-testid="stHtml"] .nav-links a:focus-visible {
-  color: #2b2d42;
-}
-
-[data-testid="stHtml"] .text-btn {
-  color: #596579;
+  background: transparent;
   text-decoration: none;
-}
-
-[data-testid="stHtml"] .text-btn:hover,
-[data-testid="stHtml"] .text-btn:focus-visible {
-  color: #ffffff;
-}
-
-[data-testid="stHtml"] .site-footer a {
-  color: #596579;
-}
-
-[data-testid="stHtml"] .site-footer a:hover,
-[data-testid="stHtml"] .site-footer a:focus-visible {
-  color: #2b2d42;
-}
-
-[data-testid="stHtml"] .resume-github {
-  color: #596579;
-}
-
-[data-testid="stHtml"] .resume-github:hover,
-[data-testid="stHtml"] .resume-github:focus-visible {
-  color: #2b2d42;
-}
-
-[data-testid="stHtml"] .work-row-dates,
-[data-testid="stHtml"] .work-meta,
-[data-testid="stHtml"] .work-back,
-[data-testid="stHtml"] .work-live {
-  color: #596579;
-}
-
-[data-testid="stHtml"] .work-title {
-  font-size: clamp(1.9rem, 3.4vw, 2.4rem);
-  font-weight: 500;
-  font-style: italic;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
-  margin: 1.35rem 0 0;
-  color: #1a1a2e;
-}
-
-[data-testid="stHtml"] .work-kicker {
-  font-size: clamp(2.1rem, 4vw, 3rem);
-  font-weight: 600;
-  font-style: normal;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin: 0 0 1.35rem;
-  color: #1a1a2e;
-}
-
-[data-testid="stHtml"] .work-link {
-  color: #2b2d42;
-}
-
-[data-testid="stHtml"] .work-back,
-[data-testid="stHtml"] .work-row {
-  text-decoration: none;
-}
-
-[data-testid="stHtml"] .work-thumb img,
-[data-testid="stHtml"] .work-hero img,
-[data-testid="stHtml"] .work-print img {
-  max-width: 100%;
-}
-
-[data-testid="stHtml"] .hero h1,
-[data-testid="stHtml"] .page-title {
-  font-size: clamp(3.4rem, 9vw, 6.4rem);
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  line-height: 0.94;
-  margin: 0;
-  color: #1a1a2e;
-}
-
-[data-testid="stHtml"] .hero h1 {
-  font-size: clamp(3.2rem, 7.2vw, 5.6rem);
 }
 
 [data-testid="stHtml"] .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-}
-
-[data-testid="stHtml"] .story-section h2,
-[data-testid="stHtml"] .build-headline,
-[data-testid="stHtml"] .field-card h3 {
-  color: #1a1a2e;
-}
-
-[data-testid="stHtml"] .story-section h2 {
-  font-size: clamp(1.7rem, 3vw, 2.2rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin: 0 0 1.15rem;
-}
-
-[data-testid="stHtml"] .build-headline {
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  font-weight: 500;
-  font-style: italic;
-  letter-spacing: -0.03em;
-  line-height: 1.25;
-  margin: 0 1.1rem;
-}
-
-[data-testid="stHtml"] .build-card-link,
-[data-testid="stHtml"] .build-card-link:hover,
-[data-testid="stHtml"] .build-card-link:focus-visible {
-  color: inherit;
-  text-decoration: none;
-}
-
-[data-testid="stHtml"] .contact-links a {
-  color: #596579;
-  text-decoration: none;
-}
-
-[data-testid="stHtml"] .contact-links a:hover,
-[data-testid="stHtml"] .contact-links a:focus-visible {
-  color: #2b2d42;
-}
-
-[data-testid="stHtml"] .race-count {
-  color: #1a1a2e;
-}
-
-[data-testid="stHtml"] .scoreboard .race-count {
-  color: #f0b429;
-}
-
-[data-testid="stHtml"] .scoreboard-hit,
-[data-testid="stHtml"] .portrait-btn,
-[data-testid="stHtml"] .lap-runner {
-  color: inherit;
-  background: transparent;
-  text-decoration: none;
-}
-
-[data-testid="stHtml"] .finish-skip,
-[data-testid="stHtml"] .finish-break,
-[data-testid="stHtml"] .finish-cta,
-[data-testid="stHtml"] .lap-mark,
-[data-testid="stHtml"] .flip {
-  text-decoration: none;
-}
-
-[data-testid="stHtml"] .finish-stage h2,
-[data-testid="stHtml"] .finish-cta,
-[data-testid="stHtml"] .finish-hint,
-[data-testid="stHtml"] .scoreboard,
-[data-testid="stHtml"] .scoreboard-records,
-[data-testid="stHtml"] .flip-copy {
-  color: #ffffff;
-}
-
-[data-testid="stHtml"] .finish-skip {
-  color: #ffffff;
-}
-
-[data-testid="stHtml"] .finish-skip:hover,
-[data-testid="stHtml"] .finish-skip:focus-visible {
-  color: #1a1a2e;
-}
-
-[data-testid="stHtml"] .soon,
-[data-testid="stHtml"] .soon p,
-[data-testid="stHtml"] .soon h3,
-[data-testid="stHtml"] .fun-facts li.soon {
-  color: #596579;
-}
-
-@media (max-width: 720px) {
-  [data-testid="stHtml"] .nav-links {
-    padding: 0.4rem 1.25rem 1rem;
-  }
 }

@@ -108,7 +108,7 @@ class HomeTests(unittest.TestCase):
         self.assertIn('class="flip"', self.html)
         self.assertGreaterEqual(self.html.count('class="flip"'), 3)
         self.assertIn('aria-pressed="false"', self.html)
-        css = (ROOT / "css" / "styles.css").read_text(encoding="utf-8")
+        css = (ROOT / "css" / "meet.css").read_text(encoding="utf-8")
         self.assertIn("min-height: 44px", css)
         self.assertIn("min-width: 44px", css)
         self.assertIn("prefers-reduced-motion", css)
