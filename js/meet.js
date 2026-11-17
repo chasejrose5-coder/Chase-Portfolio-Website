@@ -105,17 +105,19 @@
         bits.push({
           x: ox + (Math.random() - 0.5) * 80,
           y: oy + (Math.random() - 0.5) * 28,
-          r: 18 + Math.random() * 28,
-          vx: (Math.random() - 0.5) * 0.7,
-          vy: -1.15 - Math.random() * 1.5,
-          a: 0.28 + Math.random() * 0.22,
-          grow: 0.18 + Math.random() * 0.22
+          r: 22 + Math.random() * 34,
+          vx: (Math.random() - 0.5) * 0.8,
+          vy: -1.2 - Math.random() * 1.4,
+          a: 0.55 + Math.random() * 0.3,
+          grow: 0.22 + Math.random() * 0.28
         });
       }
       gun.classList.add("is-smoking");
-      gun.style.background = "transparent";
       var stage = gun.querySelector(".finish-stage");
-      if (stage) stage.style.opacity = "0";
+      window.setTimeout(function () {
+        gun.style.background = "transparent";
+        if (stage) stage.style.opacity = "0";
+      }, 320);
       var started = performance.now();
       function frame(now) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -124,13 +126,13 @@
           bit.x += bit.vx;
           bit.y += bit.vy;
           bit.r += bit.grow;
-          bit.a *= 0.986;
+          bit.a *= 0.99;
           ctx.beginPath();
-          ctx.fillStyle = "rgba(236, 230, 222, " + bit.a + ")";
+          ctx.fillStyle = "rgba(210, 198, 188, " + bit.a + ")";
           ctx.arc(bit.x, bit.y, bit.r, 0, 6.2832);
           ctx.fill();
         }
-        if (now - started < 1000) window.requestAnimationFrame(frame);
+        if (now - started < 1400) window.requestAnimationFrame(frame);
         else {
           if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
           hideGun();
@@ -357,7 +359,7 @@
       trailCtx = trailCanvas.getContext("2d");
     }
     if (trailBits.length > 20) trailBits.shift();
-    trailBits.push({ x: px, y: py, r: 5, a: 0.22 });
+    trailBits.push({ x: px, y: py, r: 8, a: 0.4 });
     if (!trailOn) {
       trailOn = true;
       window.requestAnimationFrame(drawTrail);
