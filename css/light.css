@@ -102,14 +102,31 @@ html.gun-held body {
   height: 36px;
   border: 1.5px solid #1A1A2E;
   border-radius: 50%;
-  pointer-events: none;
+  pointer-events: auto;
   overflow: hidden;
+  cursor: grab;
+  touch-action: none;
   background:
     radial-gradient(circle at 50% 36%, #1A1A2E 0 4px, transparent 4.5px),
     radial-gradient(circle at 16% 74%, #1A1A2E 0 3.5px, transparent 4px),
     radial-gradient(circle at 84% 74%, #1A1A2E 0 3.5px, transparent 4px),
     radial-gradient(circle at 34% 30%, #ffffff 0%, #eef0f4 46%, #c9ced8 100%);
   box-shadow: inset -5px -6px 8px rgba(26, 26, 46, 0.22);
+}
+
+.kick-ball.is-held {
+  cursor: grabbing;
+}
+
+body.ball-held,
+body.ball-held * {
+  cursor: grabbing !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body.ball-held {
+  touch-action: none;
 }
 
 .kick-ball::before,

@@ -183,6 +183,10 @@
   }
 
   function tick() {
+    if (hold) {
+      moving = false;
+      return;
+    }
     moving = false;
     ball.vx *= 0.986;
     ball.vy *= 0.986;
@@ -232,6 +236,7 @@
   }
 
   function push(x, y) {
+    if (hold) return;
     if (!last) {
       last = { x: x, y: y };
       return;
@@ -252,14 +257,81 @@
     kick();
   }
 
+  var hold = null;
+  var trail = [];
+
+  function placeHeld(x, y) {
+    ball.x = Math.max(radius, Math.min(window.innerWidth - radius, x - hold.dx));
+    ball.y = Math.max(radius, Math.min(window.innerHeight - radius, y - hold.dy));
+    paint();
+  }
+
+  function release(sample) {
+    if (!hold) return;
+    var gripX = hold.dx;
+    var gripY = hold.dy;
+    hold = null;
+    ballEl.classList.remove("is-held");
+    document.body.classList.remove("ball-held");
+    var a = trail[0];
+    var b = trail[trail.length - 1];
+    trail = [];
+    if (a && b && sample) b = sample;
+    var dt = a && b ? (b.t - a.t) / 1000 : 0;
+    if (dt > 0.016) {
+      ball.vx = ((b.x - a.x) / dt) / 60;
+      ball.vy = ((b.y - a.y) / dt) / 60;
+      ball.spin = (ball.vx * gripY - ball.vy * gripX) * 0.02;
+    }
+    kick();
+  }
+
+  ballEl.addEventListener("pointerdown", function (event) {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    ballEl.setPointerCapture(event.pointerId);
+    hold = {
+      id: event.pointerId,
+      dx: event.clientX - ball.x,
+      dy: event.clientY - ball.y
+    };
+    ball.vx = 0;
+    ball.vy = 0;
+    ball.spin = 0;
+    trail = [{ x: event.clientX, y: event.clientY, t: event.timeStamp }];
+    ballEl.classList.add("is-held");
+    document.body.classList.add("ball-held");
+    placeHeld(event.clientX, event.clientY);
+  });
+  ballEl.addEventListener("pointermove", function (event) {
+    if (!hold || event.pointerId !== hold.id) return;
+    event.preventDefault();
+    trail.push({ x: event.clientX, y: event.clientY, t: event.timeStamp });
+    if (trail.length > 6) trail.shift();
+    placeHeld(event.clientX, event.clientY);
+  });
+  ballEl.addEventListener("pointerup", function (event) {
+    if (!hold || event.pointerId !== hold.id) return;
+    release({ x: event.clientX, y: event.clientY, t: event.timeStamp });
+  });
+  ballEl.addEventListener("pointercancel", function (event) {
+    if (!hold || event.pointerId !== hold.id) return;
+    release(null);
+  });
+
   paint();
   window.addEventListener("pointermove", function (event) {
+    if (hold) return;
     push(event.clientX, event.clientY);
   }, { passive: true });
   window.addEventListener("pointerdown", function (event) {
+    if (hold) return;
     last = { x: event.clientX, y: event.clientY };
   }, { passive: true });
-  window.addEventListener("pointerup", function () { last = null; }, { passive: true });
+  window.addEventListener("pointerup", function () {
+    if (hold) return;
+    last = null;
+  }, { passive: true });
   window.addEventListener("resize", function () {
     ball.x = Math.max(radius + 8, Math.min(window.innerWidth - radius - 8, ball.x));
     ball.y = Math.max(76 + radius, Math.min(window.innerHeight - radius - 8, ball.y));
