@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 import portfolio.pages as pages
 from portfolio.content import ORIGIN, RESUME_SECTIONS
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 class LightHomeTests(unittest.TestCase):
@@ -29,6 +32,7 @@ class LightHomeTests(unittest.TestCase):
         self.assertIn('id="start-gun"', self.html)
         self.assertIn("On your marks", self.html)
         self.assertIn('id="kick-ball"', self.html)
+        self.assertNotIn("<svg", self.html)
         self.assertIn("Where it started", self.html)
         self.assertIn("always been good at", self.html)
         self.assertIn("I make my own things.", self.html)
@@ -44,6 +48,10 @@ class LightHomeTests(unittest.TestCase):
         self.assertNotIn(">Education<", self.html)
         ids = {section["id"] for section in RESUME_SECTIONS}
         self.assertNotIn("education", ids)
+        light = (ROOT / "css" / "light.css").read_text(encoding="utf-8")
+        styles = (ROOT / "css" / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".origin-copy p + p {\n  margin-top: 1rem;", light)
+        self.assertIn(".intro-copy p + p,\n.project-body p + p {\n  margin-top: 1rem;", styles)
 
 
 if __name__ == "__main__":

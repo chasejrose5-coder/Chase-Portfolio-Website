@@ -82,16 +82,8 @@ def _lean_dialog() -> str:
 
 
 def _ball() -> str:
-    return (
-        '<div class="kick-ball" id="kick-ball" aria-hidden="true">'
-        '<svg viewBox="0 0 64 64" focusable="false">'
-        '<circle cx="32" cy="32" r="30" fill="#f7f7f8" stroke="#1A1A2E" stroke-width="1.5"/>'
-        '<polygon points="32,14 40,26 37,40 27,40 24,26" fill="#1A1A2E"/>'
-        '<path d="M32 14 L18 20 M32 14 L46 20 M24 26 L12 30 M40 26 L52 30 '
-        'M27 40 L16 46 M37 40 L48 46 M27 40 L32 54 M37 40 L32 54" '
-        'fill="none" stroke="#1A1A2E" stroke-width="1.2"/>'
-        "</svg></div>"
-    )
+    # Streamlit drops an inline svg, so the ball is drawn with CSS only.
+    return '<div class="kick-ball" id="kick-ball" aria-hidden="true"></div>'
 
 
 def show_home() -> None:
