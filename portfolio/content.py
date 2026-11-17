@@ -62,8 +62,7 @@ GUN = {
     "marks": "On your marks",
     "set": "Set",
     "fire": "Fire",
-    "hint": "Click, tap, or press space",
-    "skip": "Skip",
+    "hint": "Click, tap, space, or Enter",
 }
 
 GAME_HEADING = "Run it yourself"
@@ -74,6 +73,10 @@ BATON_LABEL = "Pass the baton"
 BATON_GOT = "Got it."
 CURSOR_PACE_LABEL = "Your hand"
 PHOTO_KICKER = "Photo"
+SOCCER_NOTE = "Flick the ball. I captained this field too."
+SOCCER_GOAL = "Goal."
+WHISTLE_LABEL = "Whistle"
+WHISTLE_CALL = "Both teams."
 GAME_START = "Start the sprint"
 GAME_WIN = "New PR!"
 GAME_LOSE = "Chase still wins"

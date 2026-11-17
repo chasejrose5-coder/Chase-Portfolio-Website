@@ -73,106 +73,119 @@
   }
 
   var gun = document.getElementById("start-gun");
-  var gunKey = "chase-gun-fired";
-  function gunSeen() {
-    try { return sessionStorage.getItem(gunKey) === "1"; } catch (err) { return false; }
-  }
-  function rememberGun() {
-    try { sessionStorage.setItem(gunKey, "1"); } catch (err) {}
-  }
   function hideGun() {
     if (!gun) return;
     gun.classList.add("is-done");
     gun.style.display = "none";
     gun.setAttribute("aria-hidden", "true");
+    var main = document.getElementById("main");
+    if (main) main.inert = false;
+    document.documentElement.classList.remove("gun-held");
   }
-  if (gun && !gunSeen()) {
-    var marks = document.getElementById("gun-marks");
+  if (gun) {
+    var held = document.getElementById("main");
+    if (held) held.inert = true;
+    document.documentElement.classList.add("gun-held");
     var setLine = document.getElementById("gun-set");
     var fireBtn = document.getElementById("gun-fire");
-    var gunSkip = document.getElementById("gun-skip");
+    var title = document.getElementById("gun-title");
+    var armed = false;
     function fireGun() {
       if (!armed || gun.classList.contains("is-done")) return;
       crack();
-      rememberGun();
       hideGun();
     }
-    var title = document.getElementById("gun-title");
-    var armed = reduce;
-    if (fireBtn && !reduce) fireBtn.hidden = true;
     function armGun() {
       armed = true;
-      if (title) title.textContent = "Set";
+      if (reduce) {
+        if (setLine) setLine.hidden = false;
+      } else if (title) {
+        title.textContent = "Set";
+      }
       if (fireBtn) {
         fireBtn.hidden = false;
         fireBtn.focus();
       }
     }
+    if (fireBtn && !reduce) fireBtn.hidden = true;
     if (reduce) armGun();
     else window.setTimeout(armGun, 800);
-    if (fireBtn) fireBtn.addEventListener("click", fireGun);
-    if (gunSkip) gunSkip.addEventListener("click", function (event) {
-      event.preventDefault();
-      rememberGun();
-      hideGun();
+    gun.addEventListener("click", function (event) {
+      if (event.target.closest && event.target.closest(".sound-toggle")) return;
+      fireGun();
     });
     document.addEventListener("keydown", function (event) {
       if (!gun || gun.classList.contains("is-done")) return;
-      if (event.key === "Escape") {
-        event.preventDefault();
-        rememberGun();
-        hideGun();
-      } else if ((event.key === " " || event.code === "Space") && event.target !== gunSkip) {
+      if (event.key === " " || event.code === "Space" || event.key === "Enter") {
         event.preventDefault();
         fireGun();
       }
     });
-  } else {
-    hideGun();
   }
 
-  (function ensureOval() {
-    if (document.getElementById("oval-svg")) return;
-    var lap = document.getElementById("lap");
-    if (!lap) return;
-    var NS = "http://www.w3.org/2000/svg";
-    function el(name, attrs) {
-      var node = document.createElementNS(NS, name);
-      for (var key in attrs) node.setAttribute(key, attrs[key]);
-      return node;
+  var NS = "http://www.w3.org/2000/svg";
+  function svgEl(name, attrs) {
+    var node = document.createElementNS(NS, name);
+    for (var key in attrs) node.setAttribute(key, attrs[key]);
+    return node;
+  }
+  function drawOval() {
+    var svg = document.getElementById("oval-svg");
+    if (!svg) {
+      var lap = document.getElementById("lap");
+      if (!lap) return;
+      svg = svgEl("svg", {
+        id: "oval-svg",
+        class: "oval-svg",
+        role: "img",
+        "aria-label": "400 meter oval"
+      });
+      lap.insertBefore(svg, lap.firstChild);
     }
-    var svg = el("svg", {
-      id: "oval-svg",
-      class: "oval-svg",
-      viewBox: "0 0 360 220",
-      role: "img",
-      "aria-label": "400 meter oval"
-    });
-    svg.appendChild(el("rect", { class: "oval-surface", x: "6", y: "18", width: "348", height: "184", rx: "92" }));
-    svg.appendChild(el("rect", { class: "lane-line", x: "18", y: "30", width: "324", height: "160", rx: "80", fill: "none" }));
-    svg.appendChild(el("rect", { class: "lane-line", x: "32", y: "42", width: "296", height: "136", rx: "68", fill: "none" }));
-    svg.appendChild(el("rect", { class: "lane-line", x: "46", y: "54", width: "268", height: "112", rx: "56", fill: "none" }));
-    svg.appendChild(el("rect", { class: "lane-line", x: "60", y: "66", width: "240", height: "88", rx: "44", fill: "none" }));
-    svg.appendChild(el("rect", { class: "infield", x: "78", y: "82", width: "204", height: "56", rx: "28" }));
-    svg.appendChild(el("path", {
-      id: "oval-path",
-      d: "M100,36 H260 A74,74 0 0 1 260,184 H100 A74,74 0 0 1 100,36 Z",
-      fill: "none"
-    }));
-    lap.insertBefore(svg, lap.firstChild);
-  })();
+    var vertical = window.matchMedia("(max-width: 760px)").matches;
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    if (vertical) {
+      svg.setAttribute("viewBox", "0 0 480 860");
+      svg.appendChild(svgEl("rect", { class: "oval-surface", x: "10", y: "10", width: "460", height: "840", rx: "230" }));
+      svg.appendChild(svgEl("rect", { class: "lane-line", x: "34", y: "34", width: "412", height: "792", rx: "206", fill: "none" }));
+      svg.appendChild(svgEl("rect", { class: "lane-line", x: "58", y: "64", width: "364", height: "732", rx: "182", fill: "none" }));
+      svg.appendChild(svgEl("rect", { class: "lane-line", x: "82", y: "96", width: "316", height: "668", rx: "158", fill: "none" }));
+      svg.appendChild(svgEl("rect", { id: "infield-hole", class: "infield", x: "86", y: "118", width: "308", height: "624", rx: "88" }));
+      svg.appendChild(svgEl("path", {
+        id: "oval-path",
+        d: "M70,180 V680 A170,170 0 0 0 410,680 V180 A170,170 0 0 0 70,180 Z",
+        fill: "none"
+      }));
+    } else {
+      svg.setAttribute("viewBox", "0 0 1000 620");
+      svg.appendChild(svgEl("rect", { class: "oval-surface", x: "24", y: "28", width: "952", height: "564", rx: "282" }));
+      svg.appendChild(svgEl("rect", { class: "lane-line", x: "64", y: "64", width: "872", height: "492", rx: "246", fill: "none" }));
+      svg.appendChild(svgEl("rect", { class: "lane-line", x: "104", y: "100", width: "792", height: "420", rx: "210", fill: "none" }));
+      svg.appendChild(svgEl("rect", { class: "lane-line", x: "144", y: "136", width: "712", height: "348", rx: "174", fill: "none" }));
+      svg.appendChild(svgEl("rect", { id: "infield-hole", class: "infield", x: "184", y: "168", width: "632", height: "284", rx: "142" }));
+      svg.appendChild(svgEl("path", {
+        id: "oval-path",
+        d: "M220,120 H780 A190,190 0 0 1 780,500 H220 A190,190 0 0 1 220,120 Z",
+        fill: "none"
+      }));
+    }
+  }
+  drawOval();
 
-  var path = document.getElementById("oval-path");
   var runner = document.getElementById("lap-runner");
   var svg = document.getElementById("oval-svg");
   var meter = document.getElementById("meter");
   var lane = 1;
-  var stretches = [
-    { at: 0, id: "hero", meter: "0m" },
-    { at: 0.25, id: "origin-story", meter: "100m" },
-    { at: 0.5, id: "building", meter: "200m" },
-    { at: 0.75, id: "track-field", meter: "300m" },
-    { at: 0.9, id: "fun-facts", meter: "400m" }
+  var beats = [
+    { id: "hero", meter: "0m" },
+    { id: "origin-story", meter: "100m" },
+    { id: "building", meter: "200m" },
+    { id: "track-field", meter: "300m" },
+    { id: "fun-facts", meter: "400m" },
+    { id: "stories", meter: "400m" },
+    { id: "video", meter: "400m" },
+    { id: "quotes", meter: "400m" },
+    { id: "contact", meter: "400m" }
   ];
 
   function scroller() {
@@ -196,7 +209,30 @@
     return Math.max(0, Math.min(1, top / max));
   }
 
+  function placeInfield() {
+    var hole = document.getElementById("infield-hole");
+    var copy = document.getElementById("infield-copy");
+    if (!svg || !hole || !copy) return;
+    var ctm = hole.getScreenCTM && hole.getScreenCTM();
+    if (!ctm) return;
+    var p1 = svg.createSVGPoint();
+    var p2 = svg.createSVGPoint();
+    p1.x = hole.x.baseVal.value;
+    p1.y = hole.y.baseVal.value;
+    p2.x = hole.x.baseVal.value + hole.width.baseVal.value;
+    p2.y = hole.y.baseVal.value + hole.height.baseVal.value;
+    var a = p1.matrixTransform(ctm);
+    var b = p2.matrixTransform(ctm);
+    var pad = 8;
+    copy.style.position = "fixed";
+    copy.style.left = (a.x + pad) + "px";
+    copy.style.top = (a.y + pad) + "px";
+    copy.style.width = Math.max(160, b.x - a.x - pad * 2) + "px";
+    copy.style.height = Math.max(120, b.y - a.y - pad * 2) + "px";
+  }
+
   function placeRunner(t) {
+    var path = document.getElementById("oval-path");
     if (!path || !runner || !svg) return;
     var len = path.getTotalLength();
     var dist = Math.max(0, Math.min(len - 0.1, t * len));
@@ -217,27 +253,33 @@
     runner.style.left = px + "px";
     runner.style.top = py + "px";
     runner.style.position = "fixed";
-    if (!reduce) svg.style.transform = "rotate(" + (t * 10) + "deg)";
+    placeInfield();
+  }
+
+  function scrollToBeat(id) {
+    var index = 0;
+    for (var i = 0; i < beats.length; i++) if (beats[i].id === id) index = i;
+    var el = scroller();
+    var max = el.scrollHeight - el.clientHeight;
+    var top = ((index + 0.45) / beats.length) * max;
+    if (typeof el.scrollTo === "function") el.scrollTo({ top: top, behavior: reduce ? "auto" : "smooth" });
+    else el.scrollTop = top;
   }
 
   function markStretch(t) {
-    var current = stretches[0];
-    for (var i = 0; i < stretches.length; i++) {
-      var section = document.getElementById(stretches[i].id);
-      if (section && section.getBoundingClientRect().top < window.innerHeight * 0.42) current = stretches[i];
-    }
+    var index = Math.min(beats.length - 1, Math.floor(t * beats.length));
+    if (t > 0.98) index = beats.length - 1;
+    var current = beats[index];
+    var copy = document.getElementById("infield-copy");
+    if (copy) copy.classList.add("is-staged");
     if (meter) meter.textContent = current.meter;
     var sections = document.querySelectorAll(".story-section, #hero");
-    for (var s = 0; s < sections.length; s++) sections[s].classList.remove("is-live");
-    var live = document.getElementById(current.id);
-    if (live) live.classList.add("is-live");
-    var end = document.getElementById("lap-end");
-    var contact = document.getElementById("contact");
-    var endTop = end ? end.getBoundingClientRect().top : 9999;
-    var contactTop = contact ? contact.getBoundingClientRect().top : 9999;
-    if (endTop < window.innerHeight + 80 || contactTop < window.innerHeight * 0.72 || t > 0.88) {
-      document.dispatchEvent(new Event("finish-ready"));
+    for (var s = 0; s < sections.length; s++) {
+      var on = sections[s].id === current.id;
+      sections[s].classList.toggle("is-live", on);
+      sections[s].classList.toggle("is-shown", on);
     }
+    if (index >= beats.length - 1) document.dispatchEvent(new Event("finish-ready"));
   }
 
   var pending = false;
@@ -252,9 +294,15 @@
     pending = true;
     window.requestAnimationFrame(frame);
   }
-  if (path) {
+  if (svg) {
     document.addEventListener("scroll", request, { capture: true, passive: true });
-    window.addEventListener("resize", request);
+    window.addEventListener("resize", function () {
+      drawOval();
+      request();
+    });
+    document.addEventListener("chase-beat", function (event) {
+      scrollToBeat(event.detail);
+    });
     frame();
   }
 
@@ -265,8 +313,7 @@
       for (var i = 0; i < buttons.length; i++) {
         buttons[i].setAttribute("aria-pressed", buttons[i] === this ? "true" : "false");
       }
-      var target = document.getElementById(this.getAttribute("data-target"));
-      if (target) target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      scrollToBeat(this.getAttribute("data-target"));
       frame();
     });
   }
@@ -409,7 +456,7 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia("(pointer: fine)").matches && !reduce;
   var PIXELS_PER_METER = 420;
-  var stops = ["hero", "origin-story", "building", "track-field", "fun-facts", "stories", "quotes", "contact"];
+  var stops = ["hero", "origin-story", "building", "track-field", "fun-facts", "stories", "video", "quotes", "contact"];
   var samples = [];
   var mx = 0;
   var my = 0;
@@ -526,28 +573,21 @@
     kick();
   }
 
-  function nextStop() {
-    var best = stops[0];
-    var mark = -1;
-    for (var i = 0; i < stops.length; i++) {
-      var el = document.getElementById(stops[i]);
-      if (!el) continue;
-      if (el.getBoundingClientRect().top < window.innerHeight * 0.35) {
-        best = stops[i];
-        mark = i;
-      }
-    }
-    return document.getElementById(stops[Math.min(stops.length - 1, mark + 1)] || best);
+  function nextBeatId() {
+    var shown = document.querySelector("#infield-copy .is-shown");
+    var id = shown ? shown.id : "hero";
+    var mark = stops.indexOf(id);
+    if (mark < 0) mark = 0;
+    return stops[Math.min(stops.length - 1, mark + 1)];
   }
 
   function handoff() {
-    var target = nextStop();
     carrying = true;
     justHanded = true;
     if (got) got.hidden = false;
     if (baton) baton.hidden = false;
     kick();
-    if (target) target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    document.dispatchEvent(new CustomEvent("chase-beat", { detail: nextBeatId() }));
     window.setTimeout(function () {
       carrying = false;
       justHanded = false;
@@ -628,5 +668,145 @@
       event.stopPropagation();
       event.preventDefault();
     }, true);
+  }
+})();
+
+/* Soccer in the infield, and the captain's whistle. */
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var pitch = document.getElementById("pitch");
+  var ballEl = document.getElementById("soccer-ball");
+  var countEl = document.getElementById("goals-count");
+  var call = document.getElementById("goal-call");
+  var goals = 0;
+  var scoredAt = 0;
+  var ball = { x: 0.5, y: 0.5, vx: 0, vy: 0 };
+  var moving = false;
+  var down = null;
+  var cheerTimer = 0;
+
+  function paintBall() {
+    if (!ballEl) return;
+    ballEl.style.left = (ball.x * 100) + "%";
+    ballEl.style.top = (ball.y * 100) + "%";
+  }
+
+  function score() {
+    ball.x = 0.5;
+    ball.y = 0.5;
+    ball.vx = 0;
+    ball.vy = 0;
+    paintBall();
+    if (performance.now() - scoredAt < 700) return;
+    scoredAt = performance.now();
+    goals += 1;
+    if (countEl) countEl.textContent = String(goals);
+    if (call) {
+      call.hidden = false;
+      call.textContent = "Goal.";
+    }
+    if (pitch && !reduce) pitch.classList.add("is-cheer");
+    window.clearTimeout(cheerTimer);
+    cheerTimer = window.setTimeout(function () {
+      if (call) call.hidden = true;
+      if (pitch) pitch.classList.remove("is-cheer");
+    }, reduce ? 500 : 900);
+  }
+
+  function step() {
+    moving = false;
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+    ball.vx *= 0.985;
+    ball.vy *= 0.985;
+    var inGoal = ball.y > 0.34 && ball.y < 0.66;
+    if (ball.x < 0.05) {
+      if (inGoal && ball.vx < 0) { score(); return; }
+      ball.x = 0.05;
+      ball.vx *= -0.65;
+    } else if (ball.x > 0.95) {
+      if (inGoal && ball.vx > 0) { score(); return; }
+      ball.x = 0.95;
+      ball.vx *= -0.65;
+    }
+    if (ball.y < 0.06) { ball.y = 0.06; ball.vy *= -0.65; }
+    else if (ball.y > 0.94) { ball.y = 0.94; ball.vy *= -0.65; }
+    paintBall();
+    if (Math.hypot(ball.vx, ball.vy) > 0.0015) {
+      moving = true;
+      window.requestAnimationFrame(step);
+    }
+  }
+
+  function kickLoop() {
+    if (!moving) {
+      moving = true;
+      window.requestAnimationFrame(step);
+    }
+  }
+
+  if (pitch && ballEl) {
+    paintBall();
+    pitch.addEventListener("pointerdown", function (event) {
+      down = { x: event.clientX, y: event.clientY, t: event.timeStamp };
+    });
+    var lastMove = null;
+    pitch.addEventListener("pointermove", function (event) {
+      var rect = pitch.getBoundingClientRect();
+      if (!rect.width) return;
+      var px = (event.clientX - rect.left) / rect.width;
+      var py = (event.clientY - rect.top) / rect.height;
+      var near = Math.hypot(px - ball.x, py - ball.y) < 0.14;
+      if (down) {
+        var dx = event.clientX - down.x;
+        var dy = event.clientY - down.y;
+        if (Math.hypot(dx, dy) > 5) {
+          ball.vx += (dx / rect.width) * 0.9;
+          ball.vy += (dy / rect.height) * 0.9;
+        }
+        down = { x: event.clientX, y: event.clientY, t: event.timeStamp };
+      } else if (near && lastMove) {
+        ball.vx += ((event.clientX - lastMove.x) / rect.width) * 1.6;
+        ball.vy += ((event.clientY - lastMove.y) / rect.height) * 1.6;
+      }
+      ball.vx = Math.max(-0.09, Math.min(0.09, ball.vx));
+      ball.vy = Math.max(-0.09, Math.min(0.09, ball.vy));
+      lastMove = { x: event.clientX, y: event.clientY };
+      if (Math.hypot(ball.vx, ball.vy) > 0.002) kickLoop();
+    });
+    window.addEventListener("pointerup", function () { down = null; });
+  }
+
+  var whistle = document.getElementById("whistle");
+  var whistleCall = document.getElementById("whistle-call");
+  if (whistle) {
+    whistle.addEventListener("click", function () {
+      if (whistleCall) whistleCall.hidden = false;
+      var runner = document.getElementById("lap-runner");
+      if (!reduce && runner) runner.classList.add("is-hop");
+      if (!reduce && ballEl) ballEl.classList.add("is-hop");
+      var sound = document.getElementById("sound-toggle");
+      if (sound && sound.getAttribute("aria-pressed") === "true") {
+        try {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          var ctx = new AC();
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
+          osc.frequency.setValueAtTime(880, ctx.currentTime);
+          osc.frequency.setValueAtTime(1175, ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.05, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.3);
+        } catch (err) {}
+      }
+      window.setTimeout(function () {
+        if (whistleCall) whistleCall.hidden = true;
+        if (runner) runner.classList.remove("is-hop");
+        if (ballEl) ballEl.classList.remove("is-hop");
+      }, reduce ? 400 : 900);
+    });
   }
 })();

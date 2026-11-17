@@ -51,12 +51,16 @@ from portfolio.content import (
     RESUME_LINK_LABEL,
     SCOREBOARD_EVENT,
     SCOREBOARD_RECORDS,
+    SOCCER_GOAL,
+    SOCCER_NOTE,
     STORIES_HEADING,
     STORIES_LEAD,
     STORY_LINK_LABEL,
     STORY_PLACEHOLDERS,
     TAGLINE,
     VIDEO_HEADING,
+    WHISTLE_CALL,
+    WHISTLE_LABEL,
     VIDEO_LEAD,
     VIDEO_PLACEHOLDER,
     NAME,
@@ -157,10 +161,6 @@ def _gun_opener() -> str:
     return (
         '<div class="start-gun" id="start-gun" role="dialog" aria-modal="true" '
         'aria-labelledby="gun-title" style="position:fixed;inset:0;z-index:450;background:#7A2C22;color:#fff;">'
-        "<script>(function(){try{if(sessionStorage.getItem('chase-gun-fired')==='1')"
-        "{var gun=document.getElementById('start-gun');gun.classList.add('is-done');"
-        "gun.style.display='none';}}catch(e){}})();</script>"
-        f'<a class="finish-skip" id="gun-skip" href="#main">{html.escape(GUN["skip"])}</a>'
         '<div class="finish-stage">'
         f'<h2 id="gun-title">{html.escape(GUN["marks"])}</h2>'
         f'<p class="gun-phase" id="gun-set" hidden>{html.escape(GUN["set"])}</p>'
@@ -204,6 +204,7 @@ def _track_dock() -> str:
         f'<p class="baton-got" id="baton-got" hidden>{html.escape(BATON_GOT)}</p>'
         "</div>"
         '<span class="baton" id="baton" hidden aria-hidden="true"></span>'
+        '<div class="dock-tools">'
         f'<button class="baton-pass" id="baton-pass" type="button">{html.escape(BATON_LABEL)}</button>'
         '<div class="photo-frame" id="photo-frame" hidden>'
         f'<p class="photo-kicker">{html.escape(PHOTO_KICKER)}</p>'
@@ -216,9 +217,24 @@ def _track_dock() -> str:
         "</div>"
         '<button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false">'
         "Sound off</button>"
+        f'<button class="whistle" id="whistle" type="button">{html.escape(WHISTLE_LABEL)}</button>'
+        f'<p class="whistle-call" id="whistle-call" hidden>{html.escape(WHISTLE_CALL)}</p>'
+        "</div>"
         '<div class="lane-picker" role="group" aria-label="Pick a lane">'
         f'{"".join(buttons)}'
         "</div></aside>"
+    )
+
+
+def _pitch() -> str:
+    return (
+        '<div class="pitch" id="pitch">'
+        '<span class="goal is-left" aria-hidden="true"></span>'
+        '<span class="goal is-right" aria-hidden="true"></span>'
+        '<span class="ball" id="soccer-ball"></span>'
+        "</div>"
+        f'<p class="pitch-note">{html.escape(SOCCER_NOTE)}</p>'
+        f'<p class="goal-call" id="goal-call" hidden>{html.escape(SOCCER_GOAL)}</p>'
     )
 
 
@@ -288,6 +304,7 @@ def _scoreboard() -> str:
         '<span class="scoreboard-unit" data-race-unit>DAYS</span>'
         "</span></button>"
         f'<p class="scoreboard-records">{html.escape(SCOREBOARD_RECORDS)}</p>'
+        '<p class="goals-line">Goals <span id="goals-count">0</span></p>'
         f'<p class="cursor-pace" id="cursor-pace">{html.escape(CURSOR_PACE_LABEL)}</p>'
         '<p class="scoreboard-call" id="scoreboard-call" hidden></p>'
         "</div>"
@@ -398,10 +415,10 @@ def home_main_html() -> str:
         "</div>"
     )
     return (
-        '<main id="main"><div class="meet-shell">'
+        '<main id="main"><div class="stadium" id="stadium">'
         f"{_track_dock()}"
-        '<div class="wrap">'
-        '<div class="home-fold" id="hero" data-lap="Start">'
+        '<div class="infield-copy" id="infield-copy">'
+        '<div class="home-fold is-shown" id="hero" data-lap="Start">'
         '<section class="hero">'
         f'<h1 class="rise">{html.escape(NAME)}</h1>'
         f'<p class="tagline rise d1">{html.escape(TAGLINE)}</p>'
@@ -417,7 +434,7 @@ def home_main_html() -> str:
         "</div>"
         f'{_section("origin-story", ORIGIN_HEADING, f"<div class=\"story-copy stagger\">{origin}<p class=\"origin-aside\">{html.escape(ORIGIN_ASIDE)}</p></div>")}'
         f'{_section("building", BUILDING_HEADING, _scoreboard() + _race_game() + _building_cards())}'
-        f'{_section("track-field", FIELD_HEADING, f"<div class=\"field-grid\">{"".join(columns)}</div>")}'
+        f'{_section("track-field", FIELD_HEADING, _pitch() + f"<div class=\"field-grid\">{"".join(columns)}</div>")}'
         f'{_section("fun-facts", FUN_FACTS_HEADING, f"<ul class=\"fun-facts\">{"".join(facts)}</ul>")}'
         + _section(
             "stories",
@@ -432,7 +449,8 @@ def home_main_html() -> str:
             CONTACT_HEADING,
             f'<p class="story-lead">{html.escape(CONTACT_LEAD)}</p>{_contact_links()}',
         )
-        + '<div id="lap-end" class="lap-end"></div></div></div></main>'
+        + '</div></div><div class="lap-scroll" id="lap-scroll">'
+        '<div id="lap-end" class="lap-end"></div></div></main>'
         + _finish_gate()
     )
 
