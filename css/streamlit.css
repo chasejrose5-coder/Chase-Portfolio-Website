@@ -156,10 +156,65 @@ section.main {
   color: #1a1a2e;
 }
 
+[data-testid="stHtml"] .hero h1 {
+  font-size: clamp(3.2rem, 7.2vw, 5.6rem);
+}
+
 [data-testid="stHtml"] .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+[data-testid="stHtml"] .story-section h2,
+[data-testid="stHtml"] .build-headline,
+[data-testid="stHtml"] .field-card h3 {
+  color: #1a1a2e;
+}
+
+[data-testid="stHtml"] .story-section h2 {
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 1.15rem;
+}
+
+[data-testid="stHtml"] .build-headline {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  margin: 0 1.1rem;
+}
+
+[data-testid="stHtml"] .build-card-link,
+[data-testid="stHtml"] .build-card-link:hover,
+[data-testid="stHtml"] .build-card-link:focus-visible {
+  color: inherit;
+  text-decoration: none;
+}
+
+[data-testid="stHtml"] .contact-links a {
+  color: #596579;
+  text-decoration: none;
+}
+
+[data-testid="stHtml"] .contact-links a:hover,
+[data-testid="stHtml"] .contact-links a:focus-visible {
+  color: #2b2d42;
+}
+
+[data-testid="stHtml"] .race-count {
+  color: #1a1a2e;
+}
+
+[data-testid="stHtml"] .soon,
+[data-testid="stHtml"] .soon p,
+[data-testid="stHtml"] .soon h3,
+[data-testid="stHtml"] .fun-facts li.soon {
+  color: #596579;
 }
 
 @media (max-width: 720px) {

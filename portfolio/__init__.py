@@ -1,1 +1,1 @@
-"""Streamlit portfolio package. Content is ported from the static HTML."""
+"""Streamlit portfolio package. Visible copy lives in portfolio.content."""

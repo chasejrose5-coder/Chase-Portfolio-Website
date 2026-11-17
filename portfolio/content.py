@@ -1,11 +1,13 @@
 """Visible copy for the Streamlit pages.
 
-Home and Resume use Chase's wording. Projects lists RIO and
-ProWash & Detail Co. Screenshots live in static/projects/, the folder
-Streamlit serves.
+Home is a short story. Projects lists RIO and ProWash & Detail Co.
+Screenshots live in static/projects/, the folder Streamlit serves.
 """
 
 from __future__ import annotations
+
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 
 NAME = "Chase Rose"
 EMAIL = "Chasejrose5@gmail.com"
@@ -29,24 +31,109 @@ HOME_PORTRAIT = {
 PAGE_COPY = {
     "home": {
         "title": "Chase Rose",
-        "description": "Personal portfolio of Chase Rose. Introduction, projects, and resume.",
+        "description": "Personal portfolio of Chase Rose. An origin story, what he is building, and life on the track and the field.",
     },
     "projects": {
         "title": "Projects — Chase Rose",
         "description": "Selected projects by Chase Rose.",
     },
-    "resume": {
-        "title": "Resume — Chase Rose",
-        "description": "Resume of Chase Rose. Education, experience, and leadership.",
-    },
 }
 
 TAGLINE = "Captain. Researcher. Builder."
 
-INTRO = (
-    "My name is Chase Rose. I am a senior at Bentley Upper School in Lafayette, CA. My primary focus is on entrepreneurship and leadership. I have served as a three-year captain of both the track & field and soccer teams. I have set school records in both the 400m and 800m, earned multiple All-League honors, and was named Team MVP in both sports as well as All-League MVP in the 2026 soccer season. Aside from sports, I participate in student government, paper research, and building programs to solve problems.",
-    "I founded a local mobile detailing business, wrote a research thesis on West African soccer academies, and am currently building a runner training app named RIO. I care about leadership that is forward-thinking and intentional, whether that’s being part of a relay, managing a student store and its inventory, interviewing nationally recognized figures on stage, or organizing community service. I’m looking to carry that same standard into college and beyond.",
+ORIGIN_HEADING = "Origin story"
+
+# Lightly polished from Chase's own words. Two short paragraphs.
+ORIGIN = (
+    "I was always good at running, and being good at something made me feel like I fit in. Everyone I knew had their own niche.",
+    "What pushed me to build things was wanting to have something to show about myself that I would be proud of. I also want to be in control of what I do in life, so I built my own things.",
 )
+
+BUILDING_HEADING = "What I'm building"
+
+# Home cards. Detail pages keep the longer story. slugs match PROJECTS.
+BUILDING = (
+    {
+        "slug": "rio",
+        "kicker": "RIO",
+        "headline": "I'm building my own 800m training app while chasing 1:55.0 at the Stanford Invitational on 3/19/27.",
+        "body": "The plan is not fixed. It adapts to what I actually run, and I am building it in the middle of that training.",
+        "show_countdown": True,
+    },
+    {
+        "slug": "prowash",
+        "kicker": "ProWash & Detail Co.",
+        "headline": "I started ProWash & Detail Co. with a crew of three.",
+        "body": "Early 2026. We detail cars, power wash, and clean solar panels and trash cans. I built the booking site so a request lands in one place instead of getting lost in texts, and I keep the work local so each job gets personal attention.",
+    },
+)
+
+STORY_LINK_LABEL = "Read the story"
+
+# Stanford Invitational. The countdown uses Pacific time, where the meet is.
+RACE_DATE = "2027-03-19"
+RACE_NAME = "Stanford Invitational"
+RACE_ZONE = "America/Los_Angeles"
+
+FIELD_HEADING = "On the track and the field"
+
+FIELD = (
+    {
+        "title": "Track",
+        "text": "Three-year captain. I hold the school records in the 400m and the 800m. Team MVP in 2025–26, NCS finalist, and 2× All-League in the 400m and the 4×100m.",
+    },
+    {
+        "title": "Soccer",
+        "text": "Three-year captain. In 2026 I was League Offensive Player of the Year and BCL Championship MVP.",
+    },
+)
+
+FUN_FACTS_HEADING = "Fun facts"
+
+FUN_FACTS = (
+    "Wrote a 12-page thesis on West African soccer academies (JRP Honorable Mention).",
+    "Interviewed former MLB player Drew Robinson live on stage.",
+    "Student Body Treasurer who ran the student store.",
+)
+
+COMING_SOON_LABEL = "Coming soon"
+
+FUN_FACT_PLACEHOLDERS = (
+    "Fun fact coming soon",
+    "Fun fact coming soon",
+    "Fun fact coming soon",
+)
+
+STORIES_HEADING = "Stories"
+
+STORIES_LEAD = "Crazy and fun stories will go here."
+
+STORY_PLACEHOLDERS = (
+    {
+        "title": "Story coming soon",
+        "text": "A story will go here.",
+    },
+    {
+        "title": "Story coming soon",
+        "text": "A story will go here.",
+    },
+    {
+        "title": "Story coming soon",
+        "text": "A story will go here.",
+    },
+)
+
+VIDEO_HEADING = "Video"
+
+VIDEO_PLACEHOLDER = "Video coming soon"
+
+QUOTES_HEADING = "Quotes"
+
+CONTACT_HEADING = "Contact"
+
+GITHUB_LINK_LABEL = "GitHub"
+
+RESUME_LINK_LABEL = "Download resume"
 
 QUOTES = (
     {
@@ -96,41 +183,35 @@ PROJECTS = (
             "height": 1000,
         },
         "frames": (
-            None,
-            None,
-            None,
-            {
-                "src": "static/projects/rio/blocks.webp",
-                "alt": "Chase Rose driving out of the blocks",
-                "width": 1600,
-                "height": 1067,
-            },
-            {
-                "src": "static/projects/rio/goal.png",
-                "alt": "Goal: 1:55.0 around the Stanford Invitational, March 2027",
-                "width": 1600,
-                "height": 760,
-            },
-            None,
             {
                 "src": "static/projects/rio/about.jpg",
                 "alt": "A stadium during a track meet, the photograph on RIO’s About page",
                 "width": 1600,
                 "height": 1070,
             },
+            None,
+            {
+                "src": "static/projects/rio/goal.png",
+                "alt": "Goal: 1:55.0 around the Stanford Invitational, March 2027",
+                "width": 1600,
+                "height": 760,
+            },
+            {
+                "src": "static/projects/rio/blocks.webp",
+                "alt": "Chase Rose driving out of the blocks",
+                "width": 1600,
+                "height": 1067,
+            },
         ),
         "paragraphs": (
             "Rio is a distance training app for runners, initially focused on the 800m. The name is Runner Intelligence Owned. I wanted a plan that belonged to the athlete running it, not one handed down from the outside. It is built by a runner, for a runner. Your race, your plan, your result.",
-            "The biggest part of RIO is that the workout plan is not fixed. It auto-adapts as you progress through the season. Most plans tell you what to run. RIO shows you why, and it adjusts when the season does not go to script. After a hard session, the app reads how the day went, and the later weeks can change instead of staying frozen from week one.",
-            "Home is where the season stands. RIO connects to Strava. After a planned hard day it scores the session, and Home shows this week, the current phase, and the insights that come back once the workout is done.",
-            "I am chasing 1:55.0. I am building the app in the middle of that training.",
-            "Plan is the season laid out. The phases sit on the weeks as they actually fall. I can see where this week lives in the longer build toward March.",
-            "Start session is the workout itself: the reps, the rest, and what the session is for. Afterward the debrief is the point, what the day was meant to be and what it was. Profile keeps the goal on the page, a Goal 800m time.",
+            "The biggest part of RIO is that the workout plan is not fixed. It auto-adapts as you progress through the season. Most plans tell you what to run. RIO shows you why, and it adjusts when the season does not go to script.",
+            "I am chasing 1:55.0 at the Stanford Invitational on March 19, 2027. I am building the app in the middle of that training.",
             "The workouts did not come from a template I found. I read the physiology and the training ideas behind an 800, then used that, and the code, to build the workout logic and the classifiers that read a session. The product and the training move together.",
         ),
         "ahead": {
             "title": "Where I want RIO to go",
-            "lead": "I am still shipping RIO, and I am building it while I train toward March. Here is what the app already does, and where I want it to go.",
+            "lead": "I am still shipping RIO, and I am building it while I train toward the Stanford Invitational on March 19, 2027. Here is what the app already does, and where I want it to go.",
             "groups": (
                 {
                     "label": "Shipped now",
@@ -224,93 +305,25 @@ PROJECTS = (
     },
 )
 
-RESUME_TITLE = "Resume"
 
-RESUME_SECTIONS = (
-    {
-        "id": "education",
-        "heading": "Education",
-        "entries": (
-            {
-                "title": "Bentley Upper School, Lafayette, CA — Class of 2027",
-                "degree": "High School Diploma / College Preparatory Program",
-                "bullets": (
-                    "3.92 unweighted / 4.42 weighted GPA",
-                    "SAT: 780 Math · 700 English",
-                    "Selected coursework: AP Physics C: Mechanics, AP Calculus BC, AP Computer Science, AP Statistics, Honors Engineering, and additional honors courses",
-                ),
-            },
-        ),
-    },
-    {
-        "id": "leadership",
-        "heading": "Leadership & Extracurriculars",
-        "entries": (
-            {
-                "title": "Bentley Track & Field — Team Captain (Grades 10–12)",
-                "degree": None,
-                "bullets": (
-                    "Team MVP (2025–26); 2× All-League (400m, 4×100m); 400m/800m school record holder; NCS finalist",
-                    "Led workouts, pacing, and relays as 3-year captain; 400m/800m specialist",
-                ),
-            },
-            {
-                "title": "Bentley Soccer — Varsity Team Captain (Grades 10–12), Striker",
-                "degree": None,
-                "bullets": (
-                    "2026 League Offensive Player of the Year; 2026 BCL Championship MVP; Team MVP (’24–’25); 2× All-League (’24, ’25); Phoenix Award (’23–’24)",
-                    "3-year captain",
-                ),
-            },
-            {
-                "title": "Student Body Treasurer (former Class President & Ambassador)",
-                "degree": None,
-                "bullets": (
-                    "Managed the student store (inventory restocking + revenue tracking); organized class spirit events; led campus tours.",
-                ),
-            },
-            {
-                "title": "ProWash & Detail Co. — Founder & Managing Partner",
-                "degree": None,
-                "bullets": (
-                    "Founded a local mobile detailing & power washing business; managed 3 employees, client scheduling, and equipment.",
-                ),
-            },
-            {
-                "title": "RIO Training App — Creator / Coder / Researcher",
-                "degree": None,
-                "bullets": (
-                    "Building an 800m training app; researched physiological and neurological body systems while using a coding agent to build workout algorithms and classifier algorithms for athlete session data.",
-                ),
-            },
-            {
-                "title": "Bentley Junior Research Program — Independent Student Researcher",
-                "degree": None,
-                "bullets": (
-                    "12-page thesis on colonial origins & labor migration in West African soccer academies; awarded JRP Honorable Mention.",
-                ),
-            },
-            {
-                "title": "Bentley Student Life & Mental Wellness Programming — Co-Facilitator & Stage Moderator",
-                "degree": None,
-                "bullets": (
-                    "Co-facilitated mental health assembly; led live onstage interview with former MLB player Drew Robinson.",
-                ),
-            },
-            {
-                "title": "Alameda County Community Food Bank — Community Volunteer",
-                "degree": None,
-                "bullets": (
-                    "Sorted, weighed, and boxed produce/dry goods; supported East Bay residents.",
-                ),
-            },
-            {
-                "title": "Lamorinda Orthopedics and Sport PT — Volunteer Service Worker",
-                "degree": None,
-                "bullets": (
-                    "Assisted PTs with rehab setups, cleaning, and equipment prep; supported patient exercises under staff supervision.",
-                ),
-            },
-        ),
-    },
-)
+def days_until_race(today: date | None = None) -> int:
+    """Whole days from a Pacific calendar date until the Stanford Invitational."""
+    if today is None:
+        today = datetime.now(ZoneInfo(RACE_ZONE)).date()
+    return (date.fromisoformat(RACE_DATE) - today).days
+
+
+def countdown_parts(days: int, race_name: str = RACE_NAME) -> tuple[str, str]:
+    """Return the big count and the words beside it.
+
+    The JavaScript countdown in js/main.js uses the same four cases.
+    """
+    if days > 1:
+        return str(days), f"days until the {race_name}"
+    if days == 1:
+        return "1", f"day until the {race_name}"
+    if days == 0:
+        return "Today", f"is the {race_name}"
+    ago = abs(days)
+    unit = "day" if ago == 1 else "days"
+    return str(ago), f"{unit} since the {race_name}"

@@ -197,3 +197,52 @@ function portfolioPath(pathname) {
     for (var j = 0; j < items.length; j++) items[j].classList.add("is-in");
   }, 1000);
 })();
+
+/* Days until the Stanford Invitational. Same four cases as countdown_parts. */
+(function () {
+  var node = document.querySelector(".race-countdown");
+  if (!node) return;
+  var iso = node.getAttribute("data-race-date");
+  var zone = node.getAttribute("data-race-zone") || "America/Los_Angeles";
+  var name = node.getAttribute("data-race-name") || "Stanford Invitational";
+  if (!iso) return;
+
+  function calendarToday() {
+    var parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: zone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).formatToParts(new Date());
+    var map = {};
+    for (var i = 0; i < parts.length; i++) map[parts[i].type] = parts[i].value;
+    return Date.UTC(Number(map.year), Number(map.month) - 1, Number(map.day));
+  }
+
+  function render() {
+    var bits = iso.split("-");
+    if (bits.length !== 3) return;
+    var target = Date.UTC(Number(bits[0]), Number(bits[1]) - 1, Number(bits[2]));
+    var days = Math.round((target - calendarToday()) / 86400000);
+    var count = node.querySelector(".race-count");
+    var rest = node.querySelector(".race-rest");
+    if (!count || !rest) return;
+    if (days > 1) {
+      count.textContent = String(days);
+      rest.textContent = "days until the " + name;
+    } else if (days === 1) {
+      count.textContent = "1";
+      rest.textContent = "day until the " + name;
+    } else if (days === 0) {
+      count.textContent = "Today";
+      rest.textContent = "is the " + name;
+    } else {
+      var ago = Math.abs(days);
+      count.textContent = String(ago);
+      rest.textContent = (ago === 1 ? "day" : "days") + " since the " + name;
+    }
+  }
+
+  render();
+  window.setInterval(render, 60 * 60 * 1000);
+})();

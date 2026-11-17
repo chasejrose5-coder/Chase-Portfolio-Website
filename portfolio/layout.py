@@ -21,7 +21,6 @@ FONT_IMPORT = (
 NAV = (
     ("home", "Home", "./"),
     ("projects", "Projects", "projects"),
-    ("resume", "Resume", "resume"),
 )
 
 # One path normalizer for the project morph. Community Cloud mounts the app

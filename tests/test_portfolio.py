@@ -1,0 +1,198 @@
+"""Story-first portfolio: copy, section order, and what was removed."""
+
+from __future__ import annotations
+
+import tempfile
+import unittest
+from datetime import date
+from pathlib import Path
+
+from portfolio.content import (
+    FUN_FACT_PLACEHOLDERS,
+    PAGE_COPY,
+    PROJECTS,
+    QUOTES,
+    RACE_DATE,
+    STORY_PLACEHOLDERS,
+    countdown_parts,
+    days_until_race,
+)
+from portfolio.layout import NAV
+from portfolio.pages import home_main_html, project_detail_html, resume_public_path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class CountdownTests(unittest.TestCase):
+    def test_days_until_race(self):
+        self.assertEqual(days_until_race(date(2027, 3, 18)), 1)
+        self.assertEqual(days_until_race(date(2027, 3, 19)), 0)
+        self.assertEqual(days_until_race(date(2027, 3, 20)), -1)
+        self.assertGreater(days_until_race(date(2026, 11, 17)), 1)
+
+    def test_countdown_wording(self):
+        self.assertEqual(countdown_parts(122), ("122", "days until the Stanford Invitational"))
+        self.assertEqual(countdown_parts(1), ("1", "day until the Stanford Invitational"))
+        self.assertEqual(countdown_parts(0), ("Today", "is the Stanford Invitational"))
+        self.assertEqual(countdown_parts(-1), ("1", "day since the Stanford Invitational"))
+        self.assertEqual(countdown_parts(-4), ("4", "days since the Stanford Invitational"))
+
+
+class HomeTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.html = home_main_html()
+
+    def test_section_order(self):
+        ids = [
+            "origin-story",
+            "building",
+            "track-field",
+            "fun-facts",
+            "stories",
+            "video",
+            "quotes",
+            "contact",
+        ]
+        positions = [self.html.index(f'id="{item}"') for item in ids]
+        self.assertEqual(positions, sorted(positions))
+        self.assertLess(self.html.index("<h1"), positions[0])
+        self.assertIn("Chase Rose", self.html)
+        self.assertIn("Captain. Researcher. Builder.", self.html)
+        self.assertIn("app/static/home/chase-home-photo.jpg", self.html)
+
+    def test_origin_keeps_his_meaning(self):
+        self.assertIn("good at running", self.html)
+        self.assertIn("their own niche", self.html)
+        self.assertIn("proud of", self.html)
+        self.assertIn("in control of what I do", self.html)
+
+    def test_building_cards_and_countdown(self):
+        self.assertIn("1:55.0", self.html)
+        self.assertIn("Stanford Invitational", self.html)
+        self.assertIn("3/19/27", self.html)
+        self.assertIn('data-race-date="2027-03-19"', self.html)
+        self.assertIn('data-race-zone="America/Los_Angeles"', self.html)
+        count, rest = countdown_parts(days_until_race())
+        self.assertIn(f'class="race-count">{count}<', self.html)
+        self.assertIn(rest, self.html)
+        self.assertIn("crew of three", self.html)
+        self.assertIn('href="rio"', self.html)
+        self.assertIn('href="prowash"', self.html)
+        self.assertIn("https://www.riorunning.com", self.html)
+        self.assertIn("https://github.com/chasejrose5-coder/rio", self.html)
+        self.assertIn("https://prowash.streamlit.app", self.html)
+        self.assertIn("https://github.com/chasejrose5-coder/prowash-site", self.html)
+
+    def test_track_and_field_uses_existing_facts(self):
+        self.assertIn("school records in the 400m and the 800m", self.html)
+        self.assertIn("Team MVP in 2025", self.html)
+        self.assertIn("NCS finalist", self.html)
+        self.assertIn("2× All-League", self.html)
+        self.assertIn("League Offensive Player of the Year", self.html)
+        self.assertIn("BCL Championship MVP", self.html)
+        self.assertEqual(self.html.count("Three-year captain"), 2)
+
+    def test_fun_facts_and_placeholders(self):
+        self.assertIn("12-page thesis", self.html)
+        self.assertIn("West African soccer academies", self.html)
+        self.assertIn("JRP Honorable Mention", self.html)
+        self.assertIn("Drew Robinson", self.html)
+        self.assertIn("Student Body Treasurer", self.html)
+        self.assertIn("student store", self.html)
+        self.assertEqual(self.html.count("Fun fact coming soon"), len(FUN_FACT_PLACEHOLDERS))
+        self.assertGreaterEqual(len(FUN_FACT_PLACEHOLDERS), 2)
+        self.assertLessEqual(len(FUN_FACT_PLACEHOLDERS), 3)
+        self.assertIn('class="fun-soon soon', self.html)
+        self.assertIn("Coming soon", self.html)
+
+    def test_story_and_video_placeholders(self):
+        self.assertEqual(self.html.count("Story coming soon"), len(STORY_PLACEHOLDERS))
+        self.assertGreaterEqual(len(STORY_PLACEHOLDERS), 2)
+        self.assertLessEqual(len(STORY_PLACEHOLDERS), 3)
+        self.assertIn('class="story-card soon', self.html)
+        self.assertIn("Video coming soon", self.html)
+        self.assertIn('class="video-slot soon', self.html)
+        self.assertNotIn("<iframe", self.html)
+        self.assertNotIn("youtube", self.html.lower())
+
+    def test_quotes_and_contact(self):
+        for quote in QUOTES:
+            self.assertIn(quote["attribution"], self.html)
+        self.assertIn("Chasejrose5@gmail.com", self.html)
+        self.assertIn("mailto:Chasejrose5@gmail.com", self.html)
+        self.assertIn("https://github.com/chasejrose5-coder", self.html)
+        self.assertNotIn("Download resume", self.html)
+
+    def test_removed_resume_material(self):
+        banned = (
+            "GPA",
+            "SAT",
+            "AP Physics",
+            "Food Bank",
+            "Lamorinda",
+            "community service",
+            "Education",
+            ">Resume<",
+        )
+        for phrase in banned:
+            self.assertNotIn(phrase, self.html)
+        self.assertNotIn("resume", PAGE_COPY["home"]["description"].lower())
+        self.assertNotIn("resume", {item[0] for item in NAV})
+        labels = [item[1] for item in NAV]
+        self.assertEqual(labels, ["Home", "Projects"])
+
+
+class ResumeFileTests(unittest.TestCase):
+    def test_absent_until_a_file_exists(self):
+        self.assertIsNone(resume_public_path())
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            static = root / "static"
+            static.mkdir()
+            (static / "notes.pdf").write_bytes(b"%PDF")
+            self.assertIsNone(resume_public_path(root))
+            (static / "Chase-Resume.pdf").write_bytes(b"%PDF")
+            self.assertEqual(resume_public_path(root), "app/static/Chase-Resume.pdf")
+
+
+class RioDetailTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        rio = next(project for project in PROJECTS if project["slug"] == "rio")
+        cls.html = project_detail_html(rio, 0)
+
+    def test_story_and_roadmap_without_the_screen_tour(self):
+        self.assertIn("Runner Intelligence Owned", self.html)
+        self.assertIn("March 19, 2027", self.html)
+        self.assertIn("Shipped now", self.html)
+        self.assertIn(">Next<", self.html)
+        self.assertIn(">Later<", self.html)
+        self.assertIn("blocks.webp", self.html)
+        self.assertIn("goal.png", self.html)
+        self.assertIn("about.jpg", self.html)
+        for phrase in (
+            "Home is where the season stands",
+            "Plan is the season laid out",
+            "Start session is the workout itself",
+            "Profile keeps the goal",
+        ):
+            self.assertNotIn(phrase, self.html)
+        self.assertIn("https://www.riorunning.com", self.html)
+        self.assertIn("https://github.com/chasejrose5-coder/rio", self.html)
+
+
+class AppShellTests(unittest.TestCase):
+    def test_streamlit_entrypoint_has_no_resume_route(self):
+        source = (ROOT / "streamlit_app.py").read_text(encoding="utf-8")
+        self.assertNotIn("resume", source.lower())
+        self.assertFalse((ROOT / "pages" / "resume.py").exists())
+        self.assertFalse((ROOT / "resume.html").exists())
+        script = (ROOT / "js" / "main.js").read_text(encoding="utf-8")
+        self.assertIn(".race-countdown", script)
+        self.assertIn("days until the ", script)
+        self.assertEqual(RACE_DATE, "2027-03-19")
+
+
+if __name__ == "__main__":
+    unittest.main()

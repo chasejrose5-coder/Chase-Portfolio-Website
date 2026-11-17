@@ -38,11 +38,6 @@ navigation = st.navigation(
             )
             for project in PROJECTS
         ],
-        st.Page(
-            "pages/resume.py",
-            title="Resume — Chase Rose",
-            url_path="resume",
-        ),
     ],
     position="hidden",
 )

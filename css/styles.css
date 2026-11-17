@@ -263,11 +263,40 @@ a:focus-visible,
    ------------------------------------------------------------ */
 
 .hero {
-  padding-top: clamp(2.25rem, 6vh, 6.25rem);
-  padding-bottom: clamp(1.5rem, 3.5vh, 3.25rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name photo"
+    "tag photo";
+  align-items: center;
+  column-gap: clamp(1.5rem, 4vw, 3.5rem);
+  row-gap: 1.15rem;
+  padding-top: clamp(1.5rem, 4vh, 3rem);
+  padding-bottom: clamp(2.75rem, 6vh, 4.5rem);
 }
 
-.hero h1,
+.hero h1 {
+  grid-area: name;
+  align-self: end;
+  min-width: 0;
+  font-size: clamp(3.2rem, 7.2vw, 5.6rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+}
+
+.hero .tagline {
+  grid-area: tag;
+  align-self: start;
+  margin-top: 0;
+}
+
+.hero .home-portrait {
+  grid-area: photo;
+  justify-self: end;
+  width: min(23.5rem, 100%);
+}
+
 .page-title {
   font-size: clamp(3.4rem, 9vw, 6.4rem);
   font-weight: 600;
@@ -283,14 +312,14 @@ a:focus-visible,
   letter-spacing: -0.02em;
 }
 
-/* First screen holds the hero and intro. Quotes start after the fold.
-   The arrow is pinned to the viewport, not the fold, so a long intro
-   cannot push it below the first screen. It fades on scroll. */
+/* First screen is the name, portrait, and tagline.
+   The arrow is pinned to the viewport and fades on scroll. */
 .home-fold {
   min-height: calc(100vh - var(--header));
   min-height: calc(100svh - var(--header));
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .scroll-hint {
@@ -395,9 +424,286 @@ a:focus-visible,
   min-width: 0;
 }
 
-/* The fold already keeps this section off the first screen. */
-.home-fold + .quotes {
-  margin-top: clamp(1.75rem, 4vw, 2.75rem);
+/* Story sections
+   ------------------------------------------------------------ */
+
+.story-section {
+  margin-top: clamp(4.25rem, 9vw, 7rem);
+  padding-top: clamp(1.35rem, 3vw, 2rem);
+  border-top: 1px solid #8D99AE;
+  scroll-margin-top: calc(var(--header) + 0.75rem);
+}
+
+.story-section h2 {
+  margin-bottom: 1.15rem;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.story-copy {
+  max-width: var(--measure);
+}
+
+.story-copy p + p,
+.field-card p,
+.build-body {
+  margin-top: 0;
+}
+
+.story-copy p + p {
+  margin-top: 1rem;
+}
+
+.build-grid,
+.field-grid,
+.story-grid {
+  display: grid;
+  gap: 1.25rem 1.5rem;
+}
+
+.build-grid,
+.field-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.story-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.build-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid rgba(141, 153, 174, 0.45);
+  background: #FFFFFF;
+}
+
+.build-card-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  padding-bottom: 0.15rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.build-card-link:hover .build-headline,
+.build-card-link:focus-visible .build-headline {
+  color: #2B2D42;
+}
+
+.build-media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(141, 153, 174, 0.45);
+  background: #FFFFFF;
+}
+
+.build-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.build-media.is-mark {
+  display: grid;
+  place-items: center;
+}
+
+.build-media.is-mark img {
+  width: min(16rem, 78%);
+  height: auto;
+  object-fit: contain;
+  padding: 1.1rem;
+}
+
+.build-kicker,
+.build-headline,
+.build-body,
+.build-more,
+.race-countdown {
+  margin-inline: 1.1rem;
+}
+
+.build-kicker {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.build-headline {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+}
+
+.build-body,
+.field-card p,
+.story-lead,
+.story-card p,
+.fun-facts li {
+  color: #1A1A2E;
+  font-size: 1.02rem;
+  letter-spacing: -0.015em;
+  line-height: 1.6;
+}
+
+.build-more {
+  color: #2B2D42;
+  font-size: 0.92rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.build-card .work-linkline {
+  margin: 0.85rem 1.1rem 1.1rem;
+}
+
+.race-countdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.race-count {
+  color: #1A1A2E;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  font-variant-numeric: tabular-nums;
+}
+
+.race-rest {
+  color: #2B2D42;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.field-card h3,
+.story-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.field-card p {
+  margin-top: 0.55rem;
+}
+
+.fun-facts {
+  max-width: 42rem;
+  padding: 0;
+  list-style: none;
+}
+
+.fun-facts li {
+  padding: 0.85rem 0;
+}
+
+.fun-facts li + li {
+  border-top: 1px solid rgba(141, 153, 174, 0.45);
+}
+
+.story-lead {
+  max-width: var(--measure);
+  margin-bottom: 1.15rem;
+}
+
+.soon {
+  background: #f7f8fa;
+  border: 1px dashed #8D99AE;
+  color: #596579;
+}
+
+.soon-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #596579;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.fun-facts li.soon {
+  margin-top: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1px dashed #8D99AE;
+}
+
+.fun-facts li.soon + li.soon {
+  border-top: 1px dashed #8D99AE;
+}
+
+.soon .soon-text,
+.story-card.soon p,
+.video-slot.soon p {
+  color: #596579;
+}
+
+.story-card.soon {
+  min-height: 9.5rem;
+  padding: 1.1rem 1.15rem 1.2rem;
+}
+
+.story-card.soon h3 {
+  color: #596579;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.video-slot.soon {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.35rem;
+  width: min(100%, 46rem);
+  min-height: 14rem;
+  aspect-ratio: 16 / 9;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.video-slot.soon .soon-label {
+  margin-bottom: 0;
+}
+
+.story-section .quotes {
+  margin-top: 0.35rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.4rem;
+  max-width: var(--measure);
+}
+
+.contact-links a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.contact-links a:hover,
+.contact-links a:focus-visible {
+  color: #2B2D42;
+  border-bottom-color: #8D99AE;
 }
 
 .quote {
@@ -647,7 +953,7 @@ a:focus-visible,
 /* Projects
    Quiet index rows and a diary-scale detail column.
    Wide enough that two projects fill the screen, short of the old 68rem.
-   Home and resume keep the rules above.
+   Home keeps the rules above.
    ------------------------------------------------------------ */
 
 .work-column {
@@ -1115,15 +1421,33 @@ a:focus-visible,
 }
 
 @media (max-height: 740px) {
-  .home-portrait {
+  .home-portrait,
+  .hero .home-portrait {
     width: min(17rem, 72vw);
   }
 }
 
 @media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "name"
+      "tag"
+      "photo";
+    row-gap: 1rem;
+  }
+
+  .hero .home-portrait {
+    justify-self: start;
+    width: min(19.25rem, 80vw);
+  }
+
   .intro,
   .project,
-  .resume-layout {
+  .resume-layout,
+  .build-grid,
+  .field-grid,
+  .story-grid {
     grid-template-columns: 1fr;
   }
 
