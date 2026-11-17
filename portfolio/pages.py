@@ -13,12 +13,14 @@ from portfolio.content import (
     EMAIL,
     FIELD,
     FIELD_HEADING,
+    FINISH,
     FUN_FACT_PLACEHOLDERS,
     FUN_FACTS,
     FUN_FACTS_HEADING,
     GITHUB_LINK_LABEL,
     GITHUB_PROFILE,
     HOME_PORTRAIT,
+    LAP_MARKS,
     ORIGIN,
     ORIGIN_HEADING,
     PROJECTS,
@@ -28,6 +30,8 @@ from portfolio.content import (
     RACE_NAME,
     RACE_ZONE,
     RESUME_LINK_LABEL,
+    SCOREBOARD_EVENT,
+    SCOREBOARD_RECORDS,
     STORIES_HEADING,
     STORIES_LEAD,
     STORY_LINK_LABEL,
@@ -78,9 +82,11 @@ def resume_public_path(root: Path | None = None) -> str | None:
 
 def _section(section_id: str, heading: str, body: str) -> str:
     sid = html.escape(section_id, quote=True)
+    label = dict(LAP_MARKS).get(section_id, "")
+    lap = f' data-lap="{html.escape(label, quote=True)}"' if label else ""
     return (
-        f'<section class="story-section" id="{sid}" aria-labelledby="{sid}-heading">'
-        f'<h2 id="{sid}-heading" class="reveal">{html.escape(heading)}</h2>'
+        f'<section class="story-section reveal" id="{sid}"{lap} aria-labelledby="{sid}-heading">'
+        f'<h2 id="{sid}-heading">{html.escape(heading)}</h2>'
         f"{body}"
         "</section>"
     )
@@ -126,6 +132,72 @@ def _building_cards() -> str:
     return f'<div class="build-grid">{"".join(cards)}</div>'
 
 
+def _finish_gate() -> str:
+    """Full-screen finish tape. JS shows it once per session."""
+    skip = html.escape(FINISH["skip"])
+    title = html.escape(FINISH["title"])
+    kicker = html.escape(FINISH["kicker"])
+    action = html.escape(FINISH["action"])
+    hint = html.escape(FINISH["hint"])
+    return (
+        '<div class="finish-gate" id="finish-gate" role="dialog" aria-modal="true" '
+        'aria-labelledby="finish-title">'
+        "<script>(function(){try{if(sessionStorage.getItem('chase-finish-seen')==='1')"
+        "{document.getElementById('finish-gate').classList.add('is-done');}}catch(e){}})();</script>"
+        f'<a class="finish-skip" id="finish-skip" href="#main">{skip}</a>'
+        '<div class="finish-stage">'
+        f'<p class="finish-kicker">{kicker}</p>'
+        f'<h2 id="finish-title">{title}</h2>'
+        '<button class="finish-break" id="finish-break" type="button">'
+        '<span class="finish-lane" aria-hidden="true">'
+        '<span class="finish-ribbon">'
+        '<span class="finish-half is-left"><span>FINISH</span></span>'
+        '<span class="finish-half is-right"><span>FINISH</span></span>'
+        "</span></span>"
+        f'<span class="finish-cta">{action}</span>'
+        "</button>"
+        f'<p class="finish-hint">{hint}</p>'
+        "</div></div>"
+    )
+
+
+def _scoreboard() -> str:
+    count, _rest = countdown_parts(days_until_race())
+    return (
+        '<div class="scoreboard reveal" data-race-date="'
+        f'{html.escape(RACE_DATE, quote=True)}" data-race-zone="'
+        f'{html.escape(RACE_ZONE, quote=True)}" data-race-name="'
+        f'{html.escape(RACE_NAME, quote=True)}">'
+        f'<p class="scoreboard-event">{html.escape(SCOREBOARD_EVENT)}</p>'
+        '<p class="scoreboard-digits" aria-live="polite">'
+        f'<span class="race-count">{html.escape(count)}</span>'
+        '<span class="scoreboard-unit" data-race-unit>DAYS</span>'
+        "</p>"
+        f'<p class="scoreboard-records">{html.escape(SCOREBOARD_RECORDS)}</p>'
+        "</div>"
+    )
+
+
+def _lap_nav() -> str:
+    marks = []
+    for section_id, label in LAP_MARKS:
+        sid = html.escape(section_id, quote=True)
+        name = html.escape(label)
+        marks.append(
+            f'<a class="lap-mark" href="#{sid}" data-lap-target="{sid}" '
+            f'aria-label="{name}"><span class="lap-dot" aria-hidden="true"></span>'
+            f'<span class="lap-name">{name}</span></a>'
+        )
+    return (
+        '<nav class="lap" id="lap" aria-label="Page progress">'
+        '<div class="lap-track">'
+        '<span class="lap-oval" aria-hidden="true"></span>'
+        '<span class="lap-runner" id="lap-runner" aria-hidden="true"></span>'
+        f'{"".join(marks)}'
+        "</div></nav>"
+    )
+
+
 def _contact_links() -> str:
     email = html.escape(EMAIL)
     github = html.escape(GITHUB_PROFILE, quote=True)
@@ -149,8 +221,22 @@ def _contact_links() -> str:
 
 def home_main_html() -> str:
     portrait = _picture(HOME_PORTRAIT, loading="eager")
-    origin = "".join(f'<p class="reveal">{html.escape(text)}</p>' for text in ORIGIN)
-    facts = [f'<li class="reveal">{html.escape(text)}</li>' for text in FUN_FACTS]
+    origin = "".join(f"<p>{html.escape(text)}</p>" for text in ORIGIN)
+    facts = []
+    for fact in FUN_FACTS:
+        facts.append(
+            '<li>'
+            '<button class="flip" type="button" aria-pressed="false">'
+            '<span class="flip-inner">'
+            '<span class="flip-face flip-front">'
+            f'<span class="flip-kicker">Fun fact</span>'
+            f'<span class="flip-hook">{html.escape(fact["front"])}</span>'
+            "</span>"
+            '<span class="flip-face flip-back" aria-hidden="true">'
+            f'<span class="flip-copy">{html.escape(fact["back"])}</span>'
+            "</span>"
+            "</span></button></li>"
+        )
     for text in FUN_FACT_PLACEHOLDERS:
         facts.append(
             '<li class="fun-soon soon reveal">'
@@ -192,8 +278,9 @@ def home_main_html() -> str:
         "</div>"
     )
     return (
+        f"{_finish_gate()}"
         '<main id="main"><div class="wrap">'
-        '<div class="home-fold">'
+        '<div class="home-fold" id="hero" data-lap="Start">'
         '<section class="hero">'
         f'<h1 class="rise">{html.escape(NAME)}</h1>'
         f'<p class="tagline rise d1">{html.escape(TAGLINE)}</p>'
@@ -202,9 +289,9 @@ def home_main_html() -> str:
         '<div class="scroll-hint" aria-hidden="true">&#8595;</div>'
         "</div>"
         f'{_section("origin-story", ORIGIN_HEADING, f"<div class=\"story-copy stagger\">{origin}</div>")}'
-        f'{_section("building", BUILDING_HEADING, _building_cards())}'
+        f'{_section("building", BUILDING_HEADING, _scoreboard() + _building_cards())}'
         f'{_section("track-field", FIELD_HEADING, f"<div class=\"field-grid\">{"".join(columns)}</div>")}'
-        f'{_section("fun-facts", FUN_FACTS_HEADING, f"<ul class=\"fun-facts stagger\">{"".join(facts)}</ul>")}'
+        f'{_section("fun-facts", FUN_FACTS_HEADING, f"<ul class=\"fun-facts\">{"".join(facts)}</ul>")}'
         + _section(
             "stories",
             STORIES_HEADING,
@@ -215,6 +302,7 @@ def home_main_html() -> str:
         + _section("quotes", QUOTES_HEADING, f'<div class="quotes stagger">{"".join(quotes)}</div>')
         + _section("contact", CONTACT_HEADING, _contact_links())
         + "</div></main>"
+        + _lap_nav()
     )
 
 

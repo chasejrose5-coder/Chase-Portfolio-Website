@@ -93,6 +93,28 @@ class HomeTests(unittest.TestCase):
         self.assertIn("BCL Championship MVP", self.html)
         self.assertEqual(self.html.count("Three-year captain"), 2)
 
+    def test_finish_line_lap_scoreboard_and_flips(self):
+        self.assertIn('id="finish-gate"', self.html)
+        self.assertIn('class="finish-skip"', self.html)
+        self.assertIn(">Skip<", self.html)
+        self.assertIn("Break the tape", self.html)
+        self.assertIn("chase-finish-seen", self.html)
+        self.assertIn('id="lap"', self.html)
+        self.assertIn('id="lap-runner"', self.html)
+        self.assertIn("400m · 800m school records", self.html)
+        self.assertIn('class="scoreboard', self.html)
+        self.assertIn('class="flip"', self.html)
+        self.assertGreaterEqual(self.html.count('class="flip"'), 3)
+        self.assertIn('aria-pressed="false"', self.html)
+        css = (ROOT / "css" / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("min-height: 44px", css)
+        self.assertIn("min-width: 44px", css)
+        self.assertIn("prefers-reduced-motion", css)
+        script = (ROOT / "js" / "main.js").read_text(encoding="utf-8")
+        self.assertIn("chase-finish-seen", script)
+        self.assertIn('event.key === " "', script)
+        self.assertIn("prefers-reduced-motion", script)
+
     def test_fun_facts_and_placeholders(self):
         self.assertIn("12-page thesis", self.html)
         self.assertIn("West African soccer academies", self.html)

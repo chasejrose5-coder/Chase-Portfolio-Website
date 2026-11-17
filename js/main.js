@@ -200,14 +200,10 @@ function portfolioPath(pathname) {
 
 /* Days until the Stanford Invitational. Same four cases as countdown_parts. */
 (function () {
-  var node = document.querySelector(".race-countdown");
-  if (!node) return;
-  var iso = node.getAttribute("data-race-date");
-  var zone = node.getAttribute("data-race-zone") || "America/Los_Angeles";
-  var name = node.getAttribute("data-race-name") || "Stanford Invitational";
-  if (!iso) return;
+  var nodes = document.querySelectorAll(".race-countdown, .scoreboard");
+  if (!nodes.length) return;
 
-  function calendarToday() {
+  function calendarToday(zone) {
     var parts = new Intl.DateTimeFormat("en-US", {
       timeZone: zone,
       year: "numeric",
@@ -220,29 +216,206 @@ function portfolioPath(pathname) {
   }
 
   function render() {
-    var bits = iso.split("-");
-    if (bits.length !== 3) return;
-    var target = Date.UTC(Number(bits[0]), Number(bits[1]) - 1, Number(bits[2]));
-    var days = Math.round((target - calendarToday()) / 86400000);
-    var count = node.querySelector(".race-count");
-    var rest = node.querySelector(".race-rest");
-    if (!count || !rest) return;
-    if (days > 1) {
-      count.textContent = String(days);
-      rest.textContent = "days until the " + name;
-    } else if (days === 1) {
-      count.textContent = "1";
-      rest.textContent = "day until the " + name;
-    } else if (days === 0) {
-      count.textContent = "Today";
-      rest.textContent = "is the " + name;
-    } else {
-      var ago = Math.abs(days);
-      count.textContent = String(ago);
-      rest.textContent = (ago === 1 ? "day" : "days") + " since the " + name;
+    for (var n = 0; n < nodes.length; n++) {
+      var node = nodes[n];
+      var iso = node.getAttribute("data-race-date");
+      if (!iso) continue;
+      var zone = node.getAttribute("data-race-zone") || "America/Los_Angeles";
+      var name = node.getAttribute("data-race-name") || "Stanford Invitational";
+      var bits = iso.split("-");
+      if (bits.length !== 3) continue;
+      var target = Date.UTC(Number(bits[0]), Number(bits[1]) - 1, Number(bits[2]));
+      var days = Math.round((target - calendarToday(zone)) / 86400000);
+      var count = node.querySelector(".race-count");
+      var rest = node.querySelector(".race-rest");
+      var unit = node.querySelector("[data-race-unit]");
+      var shown = days < 0 ? Math.abs(days) : days;
+      if (count) count.textContent = days === 0 ? "0" : String(shown);
+      if (rest) {
+        if (days > 1) rest.textContent = "days until the " + name;
+        else if (days === 1) rest.textContent = "day until the " + name;
+        else if (days === 0) rest.textContent = "is the " + name;
+        else rest.textContent = (shown === 1 ? "day" : "days") + " since the " + name;
+      }
+      if (unit) {
+        if (days > 1) unit.textContent = "DAYS";
+        else if (days === 1) unit.textContent = "DAY";
+        else if (days === 0) unit.textContent = "TODAY";
+        else unit.textContent = shown === 1 ? "DAY AGO" : "DAYS AGO";
+      }
     }
   }
 
   render();
   window.setInterval(render, 60 * 60 * 1000);
+})();
+
+/* Finish tape. Once per session. Space breaks it. Skip dismisses it. */
+(function () {
+  var gate = document.getElementById("finish-gate");
+  if (!gate) return;
+  var key = "chase-finish-seen";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var breakBtn = document.getElementById("finish-break");
+  var skip = document.getElementById("finish-skip");
+
+  function remember() {
+    try { sessionStorage.setItem(key, "1"); } catch (err) {}
+  }
+
+  function release() {
+    gate.setAttribute("aria-hidden", "true");
+    var main = document.getElementById("main");
+    if (!main) return;
+    if (!main.hasAttribute("tabindex")) main.setAttribute("tabindex", "-1");
+    main.focus({ preventScroll: true });
+  }
+
+  function closeGate(animate) {
+    if (gate.classList.contains("is-done") || gate.classList.contains("is-breaking")) return;
+    remember();
+    if (reduce || !animate) {
+      gate.classList.add("is-done");
+      release();
+      return;
+    }
+    gate.classList.add("is-breaking");
+    window.setTimeout(function () {
+      gate.classList.add("is-done");
+      release();
+    }, 780);
+  }
+
+  try {
+    if (sessionStorage.getItem(key) === "1") gate.classList.add("is-done");
+  } catch (err) {}
+
+  if (gate.classList.contains("is-done")) {
+    gate.setAttribute("aria-hidden", "true");
+    return;
+  }
+
+  window.setTimeout(function () {
+    if (breakBtn) breakBtn.focus();
+  }, 40);
+
+  if (breakBtn) breakBtn.addEventListener("click", function () { closeGate(true); });
+  if (skip) {
+    skip.addEventListener("click", function (event) {
+      event.preventDefault();
+      closeGate(false);
+    });
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (gate.classList.contains("is-done")) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeGate(false);
+      return;
+    }
+    if ((event.key === " " || event.code === "Space") && event.target !== skip) {
+      event.preventDefault();
+      closeGate(true);
+      return;
+    }
+    if (event.key !== "Tab" || !skip || !breakBtn) return;
+    if (event.shiftKey && document.activeElement === skip) {
+      event.preventDefault();
+      breakBtn.focus();
+    } else if (!event.shiftKey && document.activeElement === breakBtn) {
+      event.preventDefault();
+      skip.focus();
+    }
+  });
+})();
+
+/* Flip the fun-fact cards. Enter and space work because they are buttons. */
+(function () {
+  var cards = document.querySelectorAll(".flip");
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].addEventListener("click", function () {
+      var on = this.classList.toggle("is-flipped");
+      this.setAttribute("aria-pressed", on ? "true" : "false");
+      var front = this.querySelector(".flip-front");
+      var back = this.querySelector(".flip-back");
+      if (front) front.setAttribute("aria-hidden", on ? "true" : "false");
+      if (back) back.setAttribute("aria-hidden", on ? "false" : "true");
+    });
+  }
+})();
+
+/* Runner dot around the lap, with a marker for each section. */
+(function () {
+  var lap = document.getElementById("lap");
+  var runner = document.getElementById("lap-runner");
+  if (!lap || !runner) return;
+  var marks = lap.querySelectorAll(".lap-mark");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var pending = false;
+
+  function scroller() {
+    var candidates = [
+      document.querySelector('[data-testid="stMain"]'),
+      document.scrollingElement,
+      document.documentElement
+    ];
+    var best = document.scrollingElement || document.documentElement;
+    for (var i = 0; i < candidates.length; i++) {
+      var node = candidates[i];
+      if (node && node.scrollHeight > node.clientHeight + 32) return node;
+    }
+    return best;
+  }
+
+  function metrics() {
+    var el = scroller();
+    var top = el.scrollTop || window.scrollY || 0;
+    var max = el.scrollHeight - el.clientHeight;
+    if (max < 1) max = 1;
+    return { el: el, top: top, max: max };
+  }
+
+  function sectionT(id, box) {
+    var node = document.getElementById(id);
+    if (!node) return 0;
+    var y;
+    if (box.el === document.scrollingElement || box.el === document.documentElement || box.el === document.body) {
+      y = node.getBoundingClientRect().top + (window.scrollY || 0);
+    } else {
+      y = node.getBoundingClientRect().top - box.el.getBoundingClientRect().top + box.el.scrollTop;
+    }
+    return Math.max(0, Math.min(1, y / box.max));
+  }
+
+  var targets = [];
+  for (var m = 0; m < marks.length; m++) {
+    targets.push(marks[m].getAttribute("data-lap-target"));
+  }
+
+  function frame() {
+    pending = false;
+    var box = metrics();
+    var p = Math.max(0, Math.min(1, box.top / box.max));
+    lap.style.setProperty("--lap", String(p));
+    var active = 0;
+    for (var i = 0; i < targets.length; i++) {
+      if (sectionT(targets[i], box) <= p + 0.02) active = i;
+    }
+    for (var j = 0; j < marks.length; j++) {
+      if (j === active) marks[j].classList.add("is-active");
+      else marks[j].classList.remove("is-active");
+    }
+  }
+
+  function request() {
+    if (pending) return;
+    pending = true;
+    window.requestAnimationFrame(frame);
+  }
+
+  if (!reduce) runner.style.transition = "left 80ms linear, top 80ms linear";
+  document.addEventListener("scroll", request, { capture: true, passive: true });
+  window.addEventListener("resize", request);
+  frame();
 })();

@@ -18,6 +18,8 @@ Open the URL Streamlit prints (usually http://localhost:8501).
 
 Edit the visible copy in `portfolio/content.py`.
 
+Home opens on a finish-line tape (once per session; Skip, click, or space breaks it; reduced motion skips the snap). A small track follows the scroll, a scoreboard counts down to Stanford and names the 400m and 800m school records, and the fun facts flip.
+
 ## Placeholders Chase still needs to fill
 
 These are marked “Coming soon” on the home page:

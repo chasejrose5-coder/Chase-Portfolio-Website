@@ -41,6 +41,30 @@ PAGE_COPY = {
 
 TAGLINE = "Captain. Researcher. Builder."
 
+FINISH = {
+    "kicker": "Finish line",
+    "title": "Break the tape",
+    "action": "Break the tape",
+    "hint": "Click, tap, or press space",
+    "skip": "Skip",
+}
+
+# One lap around the page. The ids match the home sections.
+LAP_MARKS = (
+    ("hero", "Start"),
+    ("origin-story", "Origin"),
+    ("building", "Build"),
+    ("track-field", "Track"),
+    ("fun-facts", "Facts"),
+    ("stories", "Stories"),
+    ("video", "Video"),
+    ("quotes", "Quotes"),
+    ("contact", "Contact"),
+)
+
+SCOREBOARD_EVENT = "Stanford Invitational"
+SCOREBOARD_RECORDS = "400m · 800m school records"
+
 ORIGIN_HEADING = "Origin story"
 
 # Lightly polished from Chase's own words. Two short paragraphs.
@@ -90,10 +114,20 @@ FIELD = (
 
 FUN_FACTS_HEADING = "Fun facts"
 
+# Front is the hook. Back is the fact already on the page. Nothing new.
 FUN_FACTS = (
-    "Wrote a 12-page thesis on West African soccer academies (JRP Honorable Mention).",
-    "Interviewed former MLB player Drew Robinson live on stage.",
-    "Student Body Treasurer who ran the student store.",
+    {
+        "front": "12-page thesis",
+        "back": "Wrote a 12-page thesis on West African soccer academies (JRP Honorable Mention).",
+    },
+    {
+        "front": "Drew Robinson",
+        "back": "Interviewed former MLB player Drew Robinson live on stage.",
+    },
+    {
+        "front": "Student store",
+        "back": "Student Body Treasurer who ran the student store.",
+    },
 )
 
 COMING_SOON_LABEL = "Coming soon"

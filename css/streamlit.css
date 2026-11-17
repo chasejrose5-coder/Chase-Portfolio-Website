@@ -210,6 +210,36 @@ section.main {
   color: #1a1a2e;
 }
 
+[data-testid="stHtml"] .scoreboard .race-count {
+  color: #f0b429;
+}
+
+[data-testid="stHtml"] .finish-skip,
+[data-testid="stHtml"] .finish-break,
+[data-testid="stHtml"] .finish-cta,
+[data-testid="stHtml"] .lap-mark,
+[data-testid="stHtml"] .flip {
+  text-decoration: none;
+}
+
+[data-testid="stHtml"] .finish-stage h2,
+[data-testid="stHtml"] .finish-cta,
+[data-testid="stHtml"] .finish-hint,
+[data-testid="stHtml"] .scoreboard,
+[data-testid="stHtml"] .scoreboard-records,
+[data-testid="stHtml"] .flip-copy {
+  color: #ffffff;
+}
+
+[data-testid="stHtml"] .finish-skip {
+  color: #ffffff;
+}
+
+[data-testid="stHtml"] .finish-skip:hover,
+[data-testid="stHtml"] .finish-skip:focus-visible {
+  color: #1a1a2e;
+}
+
 [data-testid="stHtml"] .soon,
 [data-testid="stHtml"] .soon p,
 [data-testid="stHtml"] .soon h3,
