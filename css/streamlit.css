@@ -7,10 +7,10 @@ body,
 [data-testid="stMain"],
 section.main {
   background:
-    linear-gradient(90deg, transparent 0 1.15rem, rgba(214, 255, 74, 0.55) 1.15rem 1.22rem, transparent 1.22rem 1.7rem, rgba(244, 239, 228, 0.28) 1.7rem 1.74rem, transparent 1.74rem),
-    repeating-linear-gradient(180deg, transparent 0 72px, rgba(244, 239, 228, 0.045) 72px 73px),
-    #10140f;
-  color: #f4efe4;
+    linear-gradient(90deg, transparent 0 1.1rem, #fff 1.1rem 1.18rem, transparent 1.18rem 1.55rem, rgba(255, 255, 255, 0.7) 1.55rem 1.58rem, transparent 1.58rem),
+    repeating-linear-gradient(180deg, transparent 0 80px, rgba(255, 255, 255, 0.08) 80px 81px),
+    #a8483a;
+  color: #ffffff;
 }
 
 [data-testid="stHeader"],
@@ -43,7 +43,7 @@ section.main {
 [data-testid="stHtml"] {
   width: 100%;
   line-height: inherit;
-  color: #f4efe4;
+  color: #ffffff;
 }
 
 [data-testid="stHtml"] ul,

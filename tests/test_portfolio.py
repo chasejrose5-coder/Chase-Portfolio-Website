@@ -18,7 +18,8 @@ from portfolio.content import (
     days_until_race,
 )
 from portfolio.layout import NAV
-from portfolio.pages import _finish_gate, home_main_html, project_detail_html, resume_public_path
+from portfolio.content import GHOST_800_PACE_SECONDS
+from portfolio.pages import _finish_gate, _gun_opener, home_main_html, project_detail_html, resume_public_path
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -121,6 +122,20 @@ class HomeTests(unittest.TestCase):
         self.assertIn('id="scoreboard-hit"', self.html)
         self.assertIn('data-goal="1:55.0"', self.html)
         self.assertIn("the short version", self.html)
+        gun = _gun_opener()
+        self.assertIn('id="start-gun"', gun)
+        self.assertIn("On your marks", gun)
+        self.assertIn(">Skip<", gun)
+        self.assertEqual(self.html.count('class="lane-btn"'), 8)
+        self.assertIn('id="run-it"', self.html)
+        self.assertIn("New PR!", self.html)
+        self.assertIn("Chase still wins", self.html)
+        self.assertIn("stand-in pace", self.html)
+        self.assertIn('id="oval-svg"', self.html)
+        self.assertGreater(GHOST_800_PACE_SECONDS, 0)
+        meet = (ROOT / "js" / "meet.js").read_text(encoding="utf-8")
+        self.assertIn("chase-gun-fired", meet)
+        self.assertIn("prefers-reduced-motion", meet)
 
     def test_fun_facts_and_placeholders(self):
         self.assertIn("12-page thesis", self.html)

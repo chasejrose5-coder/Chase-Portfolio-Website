@@ -53,6 +53,38 @@ PORTRAIT_NOTE = "Tuxedo. A boat. The bridge is back there."
 
 FALSE_START = "False start. Back on the line."
 
+# TODO: Replace with Chase's real 800m PR in seconds.
+# 1:55.0 is the Stanford goal, not a recorded time. This stand-in is only the ghost.
+GHOST_800_PACE_SECONDS = 125.0
+GAME_WALL_SECONDS = 5.0
+
+GUN = {
+    "marks": "On your marks",
+    "set": "Set",
+    "fire": "Fire",
+    "hint": "Click, tap, or press space",
+    "skip": "Skip",
+}
+
+GAME_HEADING = "Run it yourself"
+GAME_NOTE = "The ghost is on a stand-in pace. My real 800 time isn't on this page yet."
+GAME_HOW = "Tap the lane. Space or an arrow works too."
+GAME_START = "Start the sprint"
+GAME_WIN = "New PR!"
+GAME_LOSE = "Chase still wins"
+
+# Eight lanes. Video stays on the page, between stories and the quotes.
+LANES = (
+    (1, "hero", "Start"),
+    (2, "origin-story", "Origin"),
+    (3, "building", "Build"),
+    (4, "track-field", "Track"),
+    (5, "fun-facts", "Facts"),
+    (6, "stories", "Stories"),
+    (7, "quotes", "Lines"),
+    (8, "contact", "Find me"),
+)
+
 ORIGIN_ASIDE = "That's the short version. The rest of this page is me proving it."
 
 CONTACT_LEAD = "Email me, or come find the code. I answer."
@@ -60,17 +92,7 @@ CONTACT_LEAD = "Email me, or come find the code. I answer."
 VIDEO_LEAD = "Nothing here yet. When I have a video I actually like, it goes here."
 
 # One lap around the page. The ids match the home sections.
-LAP_MARKS = (
-    ("hero", "Start"),
-    ("origin-story", "Origin"),
-    ("building", "Build"),
-    ("track-field", "Track"),
-    ("fun-facts", "Facts"),
-    ("stories", "Stories"),
-    ("video", "Video"),
-    ("quotes", "Quotes"),
-    ("contact", "Contact"),
-)
+LAP_MARKS = tuple((target, label) for _lane, target, label in LANES)
 
 SCOREBOARD_EVENT = "Stanford Invitational"
 SCOREBOARD_RECORDS = "400m · 800m school records"

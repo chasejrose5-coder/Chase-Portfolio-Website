@@ -296,9 +296,18 @@ function portfolioPath(pathname) {
     return;
   }
 
-  window.setTimeout(function () {
+  if (!gate.classList.contains("is-waiting")) {
+    window.setTimeout(function () {
+      if (breakBtn) breakBtn.focus();
+    }, 40);
+  }
+
+  document.addEventListener("finish-ready", function () {
+    gate.hidden = false;
+    gate.classList.remove("is-waiting");
+    gate.style.display = "";
     if (breakBtn) breakBtn.focus();
-  }, 40);
+  });
 
   if (breakBtn) breakBtn.addEventListener("click", function () { closeGate(true); });
   if (skip) {
@@ -309,7 +318,7 @@ function portfolioPath(pathname) {
   }
 
   document.addEventListener("keydown", function (event) {
-    if (gate.classList.contains("is-done")) return;
+    if (gate.classList.contains("is-done") || gate.classList.contains("is-waiting")) return;
     if (event.key === "Escape") {
       event.preventDefault();
       closeGate(false);

@@ -13,6 +13,7 @@ from portfolio.content import EMAIL, GITHUB_PROFILE, NAME, PAGE_COPY
 ROOT = Path(__file__).resolve().parent.parent
 CSS_FILES = (ROOT / "css" / "meet.css", ROOT / "css" / "streamlit.css")
 MAIN_JS = ROOT / "js" / "main.js"
+MEET_JS = ROOT / "js" / "meet.js"
 FONT_IMPORT = (
     '@import url("https://fonts.googleapis.com/css2?family=Anton&family=Literata:'
     'ital,opsz,wght@0,7..72,400;0,7..72,650;1,7..72,400;1,7..72,650&display=swap");'
@@ -160,8 +161,8 @@ def _script(title: str, description: str) -> str:
         theme.setAttribute("name", "theme-color");
         document.head.appendChild(theme);
       }}
-      theme.setAttribute("content", "#FFFFFF");
+      theme.setAttribute("content", "#A8483A");
     }})();
     """
-    main = MAIN_JS.read_text(encoding="utf-8")
+    main = MAIN_JS.read_text(encoding="utf-8") + "\n" + MEET_JS.read_text(encoding="utf-8")
     return f"<script>{boot}\n{main}</script>"

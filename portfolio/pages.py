@@ -17,6 +17,16 @@ from portfolio.content import (
     FIELD_HEADING,
     FINISH,
     FLIP_KICKER,
+    GAME_HEADING,
+    GAME_HOW,
+    GAME_LOSE,
+    GAME_NOTE,
+    GAME_START,
+    GAME_WALL_SECONDS,
+    GAME_WIN,
+    GHOST_800_PACE_SECONDS,
+    GUN,
+    LANES,
     FUN_FACT_PLACEHOLDERS,
     FUN_FACTS,
     FUN_FACTS_HEADING,
@@ -138,6 +148,84 @@ def _building_cards() -> str:
     return f'<div class="build-grid">{"".join(cards)}</div>'
 
 
+def _gun_opener() -> str:
+    """Starting gun. The tape waits at the end of the lap."""
+    return (
+        '<div class="start-gun" id="start-gun" role="dialog" aria-modal="true" '
+        'aria-labelledby="gun-title" style="position:fixed;inset:0;z-index:450;background:#7A2C22;color:#fff;">'
+        "<script>(function(){try{if(sessionStorage.getItem('chase-gun-fired')==='1')"
+        "{var gun=document.getElementById('start-gun');gun.classList.add('is-done');"
+        "gun.style.display='none';}}catch(e){}})();</script>"
+        f'<a class="finish-skip" id="gun-skip" href="#main">{html.escape(GUN["skip"])}</a>'
+        '<div class="finish-stage">'
+        f'<h2 id="gun-title">{html.escape(GUN["marks"])}</h2>'
+        f'<p class="gun-phase" id="gun-set" hidden>{html.escape(GUN["set"])}</p>'
+        '<button class="finish-break" id="gun-fire" type="button">'
+        f'<span class="finish-cta">{html.escape(GUN["fire"])}</span>'
+        "</button>"
+        f'<p class="finish-hint">{html.escape(GUN["hint"])}</p>'
+        '<button class="sound-toggle" type="button" aria-pressed="false">Sound off</button>'
+        "</div></div>"
+    )
+
+
+def _track_dock() -> str:
+    buttons = []
+    for number, target, label in LANES:
+        buttons.append(
+            f'<button class="lane-btn" type="button" data-lane="{number}" '
+            f'data-target="{html.escape(target, quote=True)}">'
+            f'<span class="lane-num">{number}</span>'
+            f'<span class="lane-label">{html.escape(label)}</span></button>'
+        )
+    return (
+        '<aside class="track-dock" id="track-dock">'
+        '<div class="spike-layer" id="spike-layer" aria-hidden="true"></div>'
+        '<div class="lap" id="lap">'
+        '<svg class="oval-svg" id="oval-svg" viewBox="0 0 360 220" role="img" '
+        'aria-label="400 meter oval">'
+        '<rect class="oval-surface" x="6" y="18" width="348" height="184" rx="92"/>'
+        '<rect class="lane-line" x="18" y="30" width="324" height="160" rx="80" fill="none"/>'
+        '<rect class="lane-line" x="32" y="42" width="296" height="136" rx="68" fill="none"/>'
+        '<rect class="lane-line" x="46" y="54" width="268" height="112" rx="56" fill="none"/>'
+        '<rect class="lane-line" x="60" y="66" width="240" height="88" rx="44" fill="none"/>'
+        '<rect class="infield" x="78" y="82" width="204" height="56" rx="28"/>'
+        '<path id="oval-path" d="M100,36 H260 A74,74 0 0 1 260,184 H100 A74,74 0 0 1 100,36 Z" fill="none"/>'
+        "</svg>"
+        '<button type="button" class="lap-runner" id="lap-runner" '
+        'aria-label="The runner. Click it a few times.">'
+        '<span class="lap-runner-dot" aria-hidden="true"></span></button>'
+        f'<p class="false-start" id="false-start" hidden>{html.escape(FALSE_START)}</p>'
+        '<p class="meter" id="meter">0m</p>'
+        "</div>"
+        '<button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false">'
+        "Sound off</button>"
+        '<div class="lane-picker" role="group" aria-label="Pick a lane">'
+        f'{"".join(buttons)}'
+        "</div></aside>"
+    )
+
+
+def _race_game() -> str:
+    return (
+        '<section class="race-game" id="run-it" aria-labelledby="run-it-title" '
+        f'data-pace="{GHOST_800_PACE_SECONDS}" data-wall="{GAME_WALL_SECONDS}">'
+        f'<h3 id="run-it-title">{html.escape(GAME_HEADING)}</h3>'
+        f'<p class="ghost-note">{html.escape(GAME_NOTE)}</p>'
+        f'<p class="ghost-note">{html.escape(GAME_HOW)}</p>'
+        '<div class="race-lane" id="race-lane">'
+        '<span class="race-ghost" id="race-ghost"></span>'
+        '<span class="race-you" id="race-you"></span>'
+        "</div>"
+        '<p class="race-clock" id="race-clock">0.00</p>'
+        f'<button class="race-go" id="race-go" type="button">{html.escape(GAME_START)}</button>'
+        f'<p class="race-result" id="race-result" hidden '
+        f'data-win="{html.escape(GAME_WIN, quote=True)}" '
+        f'data-lose="{html.escape(GAME_LOSE, quote=True)}"></p>'
+        "</section>"
+    )
+
+
 def _finish_gate() -> str:
     """Full-screen finish tape. JS shows it once per session."""
     skip = html.escape(FINISH["skip"])
@@ -146,9 +234,9 @@ def _finish_gate() -> str:
     action = html.escape(FINISH["action"])
     hint = html.escape(FINISH["hint"])
     return (
-        '<div class="finish-gate" id="finish-gate" role="dialog" aria-modal="true" '
-        'aria-labelledby="finish-title" '
-        'style="position:fixed;inset:0;z-index:400;background:#1A1A2E;color:#fff;">'
+        '<div class="finish-gate is-waiting" id="finish-gate" role="dialog" aria-modal="true" '
+        'aria-labelledby="finish-title" hidden '
+        'style="position:fixed;inset:0;z-index:400;background:#7A2C22;color:#fff;">'
         "<script>(function(){try{if(sessionStorage.getItem('chase-finish-seen')==='1')"
         "{var gate=document.getElementById('finish-gate');gate.classList.add('is-done');"
         "gate.style.display='none';}}catch(e){}})();</script>"
@@ -184,6 +272,7 @@ def _scoreboard() -> str:
         '<span class="scoreboard-unit" data-race-unit>DAYS</span>'
         "</span></button>"
         f'<p class="scoreboard-records">{html.escape(SCOREBOARD_RECORDS)}</p>'
+        '<p class="scoreboard-call" id="scoreboard-call" hidden></p>'
         "</div>"
     )
 
@@ -292,7 +381,9 @@ def home_main_html() -> str:
         "</div>"
     )
     return (
-        '<main id="main"><div class="wrap">'
+        '<main id="main"><div class="meet-shell">'
+        f"{_track_dock()}"
+        '<div class="wrap">'
         '<div class="home-fold" id="hero" data-lap="Start">'
         '<section class="hero">'
         f'<h1 class="rise">{html.escape(NAME)}</h1>'
@@ -308,7 +399,7 @@ def home_main_html() -> str:
         '<div class="scroll-hint" aria-hidden="true">&#8595;</div>'
         "</div>"
         f'{_section("origin-story", ORIGIN_HEADING, f"<div class=\"story-copy stagger\">{origin}<p class=\"origin-aside\">{html.escape(ORIGIN_ASIDE)}</p></div>")}'
-        f'{_section("building", BUILDING_HEADING, _scoreboard() + _building_cards())}'
+        f'{_section("building", BUILDING_HEADING, _scoreboard() + _race_game() + _building_cards())}'
         f'{_section("track-field", FIELD_HEADING, f"<div class=\"field-grid\">{"".join(columns)}</div>")}'
         f'{_section("fun-facts", FUN_FACTS_HEADING, f"<ul class=\"fun-facts\">{"".join(facts)}</ul>")}'
         + _section(
@@ -324,13 +415,13 @@ def home_main_html() -> str:
             CONTACT_HEADING,
             f'<p class="story-lead">{html.escape(CONTACT_LEAD)}</p>{_contact_links()}',
         )
-        + "</div></main>"
-        + _lap_nav()
+        + '<div id="lap-end" class="lap-end"></div></div></div></main>'
+        + _finish_gate()
     )
 
 
 def show_home() -> None:
-    render_page("home", home_main_html(), before=_finish_gate())
+    render_page("home", home_main_html(), before=_gun_opener())
 
 
 _FILLS = ("#eef1f4", "#f4f0ea", "#eef3f1")
