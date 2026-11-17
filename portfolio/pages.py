@@ -594,13 +594,13 @@ def _blooper() -> str:
     video = _public_src(BLOOPER_VIDEO) or ""
     return (
         '<figure class="blooper">'
+        f"<figcaption>{html.escape(BLOOPER_CAPTION)}</figcaption>"
+        f'<p class="judges-stamp">{html.escape(BLOOPER_STAMP)}</p>'
         f'<video id="blooper-video" autoplay muted loop playsinline controls '
         f'poster="{html.escape(poster, quote=True)}" '
         f'width="720" height="1280">'
         f'<source src="{html.escape(video, quote=True)}" type="video/mp4">'
         "</video>"
-        f"<figcaption>{html.escape(BLOOPER_CAPTION)}</figcaption>"
-        f'<p class="judges-stamp">{html.escape(BLOOPER_STAMP)}</p>'
         "</figure>"
     )
 
