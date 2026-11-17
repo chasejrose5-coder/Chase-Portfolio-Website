@@ -66,13 +66,13 @@ GUN = {
 
 GAME_HEADING = "Run it yourself"
 GAME_NOTE = "The ghost is my 800, 2:02.9. I'm still chasing 1:55.0."
-GAME_HOW = "Tap the lane. Space or an arrow works too."
+GAME_HOW = "Tap the lane, or press space."
 
 BATON_LABEL = "Pass the baton"
 BATON_GOT = "Got it."
 CURSOR_PACE_LABEL = "Your hand"
 PHOTO_KICKER = "Photo"
-SOCCER_NOTE = "Flick the ball. I captained this field too."
+SOCCER_NOTE = "Flick it. Captain on this field too."
 SOCCER_GOAL = "Goal."
 WHISTLE_LABEL = "Whistle"
 WHISTLE_CALL = "Both teams."
@@ -92,11 +92,11 @@ LANES = (
     (8, "contact", "Find me"),
 )
 
-ORIGIN_ASIDE = "That's the short version. The rest of this page is me proving it."
+ORIGIN_ASIDE = "That's the short version."
 
-CONTACT_LEAD = "Email me, or come find the code. I answer."
+CONTACT_LEAD = "Email or GitHub. I answer."
 
-VIDEO_LEAD = "Nothing here yet. When I have a video I actually like, it goes here."
+VIDEO_LEAD = "A video goes here when I have one I like."
 
 # One lap around the page. The ids match the home sections.
 LAP_MARKS = tuple((target, label) for _lane, target, label in LANES)
@@ -104,7 +104,7 @@ LAP_MARKS = tuple((target, label) for _lane, target, label in LANES)
 SCOREBOARD_EVENT = "Stanford Invitational"
 SCOREBOARD_RECORDS = "400m 50.9 · 800m 2:02.9"
 
-ORIGIN_HEADING = "where it started"
+ORIGIN_HEADING = "Where it started"
 
 # Lightly polished from Chase's own words. Two short paragraphs.
 ORIGIN = (
@@ -112,7 +112,7 @@ ORIGIN = (
     "What pushed me to build things was wanting to have something to show about myself that I would be proud of. I also want to be in control of what I do in life, so I built my own things.",
 )
 
-BUILDING_HEADING = "what I'm making"
+BUILDING_HEADING = "What I'm making"
 
 # Home cards. Detail pages keep the longer story. slugs match PROJECTS.
 BUILDING = (
@@ -138,7 +138,7 @@ RACE_DATE = "2027-03-19"
 RACE_NAME = "Stanford Invitational"
 RACE_ZONE = "America/Los_Angeles"
 
-FIELD_HEADING = "the track, and the other field"
+FIELD_HEADING = "The track, and the other field"
 
 FIELD = (
     {
@@ -151,9 +151,9 @@ FIELD = (
     },
 )
 
-FUN_FACTS_HEADING = "stuff that doesn't fit a lane"
+FUN_FACTS_HEADING = "Off the lane"
 
-BLOOPER_HEADING = "the lean"
+BLOOPER_HEADING = "The lean"
 BLOOPER_CAPTION = "Leaned so hard the track had to catch me."
 BLOOPER_STAMP = "Judges' review: Dad said 54."
 BLOOPER_ALT = "Chase Rose leaning into the finish of a 400m and tumbling across the line at a track meet"
@@ -229,12 +229,12 @@ WORLD_CUP = {
     "sources": (
         {
             "type": "image/avif",
-            "media": "(max-width: 760px)",
+            "media": "(max-width: 900px)",
             "srcset": _variants("cup-tall", (800, 1200), "avif"),
         },
         {
             "type": "image/webp",
-            "media": "(max-width: 760px)",
+            "media": "(max-width: 900px)",
             "srcset": _variants("cup-tall", (480, 800, 1200), "webp"),
         },
         {"type": "image/avif", "srcset": _variants("cup-wide", (640, 1200), "avif")},
@@ -271,9 +271,9 @@ FUN_FACT_PLACEHOLDERS = (
     "Fun fact coming soon",
 )
 
-STORIES_HEADING = "the ones I haven't told yet"
+STORIES_HEADING = "Not written yet"
 
-STORIES_LEAD = "The wild ones are still in my head. I'll put them here when they're ready to be told."
+STORIES_LEAD = "The wild ones aren't written down yet."
 
 STORY_PLACEHOLDERS = (
     {
@@ -290,13 +290,13 @@ STORY_PLACEHOLDERS = (
     },
 )
 
-VIDEO_HEADING = "a video, eventually"
+VIDEO_HEADING = "A video, later"
 
 VIDEO_PLACEHOLDER = "Video coming soon"
 
-QUOTES_HEADING = "lines I keep around"
+QUOTES_HEADING = "Lines I keep"
 
-CONTACT_HEADING = "come find me"
+CONTACT_HEADING = "Find me"
 
 GITHUB_LINK_LABEL = "GitHub"
 

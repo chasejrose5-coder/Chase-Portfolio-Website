@@ -6,10 +6,7 @@ body,
 [data-testid="stAppViewContainer"],
 [data-testid="stMain"],
 section.main {
-  background:
-    linear-gradient(90deg, transparent 0 1.1rem, #fff 1.1rem 1.18rem, transparent 1.18rem 1.55rem, rgba(255, 255, 255, 0.7) 1.55rem 1.58rem, transparent 1.58rem),
-    repeating-linear-gradient(180deg, transparent 0 80px, rgba(255, 255, 255, 0.08) 80px 81px),
-    #a8483a;
+  background: #a8483a;
   color: #ffffff;
 }
 

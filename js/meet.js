@@ -201,7 +201,7 @@
       });
       lap.insertBefore(svg, lap.firstChild);
     }
-    var vertical = window.matchMedia("(max-width: 760px)").matches;
+    var vertical = window.matchMedia("(max-width: 900px)").matches;
     while (svg.firstChild) svg.removeChild(svg.firstChild);
     if (vertical) {
       svg.setAttribute("viewBox", "0 0 480 860");
@@ -283,7 +283,8 @@
     p2.y = hole.y.baseVal.value + hole.height.baseVal.value;
     var a = p1.matrixTransform(ctm);
     var b = p2.matrixTransform(ctm);
-    var pad = 8;
+    var narrow = window.matchMedia("(max-width: 900px)").matches;
+    var pad = narrow ? 36 : 22;
     copy.style.position = "fixed";
     copy.style.left = (a.x + pad) + "px";
     copy.style.top = (a.y + pad) + "px";

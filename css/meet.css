@@ -1821,3 +1821,200 @@ body > .smoke-canvas {
   .photo-frame { transform: none; }
   .baton { display: none; }
 }
+
+/* Polish. One scale, one grid, the infield stays inside the lanes.
+   ------------------------------------------------------------ */
+
+:root {
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --radius: 2px;
+  --dur: 240ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --type-label: 0.75rem;
+  --type-body: 1rem;
+  --type-lead: 1.125rem;
+  --type-h: 1.5rem;
+  --type-display: 2rem;
+}
+
+body {
+  background: var(--track);
+  font-size: var(--type-body);
+  line-height: 1.5;
+}
+
+.site-header,
+.dock-tools,
+.lane-picker {
+  padding-inline: var(--space-4);
+}
+
+.site-header {
+  height: var(--header);
+  padding-block: 0;
+}
+
+.brand,
+.nav-links a,
+.lane-btn,
+.sound-toggle,
+.whistle,
+.baton-pass,
+.race-go,
+.finish-skip,
+#gun-fire {
+  font-family: Anton, Impact, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lane-btn,
+.sound-toggle,
+.whistle,
+.baton-pass,
+.race-go,
+.finish-skip,
+#gun-fire {
+  border: 2px solid #fff;
+  border-radius: var(--radius);
+  box-shadow: none;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.lane-picker { gap: var(--space-2); }
+
+.infield-copy {
+  z-index: 30;
+  overflow: auto;
+  border-radius: 12px;
+  box-shadow: none;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  text-align: left;
+}
+
+.infield-copy h1,
+.infield-copy h2,
+.infield-copy h3,
+.infield-copy figcaption,
+.infield-copy .story-lead,
+.infield-copy .tagline {
+  text-align: center;
+}
+
+.infield-copy h1 {
+  font-size: var(--type-display);
+  line-height: 0.95;
+}
+
+.infield-copy h2,
+.infield-copy .story-section h2 {
+  font-size: var(--type-h);
+  line-height: 1;
+  margin-bottom: var(--space-3);
+}
+
+.infield-copy h3,
+.infield-copy .build-headline {
+  font-size: var(--type-lead);
+  line-height: 1.25;
+}
+
+.infield-copy p,
+.infield-copy li,
+.infield-copy figcaption {
+  font-size: var(--type-body);
+}
+
+.infield-copy .scroll-hint,
+.infield-copy .flip-kicker,
+.infield-copy .story-section::before {
+  display: none;
+}
+
+.infield-copy .hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.infield-copy img,
+.infield-copy video {
+  max-height: 26vh;
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+.infield-copy .field-grid,
+.infield-copy .build-grid,
+.infield-copy .story-grid,
+.infield-copy .quotes,
+.infield-copy .fun-facts,
+.infield-copy .photo-stories {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+.infield-copy .scoreboard {
+  border: 2px solid #fff;
+  border-radius: var(--radius);
+  box-shadow: none;
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.infield-copy .scoreboard-digits,
+.infield-copy .race-count {
+  font-size: var(--type-display);
+}
+
+.infield-copy .soon,
+.infield-copy .fun-soon,
+.infield-copy .story-card.soon,
+.infield-copy .video-slot.soon {
+  border: 1px dashed #14120f;
+  border-radius: var(--radius);
+  background: transparent;
+  color: #14120f;
+  box-shadow: none;
+  min-height: 5.5rem;
+  padding: var(--space-4);
+}
+
+.infield-copy .soon-label {
+  color: #7a2c22;
+  font-size: var(--type-label);
+  letter-spacing: 0.08em;
+}
+
+.infield-copy .pitch { height: 6.5rem; border-radius: var(--radius); }
+
+.infield-copy .recreate-me img { max-height: 22vh; }
+
+.js-reveal .reveal,
+.infield-copy .flip-inner,
+.finish-half,
+.oval-svg {
+  transition-timing-function: var(--ease);
+  transition-duration: var(--dur);
+}
+
+@media (min-width: 901px) {
+  .lane-picker { grid-template-columns: repeat(8, minmax(44px, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  :root { --header: 3.5rem; --type-display: 1.75rem; --type-h: 1.25rem; }
+  .infield-copy { padding: var(--space-2) var(--space-3) var(--space-3); }
+  .lane-label { font-size: var(--type-label); }
+}
