@@ -18,7 +18,7 @@ Open the URL Streamlit prints (usually http://localhost:8501).
 
 Edit the visible copy in `portfolio/content.py`.
 
-Home opens on a finish-line tape (once per session; Skip, click, or space breaks it; reduced motion skips the snap). A small track follows the scroll, a scoreboard counts down to Stanford and names the 400m and 800m school records, and the fun facts flip.
+Home opens on a finish-line tape (once per session; Skip, click, or space breaks it; reduced motion skips the snap). A lane follows the scroll, a scoreboard counts down to Stanford, and the fun facts flip. Click the photo, the scoreboard number, or the red dot a few times.
 
 ## Placeholders Chase still needs to fill
 

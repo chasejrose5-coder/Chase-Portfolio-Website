@@ -116,6 +116,11 @@ class HomeTests(unittest.TestCase):
         self.assertIn("chase-finish-seen", script)
         self.assertIn('event.key === " "', script)
         self.assertIn("prefers-reduced-motion", script)
+        self.assertIn("Tuxedo. A boat. The bridge is back there.", self.html)
+        self.assertIn("False start. Back on the line.", self.html)
+        self.assertIn('id="scoreboard-hit"', self.html)
+        self.assertIn('data-goal="1:55.0"', self.html)
+        self.assertIn("the short version", self.html)
 
     def test_fun_facts_and_placeholders(self):
         self.assertIn("12-page thesis", self.html)

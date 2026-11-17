@@ -42,12 +42,22 @@ PAGE_COPY = {
 TAGLINE = "Captain. Researcher. Builder."
 
 FINISH = {
-    "kicker": "Finish line",
+    "kicker": "you're on the line",
     "title": "Break the tape",
     "action": "Break the tape",
-    "hint": "Click, tap, or press space",
+    "hint": "Click, tap, or press space. I would.",
     "skip": "Skip",
 }
+
+PORTRAIT_NOTE = "Tuxedo. A boat. The bridge is back there."
+
+FALSE_START = "False start. Back on the line."
+
+ORIGIN_ASIDE = "That's the short version. The rest of this page is me proving it."
+
+CONTACT_LEAD = "Email me, or come find the code. I answer."
+
+VIDEO_LEAD = "Nothing here yet. When I have a video I actually like, it goes here."
 
 # One lap around the page. The ids match the home sections.
 LAP_MARKS = (
@@ -65,7 +75,7 @@ LAP_MARKS = (
 SCOREBOARD_EVENT = "Stanford Invitational"
 SCOREBOARD_RECORDS = "400m · 800m school records"
 
-ORIGIN_HEADING = "Origin story"
+ORIGIN_HEADING = "where it started"
 
 # Lightly polished from Chase's own words. Two short paragraphs.
 ORIGIN = (
@@ -73,7 +83,7 @@ ORIGIN = (
     "What pushed me to build things was wanting to have something to show about myself that I would be proud of. I also want to be in control of what I do in life, so I built my own things.",
 )
 
-BUILDING_HEADING = "What I'm building"
+BUILDING_HEADING = "what I'm making"
 
 # Home cards. Detail pages keep the longer story. slugs match PROJECTS.
 BUILDING = (
@@ -81,14 +91,14 @@ BUILDING = (
         "slug": "rio",
         "kicker": "RIO",
         "headline": "I'm building my own 800m training app while chasing 1:55.0 at the Stanford Invitational on 3/19/27.",
-        "body": "The plan is not fixed. It adapts to what I actually run, and I am building it in the middle of that training.",
+        "body": "The plan isn't fixed. It changes when I actually run it, and I'm building the thing in the middle of that training.",
         "show_countdown": True,
     },
     {
         "slug": "prowash",
         "kicker": "ProWash & Detail Co.",
         "headline": "I started ProWash & Detail Co. with a crew of three.",
-        "body": "Early 2026. We detail cars, power wash, and clean solar panels and trash cans. I built the booking site so a request lands in one place instead of getting lost in texts, and I keep the work local so each job gets personal attention.",
+        "body": "Early 2026. Cars, power washing, solar panels, trash cans. I built the booking site so a job doesn't die in a text thread, and I keep it local so the work stays personal.",
     },
 )
 
@@ -99,34 +109,36 @@ RACE_DATE = "2027-03-19"
 RACE_NAME = "Stanford Invitational"
 RACE_ZONE = "America/Los_Angeles"
 
-FIELD_HEADING = "On the track and the field"
+FIELD_HEADING = "the track, and the other field"
 
 FIELD = (
     {
         "title": "Track",
-        "text": "Three-year captain. I hold the school records in the 400m and the 800m. Team MVP in 2025–26, NCS finalist, and 2× All-League in the 400m and the 4×100m.",
+        "text": "Three-year captain. I hold the school records in the 400m and the 800m. Team MVP in 2025–26, NCS finalist, and 2× All-League in the 400m and the 4×100m. This is the one I was always good at.",
     },
     {
         "title": "Soccer",
-        "text": "Three-year captain. In 2026 I was League Offensive Player of the Year and BCL Championship MVP.",
+        "text": "Three-year captain here too. In 2026 I was League Offensive Player of the Year and BCL Championship MVP.",
     },
 )
 
-FUN_FACTS_HEADING = "Fun facts"
+FUN_FACTS_HEADING = "stuff that doesn't fit a lane"
+
+FLIP_KICKER = "poke this"
 
 # Front is the hook. Back is the fact already on the page. Nothing new.
 FUN_FACTS = (
     {
         "front": "12-page thesis",
-        "back": "Wrote a 12-page thesis on West African soccer academies (JRP Honorable Mention).",
+        "back": "I wrote a 12-page thesis on West African soccer academies. JRP Honorable Mention.",
     },
     {
         "front": "Drew Robinson",
-        "back": "Interviewed former MLB player Drew Robinson live on stage.",
+        "back": "I interviewed former MLB player Drew Robinson live on stage.",
     },
     {
         "front": "Student store",
-        "back": "Student Body Treasurer who ran the student store.",
+        "back": "I was Student Body Treasurer. I ran the student store.",
     },
 )
 
@@ -138,9 +150,9 @@ FUN_FACT_PLACEHOLDERS = (
     "Fun fact coming soon",
 )
 
-STORIES_HEADING = "Stories"
+STORIES_HEADING = "the ones I haven't told yet"
 
-STORIES_LEAD = "Crazy and fun stories will go here."
+STORIES_LEAD = "The wild ones are still in my head. I'll put them here when they're ready to be told."
 
 STORY_PLACEHOLDERS = (
     {
@@ -157,13 +169,13 @@ STORY_PLACEHOLDERS = (
     },
 )
 
-VIDEO_HEADING = "Video"
+VIDEO_HEADING = "a video, eventually"
 
 VIDEO_PLACEHOLDER = "Video coming soon"
 
-QUOTES_HEADING = "Quotes"
+QUOTES_HEADING = "lines I keep around"
 
-CONTACT_HEADING = "Contact"
+CONTACT_HEADING = "come find me"
 
 GITHUB_LINK_LABEL = "GitHub"
 

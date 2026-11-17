@@ -214,6 +214,14 @@ section.main {
   color: #f0b429;
 }
 
+[data-testid="stHtml"] .scoreboard-hit,
+[data-testid="stHtml"] .portrait-btn,
+[data-testid="stHtml"] .lap-runner {
+  color: inherit;
+  background: transparent;
+  text-decoration: none;
+}
+
 [data-testid="stHtml"] .finish-skip,
 [data-testid="stHtml"] .finish-break,
 [data-testid="stHtml"] .finish-cta,

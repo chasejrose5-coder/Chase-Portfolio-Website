@@ -11,9 +11,12 @@ from portfolio.content import (
     COMING_SOON_LABEL,
     CONTACT_HEADING,
     EMAIL,
+    CONTACT_LEAD,
+    FALSE_START,
     FIELD,
     FIELD_HEADING,
     FINISH,
+    FLIP_KICKER,
     FUN_FACT_PLACEHOLDERS,
     FUN_FACTS,
     FUN_FACTS_HEADING,
@@ -22,7 +25,9 @@ from portfolio.content import (
     HOME_PORTRAIT,
     LAP_MARKS,
     ORIGIN,
+    ORIGIN_ASIDE,
     ORIGIN_HEADING,
+    PORTRAIT_NOTE,
     PROJECTS,
     QUOTES,
     QUOTES_HEADING,
@@ -38,6 +43,7 @@ from portfolio.content import (
     STORY_PLACEHOLDERS,
     TAGLINE,
     VIDEO_HEADING,
+    VIDEO_LEAD,
     VIDEO_PLACEHOLDER,
     NAME,
     countdown_parts,
@@ -169,12 +175,14 @@ def _scoreboard() -> str:
         '<div class="scoreboard reveal" data-race-date="'
         f'{html.escape(RACE_DATE, quote=True)}" data-race-zone="'
         f'{html.escape(RACE_ZONE, quote=True)}" data-race-name="'
-        f'{html.escape(RACE_NAME, quote=True)}">'
+        f'{html.escape(RACE_NAME, quote=True)}" data-goal="1:55.0" data-meet="3/19/27">'
         f'<p class="scoreboard-event">{html.escape(SCOREBOARD_EVENT)}</p>'
-        '<p class="scoreboard-digits" aria-live="polite">'
+        '<button type="button" class="scoreboard-hit" id="scoreboard-hit" '
+        'aria-label="The number. Click it.">'
+        '<span class="scoreboard-digits" aria-live="polite">'
         f'<span class="race-count">{html.escape(count)}</span>'
         '<span class="scoreboard-unit" data-race-unit>DAYS</span>'
-        "</p>"
+        "</span></button>"
         f'<p class="scoreboard-records">{html.escape(SCOREBOARD_RECORDS)}</p>'
         "</div>"
     )
@@ -194,7 +202,10 @@ def _lap_nav() -> str:
         '<nav class="lap" id="lap" aria-label="Page progress">'
         '<div class="lap-track">'
         '<span class="lap-oval" aria-hidden="true"></span>'
-        '<span class="lap-runner" id="lap-runner" aria-hidden="true"></span>'
+        '<button type="button" class="lap-runner" id="lap-runner" '
+        'aria-label="The runner. Click it a few times.">'
+        '<span class="lap-runner-dot" aria-hidden="true"></span></button>'
+        f'<p class="false-start" id="false-start" hidden>{html.escape(FALSE_START)}</p>'
         f'{"".join(marks)}'
         "</div></nav>"
     )
@@ -231,7 +242,7 @@ def home_main_html() -> str:
             '<button class="flip" type="button" aria-pressed="false">'
             '<span class="flip-inner">'
             '<span class="flip-face flip-front">'
-            f'<span class="flip-kicker">Fun fact</span>'
+            f'<span class="flip-kicker">{html.escape(FLIP_KICKER)}</span>'
             f'<span class="flip-hook">{html.escape(fact["front"])}</span>'
             "</span>"
             '<span class="flip-face flip-back" aria-hidden="true">'
@@ -274,6 +285,7 @@ def home_main_html() -> str:
             "</figure>"
         )
     video = (
+        f'<p class="story-lead">{html.escape(VIDEO_LEAD)}</p>'
         '<div class="video-slot soon reveal">'
         f'<span class="soon-label">{html.escape(COMING_SOON_LABEL)}</span>'
         f"<p>{html.escape(VIDEO_PLACEHOLDER)}</p>"
@@ -285,11 +297,17 @@ def home_main_html() -> str:
         '<section class="hero">'
         f'<h1 class="rise">{html.escape(NAME)}</h1>'
         f'<p class="tagline rise d1">{html.escape(TAGLINE)}</p>'
-        f'<figure class="home-portrait">{portrait}</figure>'
+        '<div class="portrait-wrap">'
+        '<button type="button" class="portrait-btn" id="portrait-btn" '
+        'aria-expanded="false" aria-controls="portrait-note">'
+        f'<span class="home-portrait">{portrait}</span>'
+        "</button>"
+        f'<p class="portrait-note" id="portrait-note" hidden>{html.escape(PORTRAIT_NOTE)}</p>'
+        "</div>"
         "</section>"
         '<div class="scroll-hint" aria-hidden="true">&#8595;</div>'
         "</div>"
-        f'{_section("origin-story", ORIGIN_HEADING, f"<div class=\"story-copy stagger\">{origin}</div>")}'
+        f'{_section("origin-story", ORIGIN_HEADING, f"<div class=\"story-copy stagger\">{origin}<p class=\"origin-aside\">{html.escape(ORIGIN_ASIDE)}</p></div>")}'
         f'{_section("building", BUILDING_HEADING, _scoreboard() + _building_cards())}'
         f'{_section("track-field", FIELD_HEADING, f"<div class=\"field-grid\">{"".join(columns)}</div>")}'
         f'{_section("fun-facts", FUN_FACTS_HEADING, f"<ul class=\"fun-facts\">{"".join(facts)}</ul>")}'
@@ -301,7 +319,11 @@ def home_main_html() -> str:
         )
         + _section("video", VIDEO_HEADING, video)
         + _section("quotes", QUOTES_HEADING, f'<div class="quotes stagger">{"".join(quotes)}</div>')
-        + _section("contact", CONTACT_HEADING, _contact_links())
+        + _section(
+            "contact",
+            CONTACT_HEADING,
+            f'<p class="story-lead">{html.escape(CONTACT_LEAD)}</p>{_contact_links()}',
+        )
         + "</div></main>"
         + _lap_nav()
     )

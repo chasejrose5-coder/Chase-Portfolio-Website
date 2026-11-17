@@ -226,6 +226,7 @@ function portfolioPath(pathname) {
       if (bits.length !== 3) continue;
       var target = Date.UTC(Number(bits[0]), Number(bits[1]) - 1, Number(bits[2]));
       var days = Math.round((target - calendarToday(zone)) / 86400000);
+      if (node.getAttribute("data-hold") === "1") continue;
       var count = node.querySelector(".race-count");
       var rest = node.querySelector(".race-rest");
       var unit = node.querySelector("[data-race-unit]");
@@ -353,6 +354,8 @@ function portfolioPath(pathname) {
   var marks = lap.querySelectorAll(".lap-mark");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var pending = false;
+  var holdUntil = 0;
+  var pokes = 0;
 
   function scroller() {
     var candidates = [
@@ -395,6 +398,10 @@ function portfolioPath(pathname) {
 
   function frame() {
     pending = false;
+    if (Date.now() < holdUntil) {
+      lap.style.setProperty("--lap", "0");
+      return;
+    }
     var box = metrics();
     var p = Math.max(0, Math.min(1, box.top / box.max));
     lap.style.setProperty("--lap", String(p));
@@ -415,7 +422,58 @@ function portfolioPath(pathname) {
   }
 
   if (!reduce) runner.style.transition = "left 80ms linear, top 80ms linear";
+  runner.addEventListener("click", function () {
+    pokes += 1;
+    if (pokes < 4) return;
+    pokes = 0;
+    holdUntil = Date.now() + 1700;
+    var flag = document.getElementById("false-start");
+    if (flag) {
+      flag.hidden = false;
+      window.setTimeout(function () { flag.hidden = true; }, 1700);
+    }
+    lap.style.setProperty("--lap", "0");
+  });
+
   document.addEventListener("scroll", request, { capture: true, passive: true });
   window.addEventListener("resize", request);
   frame();
+})();
+
+/* Poke the photo, and poke the scoreboard number. */
+(function () {
+  var photo = document.getElementById("portrait-btn");
+  var note = document.getElementById("portrait-note");
+  if (photo && note) {
+    photo.addEventListener("click", function () {
+      var open = note.hasAttribute("hidden");
+      if (open) note.removeAttribute("hidden");
+      else note.setAttribute("hidden", "");
+      photo.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  var hit = document.getElementById("scoreboard-hit");
+  var board = document.querySelector(".scoreboard");
+  if (!hit || !board) return;
+  var step = 0;
+  hit.addEventListener("click", function () {
+    step = (step + 1) % 3;
+    var count = board.querySelector(".race-count");
+    var unit = board.querySelector("[data-race-unit]");
+    if (!count || !unit) return;
+    if (step === 0) {
+      board.removeAttribute("data-hold");
+      unit.textContent = "DAYS";
+      return;
+    }
+    board.setAttribute("data-hold", "1");
+    if (step === 1) {
+      count.textContent = board.getAttribute("data-goal") || "1:55.0";
+      unit.textContent = "THE GOAL";
+    } else {
+      count.textContent = board.getAttribute("data-meet") || "3/19/27";
+      unit.textContent = "RACE DAY";
+    }
+  });
 })();
