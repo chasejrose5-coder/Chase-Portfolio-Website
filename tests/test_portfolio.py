@@ -136,6 +136,8 @@ class HomeTests(unittest.TestCase):
         self.assertGreater(GHOST_800_PACE_SECONDS, 0)
         meet = (ROOT / "js" / "meet.js").read_text(encoding="utf-8")
         self.assertIn('event.key === "Enter"', meet)
+        self.assertIn("smoke-canvas", meet)
+        self.assertIn("is-smoking", meet)
         self.assertIn('id="pitch"', self.html)
         self.assertIn('id="goals-count"', self.html)
         self.assertIn('id="whistle"', self.html)

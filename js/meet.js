@@ -90,10 +90,62 @@
     var fireBtn = document.getElementById("gun-fire");
     var title = document.getElementById("gun-title");
     var armed = false;
+    function puff() {
+      var canvas = document.createElement("canvas");
+      canvas.className = "smoke-canvas";
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      gun.appendChild(canvas);
+      var ctx = canvas.getContext("2d");
+      var origin = fireBtn ? fireBtn.getBoundingClientRect() : { left: canvas.width / 2, top: canvas.height / 2, width: 0, height: 0 };
+      var ox = origin.left + origin.width / 2;
+      var oy = origin.top + origin.height / 2;
+      var bits = [];
+      for (var i = 0; i < 56; i++) {
+        bits.push({
+          x: ox + (Math.random() - 0.5) * 80,
+          y: oy + (Math.random() - 0.5) * 28,
+          r: 18 + Math.random() * 28,
+          vx: (Math.random() - 0.5) * 0.7,
+          vy: -1.15 - Math.random() * 1.5,
+          a: 0.28 + Math.random() * 0.22,
+          grow: 0.18 + Math.random() * 0.22
+        });
+      }
+      gun.classList.add("is-smoking");
+      gun.style.background = "transparent";
+      var stage = gun.querySelector(".finish-stage");
+      if (stage) stage.style.opacity = "0";
+      var started = performance.now();
+      function frame(now) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var n = 0; n < bits.length; n++) {
+          var bit = bits[n];
+          bit.x += bit.vx;
+          bit.y += bit.vy;
+          bit.r += bit.grow;
+          bit.a *= 0.986;
+          ctx.beginPath();
+          ctx.fillStyle = "rgba(236, 230, 222, " + bit.a + ")";
+          ctx.arc(bit.x, bit.y, bit.r, 0, 6.2832);
+          ctx.fill();
+        }
+        if (now - started < 1000) window.requestAnimationFrame(frame);
+        else {
+          if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+          hideGun();
+        }
+      }
+      window.requestAnimationFrame(frame);
+    }
     function fireGun() {
-      if (!armed || gun.classList.contains("is-done")) return;
+      if (!armed || gun.classList.contains("is-done") || gun.classList.contains("is-smoking")) return;
       crack();
-      hideGun();
+      if (reduce) {
+        hideGun();
+        return;
+      }
+      puff();
     }
     function armGun() {
       armed = true;
@@ -254,6 +306,62 @@
     runner.style.top = py + "px";
     runner.style.position = "fixed";
     placeInfield();
+    wisp(px, py);
+  }
+
+  var trailBits = [];
+  var trailCanvas = null;
+  var trailCtx = null;
+  var trailOn = false;
+  var lastSpot = null;
+
+  function drawTrail() {
+    if (!trailCtx) return;
+    trailCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+    for (var i = trailBits.length - 1; i >= 0; i--) {
+      var bit = trailBits[i];
+      bit.y -= 0.3;
+      bit.r += 0.08;
+      bit.a -= 0.01;
+      if (bit.a <= 0) {
+        trailBits.splice(i, 1);
+        continue;
+      }
+      trailCtx.beginPath();
+      trailCtx.fillStyle = "rgba(244, 236, 228, " + bit.a + ")";
+      trailCtx.arc(bit.x, bit.y, bit.r, 0, 6.2832);
+      trailCtx.fill();
+    }
+    if (trailBits.length) window.requestAnimationFrame(drawTrail);
+    else trailOn = false;
+  }
+
+  function wisp(px, py) {
+    if (reduce) return;
+    var now = performance.now();
+    if (!lastSpot) {
+      lastSpot = { x: px, y: py, t: now };
+      return;
+    }
+    var dist = Math.hypot(px - lastSpot.x, py - lastSpot.y);
+    var dt = now - lastSpot.t;
+    var fast = dt > 0 && dt < 90 && dist > 16;
+    lastSpot = { x: px, y: py, t: now };
+    if (!fast) return;
+    if (!trailCanvas) {
+      trailCanvas = document.createElement("canvas");
+      trailCanvas.className = "smoke-canvas";
+      trailCanvas.width = window.innerWidth;
+      trailCanvas.height = window.innerHeight;
+      document.body.appendChild(trailCanvas);
+      trailCtx = trailCanvas.getContext("2d");
+    }
+    if (trailBits.length > 20) trailBits.shift();
+    trailBits.push({ x: px, y: py, r: 5, a: 0.22 });
+    if (!trailOn) {
+      trailOn = true;
+      window.requestAnimationFrame(drawTrail);
+    }
   }
 
   function scrollToBeat(id) {
