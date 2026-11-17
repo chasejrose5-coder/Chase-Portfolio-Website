@@ -1,6 +1,11 @@
 /* The page is one 400m oval. Scroll moves the runner. The gun starts the meet. */
 (function () {
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var blooperReel = document.getElementById("blooper-video");
+  if (blooperReel && reduce) {
+    blooperReel.removeAttribute("autoplay");
+    blooperReel.pause();
+  }
   var soundOn = false;
   var audioCtx = null;
   var crowd = null;
@@ -239,7 +244,8 @@
     { id: "stories", meter: "400m" },
     { id: "video", meter: "400m" },
     { id: "quotes", meter: "400m" },
-    { id: "contact", meter: "400m" }
+    { id: "contact", meter: "400m" },
+    { id: "blooper", meter: "400m" }
   ];
 
   function scroller() {
@@ -381,7 +387,13 @@
     if (t > 0.98) index = beats.length - 1;
     var current = beats[index];
     var copy = document.getElementById("infield-copy");
-    if (copy) copy.classList.add("is-staged");
+    if (copy) {
+      copy.classList.add("is-staged");
+      if (copy.getAttribute("data-beat") !== current.id) {
+        copy.setAttribute("data-beat", current.id);
+        copy.scrollTop = 0;
+      }
+    }
     if (meter) meter.textContent = current.meter;
     var sections = document.querySelectorAll(".story-section, #hero");
     for (var s = 0; s < sections.length; s++) {
@@ -390,6 +402,16 @@
       sections[s].classList.toggle("is-shown", on);
     }
     if (index >= beats.length - 1) document.dispatchEvent(new Event("finish-ready"));
+    var reel = document.getElementById("blooper-video");
+    var blooper = document.getElementById("blooper");
+    if (reel && blooper) {
+      if (!reduce && blooper.classList.contains("is-shown")) {
+        var play = reel.play();
+        if (play && play.catch) play.catch(function () {});
+      } else {
+        reel.pause();
+      }
+    }
   }
 
   var pending = false;
@@ -566,7 +588,7 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia("(pointer: fine)").matches && !reduce;
   var PIXELS_PER_METER = 420;
-  var stops = ["hero", "origin-story", "building", "track-field", "fun-facts", "stories", "video", "quotes", "contact"];
+  var stops = ["hero", "origin-story", "building", "track-field", "fun-facts", "stories", "video", "quotes", "contact", "blooper"];
   var samples = [];
   var mx = 0;
   var my = 0;

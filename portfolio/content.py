@@ -53,9 +53,8 @@ PORTRAIT_NOTE = "Tuxedo. A boat. The bridge is back there."
 
 FALSE_START = "False start. Back on the line."
 
-# TODO: Replace with Chase's real 800m PR in seconds.
-# 1:55.0 is the Stanford goal, not a recorded time. This stand-in is only the ghost.
-GHOST_800_PACE_SECONDS = 125.0
+# Chase's 800m PR. 1:55.0 is still the Stanford goal, not this time.
+GHOST_800_PACE_SECONDS = 122.9
 GAME_WALL_SECONDS = 5.0
 
 GUN = {
@@ -66,7 +65,7 @@ GUN = {
 }
 
 GAME_HEADING = "Run it yourself"
-GAME_NOTE = "The ghost is on a stand-in pace. My real 800 time isn't on this page yet."
+GAME_NOTE = "The ghost is my 800, 2:02.9. I'm still chasing 1:55.0."
 GAME_HOW = "Tap the lane. Space or an arrow works too."
 
 BATON_LABEL = "Pass the baton"
@@ -103,7 +102,7 @@ VIDEO_LEAD = "Nothing here yet. When I have a video I actually like, it goes her
 LAP_MARKS = tuple((target, label) for _lane, target, label in LANES)
 
 SCOREBOARD_EVENT = "Stanford Invitational"
-SCOREBOARD_RECORDS = "400m · 800m school records"
+SCOREBOARD_RECORDS = "400m 50.9 · 800m 2:02.9"
 
 ORIGIN_HEADING = "where it started"
 
@@ -144,7 +143,7 @@ FIELD_HEADING = "the track, and the other field"
 FIELD = (
     {
         "title": "Track",
-        "text": "Three-year captain. I hold the school records in the 400m and the 800m. Team MVP in 2025–26, NCS finalist, and 2× All-League in the 400m and the 4×100m. This is the one I was always good at.",
+        "text": "Three-year captain. I hold the school records in the 400m and the 800m, 50.9 and 2:02.9. Team MVP in 2025–26, NCS finalist, and 2× All-League in the 400m and the 4×100m. This is the one I was always good at.",
     },
     {
         "title": "Soccer",
@@ -153,6 +152,98 @@ FIELD = (
 )
 
 FUN_FACTS_HEADING = "stuff that doesn't fit a lane"
+
+BLOOPER_HEADING = "the lean"
+BLOOPER_CAPTION = "Leaned so hard the track had to catch me."
+BLOOPER_STAMP = "Judges' review: Dad said 54."
+BLOOPER_ALT = "Chase Rose leaning into the finish of a 400m and tumbling across the line at a track meet"
+
+RECREATE_CAPTION = "Same chair. I had a trophy, so I sat like that."
+KOBE_CREDIT = "Kobe Bryant, 2009 (reference photo)"
+
+USATF_CAPTION = "Met a gold medalist. Asked for tips. Got a photo."
+WORLD_CUP_CAPTION = "South Africa on my face, the World Cup trophy beside me. The thesis was the version with footnotes."
+DRIBBLE_CAPTION = "Number 5. Bentley black and gold."
+
+def _variants(name, widths, kind):
+    return tuple(
+        {"src": f"static/meet/{name}-{item}.{kind}", "width": item} for item in widths
+    )
+
+
+def _shot(name, width, height, alt, widths, *, sizes):
+    """webp and avif srcsets for one photo in static/meet/."""
+    return {
+        "src": f"static/meet/{name}-{widths[-1]}.webp",
+        "width": width,
+        "height": height,
+        "alt": alt,
+        "sizes": sizes,
+        "sources": (
+            {"type": "image/avif", "srcset": _variants(name, widths, "avif")},
+            {"type": "image/webp", "srcset": _variants(name, widths, "webp")},
+        ),
+    }
+
+FALL_STILL = _shot(
+    "fall-still", 1080, 1920,
+    BLOOPER_ALT,
+    (540, 1080),
+    sizes="(max-width: 760px) 70vw, 16rem",
+)
+LOCKER = _shot(
+    "locker", 1200, 2133,
+    "Chase Rose in a black and gold jersey, chin on his hand, holding a championship trophy and wearing a medal in a locker room",
+    (480, 800, 1200),
+    sizes="(max-width: 760px) 46vw, 14rem",
+)
+KOBE = _shot(
+    "kobe", 220, 121,
+    "Kobe Bryant seated in a locker room, chin on his hand, holding a championship trophy",
+    (220,),
+    sizes="8.5rem",
+)
+USATF = _shot(
+    "usatf", 1200, 1601,
+    "Chase Rose standing beside a gold medalist in front of a USATF Pacific backdrop. The medalist is holding a gold medal.",
+    (480, 800, 1200),
+    sizes="(max-width: 760px) 80vw, 22rem",
+)
+DRIBBLE = _shot(
+    "dribble", 1200, 800,
+    "Chase Rose in a black and gold Bentley number 5 kit, dribbling a soccer ball",
+    (640, 1200),
+    sizes="(max-width: 760px) 80vw, 24rem",
+)
+
+WORLD_CUP_ALT = (
+    "Chase Rose with the South African flag painted on his face and torso, "
+    "giving two thumbs up beside the FIFA World Cup 26 winner's trophy"
+)
+WORLD_CUP = {
+    "src": "static/meet/cup-wide-1200.webp",
+    "width": 1200,
+    "height": 802,
+    "alt": WORLD_CUP_ALT,
+    "sizes": "(max-width: 760px) 78vw, 28rem",
+    "sources": (
+        {
+            "type": "image/avif",
+            "media": "(max-width: 760px)",
+            "srcset": _variants("cup-tall", (800, 1200), "avif"),
+        },
+        {
+            "type": "image/webp",
+            "media": "(max-width: 760px)",
+            "srcset": _variants("cup-tall", (480, 800, 1200), "webp"),
+        },
+        {"type": "image/avif", "srcset": _variants("cup-wide", (640, 1200), "avif")},
+        {"type": "image/webp", "srcset": _variants("cup-wide", (640, 1200), "webp")},
+    ),
+}
+
+BLOOPER_VIDEO = "static/meet/400m-fall-loop.mp4"
+BLOOPER_POSTER = "static/meet/fall-still-540.webp"
 
 FLIP_KICKER = "poke this"
 

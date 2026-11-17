@@ -54,6 +54,7 @@ class HomeTests(unittest.TestCase):
             "video",
             "quotes",
             "contact",
+            "blooper",
         ]
         positions = [self.html.index(f'id="{item}"') for item in ids]
         self.assertEqual(positions, sorted(positions))
@@ -104,7 +105,7 @@ class HomeTests(unittest.TestCase):
         self.assertIn("position:fixed", gate)
         self.assertIn('id="lap"', self.html)
         self.assertIn('id="lap-runner"', self.html)
-        self.assertIn("400m · 800m school records", self.html)
+        self.assertIn("400m 50.9 · 800m 2:02.9", self.html)
         self.assertIn('class="scoreboard', self.html)
         self.assertIn('class="flip"', self.html)
         self.assertGreaterEqual(self.html.count('class="flip"'), 3)
@@ -131,7 +132,15 @@ class HomeTests(unittest.TestCase):
         self.assertIn('id="run-it"', self.html)
         self.assertIn("New PR!", self.html)
         self.assertIn("Chase still wins", self.html)
-        self.assertIn("stand-in pace", self.html)
+        self.assertIn("2:02.9", self.html)
+        self.assertEqual(GHOST_800_PACE_SECONDS, 122.9)
+        self.assertIn("Leaned so hard the track had to catch me.", self.html)
+        self.assertIn("Dad said 54.", self.html)
+        self.assertIn("playsinline", self.html)
+        self.assertIn("Kobe Bryant, 2009 (reference photo)", self.html)
+        self.assertNotIn("THAT WAS ABOUT MY DAD", self.html)
+        self.assertIn("Met a gold medalist. Asked for tips. Got a photo.", self.html)
+        self.assertIn("Number 5. Bentley black and gold.", self.html)
         self.assertIn('id="oval-svg"', self.html)
         self.assertGreater(GHOST_800_PACE_SECONDS, 0)
         meet = (ROOT / "js" / "meet.js").read_text(encoding="utf-8")
@@ -184,7 +193,6 @@ class HomeTests(unittest.TestCase):
     def test_removed_resume_material(self):
         banned = (
             "GPA",
-            "SAT",
             "AP Physics",
             "Food Bank",
             "Lamorinda",
@@ -194,6 +202,7 @@ class HomeTests(unittest.TestCase):
         )
         for phrase in banned:
             self.assertNotIn(phrase, self.html)
+        self.assertIsNone(__import__("re").search(r"\bSAT\b", self.html))
         self.assertNotIn("resume", PAGE_COPY["home"]["description"].lower())
         self.assertNotIn("resume", {item[0] for item in NAV})
         labels = [item[1] for item in NAV]

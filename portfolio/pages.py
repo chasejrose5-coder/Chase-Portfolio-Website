@@ -8,11 +8,18 @@ from pathlib import Path
 from portfolio.content import (
     BATON_GOT,
     BATON_LABEL,
+    BLOOPER_CAPTION,
+    BLOOPER_HEADING,
+    BLOOPER_POSTER,
+    BLOOPER_STAMP,
+    BLOOPER_VIDEO,
     BUILDING,
     BUILDING_HEADING,
     COMING_SOON_LABEL,
     CONTACT_HEADING,
     CURSOR_PACE_LABEL,
+    DRIBBLE,
+    DRIBBLE_CAPTION,
     EMAIL,
     CONTACT_LEAD,
     FALSE_START,
@@ -36,7 +43,10 @@ from portfolio.content import (
     GITHUB_LINK_LABEL,
     GITHUB_PROFILE,
     HOME_PORTRAIT,
+    KOBE,
+    KOBE_CREDIT,
     LAP_MARKS,
+    LOCKER,
     ORIGIN,
     ORIGIN_ASIDE,
     ORIGIN_HEADING,
@@ -46,6 +56,7 @@ from portfolio.content import (
     QUOTES,
     QUOTES_HEADING,
     RACE_DATE,
+    RECREATE_CAPTION,
     RACE_NAME,
     RACE_ZONE,
     RESUME_LINK_LABEL,
@@ -58,11 +69,15 @@ from portfolio.content import (
     STORY_LINK_LABEL,
     STORY_PLACEHOLDERS,
     TAGLINE,
+    USATF,
+    USATF_CAPTION,
     VIDEO_HEADING,
     WHISTLE_CALL,
     WHISTLE_LABEL,
     VIDEO_LEAD,
     VIDEO_PLACEHOLDER,
+    WORLD_CUP,
+    WORLD_CUP_CAPTION,
     NAME,
     countdown_parts,
     days_until_race,
@@ -391,8 +406,15 @@ def home_main_html() -> str:
         )
     columns = []
     for item in FIELD:
+        photo = ""
+        if item["title"] == "Soccer":
+            photo = (
+                f'<figure class="field-photo">{_picture(DRIBBLE)}'
+                f"<figcaption>{html.escape(DRIBBLE_CAPTION)}</figcaption></figure>"
+            )
         columns.append(
             '<article class="field-card reveal">'
+            f"{photo}"
             f'<h3>{html.escape(item["title"])}</h3>'
             f'<p>{html.escape(item["text"])}</p>'
             "</article>"
@@ -435,7 +457,7 @@ def home_main_html() -> str:
         f'{_section("origin-story", ORIGIN_HEADING, f"<div class=\"story-copy stagger\">{origin}<p class=\"origin-aside\">{html.escape(ORIGIN_ASIDE)}</p></div>")}'
         f'{_section("building", BUILDING_HEADING, _scoreboard() + _race_game() + _building_cards())}'
         f'{_section("track-field", FIELD_HEADING, _pitch() + f"<div class=\"field-grid\">{"".join(columns)}</div>")}'
-        f'{_section("fun-facts", FUN_FACTS_HEADING, f"<ul class=\"fun-facts\">{"".join(facts)}</ul>")}'
+        f'{_section("fun-facts", FUN_FACTS_HEADING, _photo_stories() + f"<ul class=\"fun-facts\">{"".join(facts)}</ul>")}'
         + _section(
             "stories",
             STORIES_HEADING,
@@ -449,6 +471,7 @@ def home_main_html() -> str:
             CONTACT_HEADING,
             f'<p class="story-lead">{html.escape(CONTACT_LEAD)}</p>{_contact_links()}',
         )
+        + _section("blooper", BLOOPER_HEADING, _blooper())
         + '</div></div><div class="lap-scroll" id="lap-scroll">'
         '<div id="lap-end" class="lap-end"></div></div></main>'
         + _finish_gate()
@@ -502,6 +525,16 @@ def _public_src(path: str | None) -> str | None:
     return "app/static/" + rel
 
 
+def _srcset(items) -> str:
+    parts = []
+    for item in items or ():
+        url = _public_src(item.get("src"))
+        if not url:
+            continue
+        parts.append(f"{html.escape(url, quote=True)} {int(item['width'])}w")
+    return ", ".join(parts)
+
+
 def _picture(image: dict | None, *, decorative: bool = False, loading: str = "lazy") -> str:
     src = _public_src(image.get("src")) if image else None
     if not src:
@@ -510,23 +543,65 @@ def _picture(image: dict | None, *, decorative: bool = False, loading: str = "la
     alt = "" if decorative else html.escape(image.get("alt") or "", quote=True)
     width = int(image["width"])
     height = int(image["height"])
+    sizes = image.get("sizes")
+    sizes_attr = f' sizes="{html.escape(sizes, quote=True)}"' if sizes else ""
     extra = ""
-    srcset_parts = []
-    for item in image.get("srcset") or ():
-        url = _public_src(item.get("src"))
-        if not url:
-            continue
-        srcset_parts.append(
-            f"{html.escape(url, quote=True)} {int(item['width'])}w"
-        )
-    if srcset_parts:
-        extra += f' srcset="{", ".join(srcset_parts)}"'
-        sizes = image.get("sizes")
-        if sizes:
-            extra += f' sizes="{html.escape(sizes, quote=True)}"'
-    return (
+    srcset = _srcset(image.get("srcset"))
+    if srcset:
+        extra += f' srcset="{srcset}"{sizes_attr}'
+    img = (
         f'<img src="{html.escape(src, quote=True)}" alt="{alt}" '
         f'width="{width}" height="{height}"{extra} loading="{loading}" decoding="async">'
+    )
+    sources = []
+    for source in image.get("sources") or ():
+        set_value = _srcset(source.get("srcset"))
+        if not set_value:
+            continue
+        media = source.get("media")
+        media_attr = f' media="{html.escape(media, quote=True)}"' if media else ""
+        kind = html.escape(source.get("type") or "", quote=True)
+        sources.append(
+            f'<source type="{kind}"{media_attr} srcset="{set_value}"{sizes_attr}>'
+        )
+    if not sources:
+        return img
+    return f'<picture>{"".join(sources)}{img}</picture>'
+
+
+def _figure(image: dict, caption: str, class_name: str = "") -> str:
+    css = f' class="{class_name}"' if class_name else ""
+    return (
+        f"<figure{css}>{_picture(image)}"
+        f"<figcaption>{html.escape(caption)}</figcaption></figure>"
+    )
+
+
+def _photo_stories() -> str:
+    return (
+        '<div class="photo-stories">'
+        f"{_figure(USATF, USATF_CAPTION, 'meet-photo')}"
+        f"{_figure(WORLD_CUP, WORLD_CUP_CAPTION, 'meet-photo')}"
+        '<div class="recreate">'
+        f"{_figure(LOCKER, RECREATE_CAPTION, 'recreate-me')}"
+        f"{_figure(KOBE, KOBE_CREDIT, 'recreate-ref')}"
+        "</div></div>"
+    )
+
+
+def _blooper() -> str:
+    poster = _public_src(BLOOPER_POSTER) or ""
+    video = _public_src(BLOOPER_VIDEO) or ""
+    return (
+        '<figure class="blooper">'
+        f'<video id="blooper-video" autoplay muted loop playsinline controls '
+        f'poster="{html.escape(poster, quote=True)}" '
+        f'width="720" height="1280">'
+        f'<source src="{html.escape(video, quote=True)}" type="video/mp4">'
+        "</video>"
+        f"<figcaption>{html.escape(BLOOPER_CAPTION)}</figcaption>"
+        f'<p class="judges-stamp">{html.escape(BLOOPER_STAMP)}</p>'
+        "</figure>"
     )
 
 

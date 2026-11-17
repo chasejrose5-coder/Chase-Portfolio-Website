@@ -18,7 +18,7 @@ Open the URL Streamlit prints (usually http://localhost:8501).
 
 Edit the visible copy in `portfolio/content.py`.
 
-Home opens on a full-screen starting gun. The page stays behind it until you fire (click, tap, space, or Enter). Reduced motion still waits for that action. The oval fills the screen and the story sits in the infield. The track-and-field stretch has a ball you can flick at two goals. A whistle calls both teams. Eight lanes jump to a section, and the finish tape is at the end of the lap. A scoreboard counts down to Stanford. Run it yourself races a stand-in ghost. The cursor can pass a baton, print a hand pace on the scoreboard, and snap a photo finish. Sound is off until you turn it on. Click the photo, the scoreboard number, or the runner a few times.
+Home opens on a full-screen starting gun. The page stays behind it until you fire (click, tap, space, or Enter). Reduced motion still waits for that action. The oval fills the screen and the story sits in the infield. The track-and-field stretch has a ball you can flick at two goals. A whistle calls both teams. Eight lanes jump to a section, and the finish tape is at the end of the lap. A scoreboard counts down to Stanford. Run it yourself races his 2:02.9. The 400m school record on the board is 50.9. The goal is still 1:55.0. The cursor can pass a baton, print a hand pace on the scoreboard, and snap a photo finish. Sound is off until you turn it on. Click the photo, the scoreboard number, or the runner a few times.
 
 ## Placeholders Chase still needs to fill
 
