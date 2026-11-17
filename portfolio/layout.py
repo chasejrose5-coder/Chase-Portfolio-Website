@@ -54,12 +54,16 @@ def render_page(
     *,
     title: str | None = None,
     description: str | None = None,
+    before: str = "",
 ) -> None:
     # Style-only HTML is mounted outside the page body. A <style> tag inside
     # the page is stripped, and two separate style elements overwrite each other.
+    # `before` is the finish gate. It has to lead the document so the cover
+    # paints before the header and the hero.
     st.html(f"<style>\n{combined_css()}\n</style>")
     st.html(
-        _document(active, main_html, title=title, description=description),
+        before
+        + _document(active, main_html, title=title, description=description),
         unsafe_allow_javascript=True,
     )
 

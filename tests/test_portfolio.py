@@ -18,7 +18,7 @@ from portfolio.content import (
     days_until_race,
 )
 from portfolio.layout import NAV
-from portfolio.pages import home_main_html, project_detail_html, resume_public_path
+from portfolio.pages import _finish_gate, home_main_html, project_detail_html, resume_public_path
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -94,11 +94,13 @@ class HomeTests(unittest.TestCase):
         self.assertEqual(self.html.count("Three-year captain"), 2)
 
     def test_finish_line_lap_scoreboard_and_flips(self):
-        self.assertIn('id="finish-gate"', self.html)
-        self.assertIn('class="finish-skip"', self.html)
-        self.assertIn(">Skip<", self.html)
-        self.assertIn("Break the tape", self.html)
-        self.assertIn("chase-finish-seen", self.html)
+        gate = _finish_gate()
+        self.assertIn('id="finish-gate"', gate)
+        self.assertIn('class="finish-skip"', gate)
+        self.assertIn(">Skip<", gate)
+        self.assertIn("Break the tape", gate)
+        self.assertIn("chase-finish-seen", gate)
+        self.assertIn("position:fixed", gate)
         self.assertIn('id="lap"', self.html)
         self.assertIn('id="lap-runner"', self.html)
         self.assertIn("400m · 800m school records", self.html)

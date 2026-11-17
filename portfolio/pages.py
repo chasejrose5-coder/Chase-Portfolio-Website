@@ -141,9 +141,11 @@ def _finish_gate() -> str:
     hint = html.escape(FINISH["hint"])
     return (
         '<div class="finish-gate" id="finish-gate" role="dialog" aria-modal="true" '
-        'aria-labelledby="finish-title">'
+        'aria-labelledby="finish-title" '
+        'style="position:fixed;inset:0;z-index:400;background:#1A1A2E;color:#fff;">'
         "<script>(function(){try{if(sessionStorage.getItem('chase-finish-seen')==='1')"
-        "{document.getElementById('finish-gate').classList.add('is-done');}}catch(e){}})();</script>"
+        "{var gate=document.getElementById('finish-gate');gate.classList.add('is-done');"
+        "gate.style.display='none';}}catch(e){}})();</script>"
         f'<a class="finish-skip" id="finish-skip" href="#main">{skip}</a>'
         '<div class="finish-stage">'
         f'<p class="finish-kicker">{kicker}</p>'
@@ -278,7 +280,6 @@ def home_main_html() -> str:
         "</div>"
     )
     return (
-        f"{_finish_gate()}"
         '<main id="main"><div class="wrap">'
         '<div class="home-fold" id="hero" data-lap="Start">'
         '<section class="hero">'
@@ -307,7 +308,7 @@ def home_main_html() -> str:
 
 
 def show_home() -> None:
-    render_page("home", home_main_html())
+    render_page("home", home_main_html(), before=_finish_gate())
 
 
 _FILLS = ("#eef1f4", "#f4f0ea", "#eef3f1")
