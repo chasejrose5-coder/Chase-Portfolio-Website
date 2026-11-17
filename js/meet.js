@@ -373,7 +373,6 @@
     if (racing) return;
     racing = true;
     youPos = 0;
-    speed = 0;
     splitNoted = false;
     startedAt = performance.now();
     lastTick = startedAt;
@@ -393,4 +392,241 @@
       stride(event);
     }
   });
+})();
+
+/* Baton, hand pace, and a photo finish. Pointer toys, one animation frame. */
+(function () {
+  var dock = document.getElementById("track-dock");
+  var paceEl = document.getElementById("cursor-pace");
+  var baton = document.getElementById("baton");
+  var passBtn = document.getElementById("baton-pass");
+  var photo = document.getElementById("photo-frame");
+  var photoTime = document.getElementById("photo-time");
+  var got = document.getElementById("baton-got");
+  var lap = document.getElementById("lap");
+  if (!dock || !paceEl) return;
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = window.matchMedia("(pointer: fine)").matches && !reduce;
+  var PIXELS_PER_METER = 420;
+  var stops = ["hero", "origin-story", "building", "track-field", "fun-facts", "stories", "quotes", "contact"];
+  var samples = [];
+  var mx = 0;
+  var my = 0;
+  var bx = 0;
+  var by = 0;
+  var over = false;
+  var carrying = false;
+  var dragging = false;
+  var dragX = 0;
+  var dragY = 0;
+  var moved = 0;
+  var snapped = false;
+  var justHanded = false;
+  var metersPerSecond = 0;
+  var shownPace = 0;
+  var holdUntil = 0;
+  var lastPaint = 0;
+  var photoTimer = 0;
+  var running = false;
+
+  function runnerBox() {
+    var runner = document.getElementById("lap-runner");
+    if (!runner) return null;
+    var box = runner.getBoundingClientRect();
+    if (box.width < 2) return null;
+    return box;
+  }
+
+  function nearRunner(x, y) {
+    var box = runnerBox();
+    if (!box) return false;
+    var dx = x - (box.left + box.width / 2);
+    var dy = y - (box.top + box.height / 2);
+    return dx * dx + dy * dy < 54 * 54;
+  }
+
+  function format800(seconds) {
+    if (!isFinite(seconds) || seconds <= 0 || seconds > 4000) return "—";
+    var mins = Math.floor(seconds / 60);
+    var secs = seconds - mins * 60;
+    var whole = Math.floor(secs);
+    var frac = Math.floor((secs - whole) * 10);
+    return mins + ":" + (whole < 10 ? "0" : "") + whole + "." + frac;
+  }
+
+  function paintPace(now) {
+    if (now - lastPaint < 120) return;
+    lastPaint = now;
+    var live = now < holdUntil ? shownPace : metersPerSecond;
+    if (live < 0.35) {
+      paceEl.textContent = "Your hand · standing";
+      return;
+    }
+    paceEl.textContent = "Your hand · " + live.toFixed(1) + " m/s · " + format800(800 / live);
+  }
+
+  function placeBaton() {
+    if (!baton || !fine) return;
+    if (carrying) {
+      var box = runnerBox();
+      if (box) {
+        bx = box.left + box.width / 2;
+        by = box.top + box.height / 2;
+      }
+    }
+    baton.style.transform = "translate(" + bx + "px," + by + "px) rotate(-18deg)";
+    baton.hidden = !over && !carrying;
+    if (lap) lap.classList.toggle("baton-live", over && !carrying);
+  }
+
+  function loop(now) {
+    running = true;
+    if (samples.length > 1) {
+      var a = samples[0];
+      var b = samples[samples.length - 1];
+      var dt = (b.t - a.t) / 1000;
+      if (dt > 0.016) {
+        var dist = Math.hypot(b.x - a.x, b.y - a.y);
+        var next = Math.min(12, (dist / dt) / PIXELS_PER_METER);
+        metersPerSecond += (next - metersPerSecond) * 0.45;
+        if (metersPerSecond > 0.4) {
+          shownPace = metersPerSecond;
+          holdUntil = now + 4000;
+        }
+      }
+    } else {
+      metersPerSecond += (0 - metersPerSecond) * 0.08;
+    }
+    if (samples.length && now - samples[samples.length - 1].t > 800) samples.length = 0;
+    paintPace(now);
+    placeBaton();
+    if (over || carrying || metersPerSecond > 0.2 || dragging) {
+      window.requestAnimationFrame(loop);
+    } else {
+      running = false;
+      paintPace(now + 200);
+    }
+  }
+
+  function kick() {
+    if (!running) window.requestAnimationFrame(loop);
+  }
+
+  function sample(x, y) {
+    var now = performance.now();
+    samples.push({ x: x, y: y, t: now });
+    if (samples.length > 6) samples.shift();
+    mx = x;
+    my = y;
+    if (!carrying) {
+      bx = x;
+      by = y;
+    }
+    kick();
+  }
+
+  function nextStop() {
+    var best = stops[0];
+    var mark = -1;
+    for (var i = 0; i < stops.length; i++) {
+      var el = document.getElementById(stops[i]);
+      if (!el) continue;
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.35) {
+        best = stops[i];
+        mark = i;
+      }
+    }
+    return document.getElementById(stops[Math.min(stops.length - 1, mark + 1)] || best);
+  }
+
+  function handoff() {
+    var target = nextStop();
+    carrying = true;
+    justHanded = true;
+    if (got) got.hidden = false;
+    if (baton) baton.hidden = false;
+    kick();
+    if (target) target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    window.setTimeout(function () {
+      carrying = false;
+      justHanded = false;
+      if (got) got.hidden = true;
+      if (baton && !over) baton.hidden = true;
+    }, reduce ? 400 : 1100);
+  }
+
+  function showPhoto() {
+    if (!photo) return;
+    var eight = metersPerSecond > 0.35 ? format800(800 / metersPerSecond) : "—";
+    if (photoTime) {
+      photoTime.textContent = metersPerSecond > 0.35
+        ? metersPerSecond.toFixed(1) + " m/s · " + eight
+        : "Your hand";
+    }
+    photo.hidden = false;
+    window.clearTimeout(photoTimer);
+    photoTimer = window.setTimeout(function () {
+      photo.hidden = true;
+    }, reduce ? 700 : 1400);
+  }
+
+  function segmentHitsRunner(x1, y1, x2, y2) {
+    var box = runnerBox();
+    if (!box) return false;
+    var cx = box.left + box.width / 2;
+    var cy = box.top + box.height / 2;
+    var dx = x2 - x1;
+    var dy = y2 - y1;
+    var len = dx * dx + dy * dy;
+    var t = len < 1 ? 0 : Math.max(0, Math.min(1, ((cx - x1) * dx + (cy - y1) * dy) / len));
+    var px = x1 + dx * t;
+    var py = y1 + dy * t;
+    return Math.hypot(px - cx, py - cy) < 40;
+  }
+
+  dock.addEventListener("pointerenter", function () {
+    over = true;
+    kick();
+  });
+  dock.addEventListener("pointerleave", function () {
+    over = false;
+    if (lap) lap.classList.remove("baton-live");
+  });
+  dock.addEventListener("pointerdown", function (event) {
+    if (event.target && event.target.closest && event.target.closest("button, a")) return;
+    dragging = true;
+    snapped = false;
+    moved = 0;
+    dragX = event.clientX;
+    dragY = event.clientY;
+    sample(event.clientX, event.clientY);
+  });
+  dock.addEventListener("pointermove", function (event) {
+    over = true;
+    sample(event.clientX, event.clientY);
+    if (!dragging) return;
+    moved += Math.hypot(event.clientX - dragX, event.clientY - dragY);
+    if (!snapped && segmentHitsRunner(dragX, dragY, event.clientX, event.clientY)) {
+      snapped = true;
+      showPhoto();
+    }
+    dragX = event.clientX;
+    dragY = event.clientY;
+  });
+  window.addEventListener("pointerup", function (event) {
+    if (!dragging) return;
+    dragging = false;
+    if (moved > 16 && nearRunner(event.clientX, event.clientY)) handoff();
+  });
+  if (passBtn) passBtn.addEventListener("click", handoff);
+
+  var runner = document.getElementById("lap-runner");
+  if (runner) {
+    runner.addEventListener("click", function (event) {
+      if (!justHanded) return;
+      event.stopPropagation();
+      event.preventDefault();
+    }, true);
+  }
 })();

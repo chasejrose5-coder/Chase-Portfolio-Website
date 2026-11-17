@@ -1281,7 +1281,8 @@ body,
 
 .lane-btn,
 .sound-toggle,
-.race-go {
+.race-go,
+.baton-pass {
   min-width: 44px;
   min-height: 44px;
   border: 2px solid #fff;
@@ -1426,4 +1427,109 @@ body,
   }
   .oval-svg { max-height: 34vh; }
   .lane-picker { grid-template-columns: repeat(4, minmax(44px, 1fr)); }
+}
+
+/* Cursor toys: baton, hand pace, photo finish.
+   ------------------------------------------------------------ */
+
+.cursor-pace {
+  margin: 0.45rem 0 0;
+  color: #fff;
+  font-family: Anton, Impact, sans-serif;
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.baton-pass {
+  width: 100%;
+  margin: 0.35rem 0 0.45rem;
+}
+
+.baton {
+  position: fixed;
+  z-index: 35;
+  left: 0;
+  top: 0;
+  width: 34px;
+  height: 8px;
+  margin: -4px 0 0 -17px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #fff 0 6px, #c9a227 6px 28px, #fff 28px 34px);
+  pointer-events: none;
+  display: none;
+}
+
+.baton-got {
+  margin: 0;
+  text-align: center;
+  color: #fff;
+  font-family: Anton, Impact, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.photo-frame {
+  position: absolute;
+  z-index: 20;
+  left: 10%;
+  top: 46%;
+  width: 80%;
+  padding: 0.55rem 0.55rem 0.4rem;
+  border: 2px solid #14120f;
+  background: #f7f1e8;
+  color: #14120f;
+  box-shadow: 0 10px 0 rgba(20, 18, 15, 0.25);
+  transform: rotate(-2.5deg);
+}
+
+.photo-kicker,
+.photo-time {
+  margin: 0;
+  font-family: Anton, Impact, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.photo-time { margin-top: 0.3rem; font-size: 0.95rem; letter-spacing: 0.04em; }
+
+.photo-strip {
+  position: relative;
+  height: 64px;
+  margin-top: 0.35rem;
+  background:
+    linear-gradient(#fff, #fff) center / 100% 2px no-repeat,
+    repeating-linear-gradient(90deg, #c15a45 0 16px, #a8483a 16px 32px);
+  overflow: hidden;
+}
+
+.photo-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 58%;
+  width: 2px;
+  background: #14120f;
+}
+
+.photo-dot {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.photo-dot.is-them { left: 46%; background: #fff; border: 2px solid #14120f; }
+.photo-dot.is-you { left: 70%; background: #14120f; }
+
+@media (pointer: fine) {
+  .baton { display: block; }
+  .lap.baton-live { cursor: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-frame { transform: none; }
+  .baton { display: none; }
 }

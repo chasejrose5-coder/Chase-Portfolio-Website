@@ -6,10 +6,13 @@ import html
 from pathlib import Path
 
 from portfolio.content import (
+    BATON_GOT,
+    BATON_LABEL,
     BUILDING,
     BUILDING_HEADING,
     COMING_SOON_LABEL,
     CONTACT_HEADING,
+    CURSOR_PACE_LABEL,
     EMAIL,
     CONTACT_LEAD,
     FALSE_START,
@@ -37,6 +40,7 @@ from portfolio.content import (
     ORIGIN,
     ORIGIN_ASIDE,
     ORIGIN_HEADING,
+    PHOTO_KICKER,
     PORTRAIT_NOTE,
     PROJECTS,
     QUOTES,
@@ -197,6 +201,18 @@ def _track_dock() -> str:
         '<span class="lap-runner-dot" aria-hidden="true"></span></button>'
         f'<p class="false-start" id="false-start" hidden>{html.escape(FALSE_START)}</p>'
         '<p class="meter" id="meter">0m</p>'
+        f'<p class="baton-got" id="baton-got" hidden>{html.escape(BATON_GOT)}</p>'
+        "</div>"
+        '<span class="baton" id="baton" hidden aria-hidden="true"></span>'
+        f'<button class="baton-pass" id="baton-pass" type="button">{html.escape(BATON_LABEL)}</button>'
+        '<div class="photo-frame" id="photo-frame" hidden>'
+        f'<p class="photo-kicker">{html.escape(PHOTO_KICKER)}</p>'
+        '<div class="photo-strip" aria-hidden="true">'
+        '<span class="photo-line"></span>'
+        '<span class="photo-dot is-them"></span>'
+        '<span class="photo-dot is-you"></span>'
+        "</div>"
+        '<p class="photo-time" id="photo-time"></p>'
         "</div>"
         '<button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false">'
         "Sound off</button>"
@@ -272,6 +288,7 @@ def _scoreboard() -> str:
         '<span class="scoreboard-unit" data-race-unit>DAYS</span>'
         "</span></button>"
         f'<p class="scoreboard-records">{html.escape(SCOREBOARD_RECORDS)}</p>'
+        f'<p class="cursor-pace" id="cursor-pace">{html.escape(CURSOR_PACE_LABEL)}</p>'
         '<p class="scoreboard-call" id="scoreboard-call" hidden></p>'
         "</div>"
     )

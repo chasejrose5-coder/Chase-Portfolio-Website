@@ -69,6 +69,11 @@ GUN = {
 GAME_HEADING = "Run it yourself"
 GAME_NOTE = "The ghost is on a stand-in pace. My real 800 time isn't on this page yet."
 GAME_HOW = "Tap the lane. Space or an arrow works too."
+
+BATON_LABEL = "Pass the baton"
+BATON_GOT = "Got it."
+CURSOR_PACE_LABEL = "Your hand"
+PHOTO_KICKER = "Photo"
 GAME_START = "Start the sprint"
 GAME_WIN = "New PR!"
 GAME_LOSE = "Chase still wins"

@@ -136,6 +136,12 @@ class HomeTests(unittest.TestCase):
         meet = (ROOT / "js" / "meet.js").read_text(encoding="utf-8")
         self.assertIn("chase-gun-fired", meet)
         self.assertIn("prefers-reduced-motion", meet)
+        self.assertIn('id="cursor-pace"', self.html)
+        self.assertIn('id="baton-pass"', self.html)
+        self.assertIn('id="photo-frame"', self.html)
+        self.assertIn("Pass the baton", self.html)
+        self.assertIn("Your hand", self.html)
+        self.assertIn("showPhoto", meet)
 
     def test_fun_facts_and_placeholders(self):
         self.assertIn("12-page thesis", self.html)
