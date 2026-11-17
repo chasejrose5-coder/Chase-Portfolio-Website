@@ -11,7 +11,11 @@ import streamlit as st
 from portfolio.content import EMAIL, GITHUB_PROFILE, NAME, PAGE_COPY
 
 ROOT = Path(__file__).resolve().parent.parent
-CSS_FILES = (ROOT / "css" / "meet.css", ROOT / "css" / "streamlit.css")
+CSS_FILES = (
+    ROOT / "css" / "meet.css",
+    ROOT / "css" / "streamlit.css",
+    ROOT / "css" / "rooms.css",
+)
 MAIN_JS = ROOT / "js" / "main.js"
 MEET_JS = ROOT / "js" / "meet.js"
 FONT_IMPORT = (

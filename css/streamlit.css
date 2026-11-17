@@ -6,8 +6,8 @@ body,
 [data-testid="stAppViewContainer"],
 [data-testid="stMain"],
 section.main {
-  background: #a8483a;
-  color: #ffffff;
+  background: #fffcf8;
+  color: #14120f;
 }
 
 [data-testid="stHeader"],

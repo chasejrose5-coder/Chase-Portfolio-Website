@@ -6,18 +6,14 @@ import html
 from pathlib import Path
 
 from portfolio.content import (
-    BATON_GOT,
-    BATON_LABEL,
     BLOOPER_CAPTION,
     BLOOPER_HEADING,
     BLOOPER_POSTER,
     BLOOPER_STAMP,
     BLOOPER_VIDEO,
     BUILDING,
-    BUILDING_HEADING,
     COMING_SOON_LABEL,
     CONTACT_HEADING,
-    CURSOR_PACE_LABEL,
     ASSIST_CAPTION,
     ASSIST_POSTER,
     ASSIST_TITLE,
@@ -30,9 +26,7 @@ from portfolio.content import (
     GOAL_VIDEO,
     EMAIL,
     CONTACT_LEAD,
-    FALSE_START,
     FIELD,
-    FIELD_HEADING,
     FINISH,
     FLIP_KICKER,
     GAME_HEADING,
@@ -44,10 +38,8 @@ from portfolio.content import (
     GAME_WIN,
     GHOST_800_PACE_SECONDS,
     GUN,
-    LANES,
     FUN_FACT_PLACEHOLDERS,
     FUN_FACTS,
-    FUN_FACTS_HEADING,
     GITHUB_LINK_LABEL,
     GITHUB_PROFILE,
     HOME_PORTRAIT,
@@ -57,8 +49,6 @@ from portfolio.content import (
     LOCKER,
     ORIGIN,
     ORIGIN_ASIDE,
-    ORIGIN_HEADING,
-    PHOTO_KICKER,
     PORTRAIT_NOTE,
     PROJECTS,
     QUOTES,
@@ -72,16 +62,12 @@ from portfolio.content import (
     SCOREBOARD_RECORDS,
     SOCCER_GOAL,
     SOCCER_NOTE,
-    STORIES_HEADING,
     STORIES_LEAD,
     STORY_LINK_LABEL,
     STORY_PLACEHOLDERS,
     TAGLINE,
     USATF,
     USATF_CAPTION,
-    VIDEO_HEADING,
-    WHISTLE_CALL,
-    WHISTLE_LABEL,
     VIDEO_LEAD,
     VIDEO_PLACEHOLDER,
     WORLD_CUP,
@@ -196,59 +182,6 @@ def _gun_opener() -> str:
     )
 
 
-def _track_dock() -> str:
-    buttons = []
-    for number, target, label in LANES:
-        buttons.append(
-            f'<button class="lane-btn" type="button" data-lane="{number}" '
-            f'data-target="{html.escape(target, quote=True)}">'
-            f'<span class="lane-num">{number}</span>'
-            f'<span class="lane-label">{html.escape(label)}</span></button>'
-        )
-    return (
-        '<aside class="track-dock" id="track-dock">'
-        '<div class="spike-layer" id="spike-layer" aria-hidden="true"></div>'
-        '<div class="lap" id="lap">'
-        '<svg class="oval-svg" id="oval-svg" viewBox="0 0 360 220" role="img" '
-        'aria-label="400 meter oval">'
-        '<rect class="oval-surface" x="6" y="18" width="348" height="184" rx="92"/>'
-        '<rect class="lane-line" x="18" y="30" width="324" height="160" rx="80" fill="none"/>'
-        '<rect class="lane-line" x="32" y="42" width="296" height="136" rx="68" fill="none"/>'
-        '<rect class="lane-line" x="46" y="54" width="268" height="112" rx="56" fill="none"/>'
-        '<rect class="lane-line" x="60" y="66" width="240" height="88" rx="44" fill="none"/>'
-        '<rect class="infield" x="78" y="82" width="204" height="56" rx="28"/>'
-        '<path id="oval-path" d="M100,36 H260 A74,74 0 0 1 260,184 H100 A74,74 0 0 1 100,36 Z" fill="none"/>'
-        "</svg>"
-        '<button type="button" class="lap-runner" id="lap-runner" '
-        'aria-label="The runner. Click it a few times.">'
-        '<span class="lap-runner-dot" aria-hidden="true"></span></button>'
-        f'<p class="false-start" id="false-start" hidden>{html.escape(FALSE_START)}</p>'
-        '<p class="meter" id="meter">0m</p>'
-        f'<p class="baton-got" id="baton-got" hidden>{html.escape(BATON_GOT)}</p>'
-        "</div>"
-        '<span class="baton" id="baton" hidden aria-hidden="true"></span>'
-        '<div class="dock-tools">'
-        f'<button class="baton-pass" id="baton-pass" type="button">{html.escape(BATON_LABEL)}</button>'
-        '<div class="photo-frame" id="photo-frame" hidden>'
-        f'<p class="photo-kicker">{html.escape(PHOTO_KICKER)}</p>'
-        '<div class="photo-strip" aria-hidden="true">'
-        '<span class="photo-line"></span>'
-        '<span class="photo-dot is-them"></span>'
-        '<span class="photo-dot is-you"></span>'
-        "</div>"
-        '<p class="photo-time" id="photo-time"></p>'
-        "</div>"
-        '<button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false">'
-        "Sound off</button>"
-        f'<button class="whistle" id="whistle" type="button">{html.escape(WHISTLE_LABEL)}</button>'
-        f'<p class="whistle-call" id="whistle-call" hidden>{html.escape(WHISTLE_CALL)}</p>'
-        "</div>"
-        '<div class="lane-picker" role="group" aria-label="Pick a lane">'
-        f'{"".join(buttons)}'
-        "</div></aside>"
-    )
-
-
 def _pitch() -> str:
     return (
         '<div class="pitch" id="pitch">'
@@ -257,6 +190,7 @@ def _pitch() -> str:
         '<span class="ball" id="soccer-ball"></span>'
         "</div>"
         f'<p class="pitch-note">{html.escape(SOCCER_NOTE)}</p>'
+        '<p class="goals-line">Goals <span id="goals-count">0</span></p>'
         f'<p class="goal-call" id="goal-call" hidden>{html.escape(SOCCER_GOAL)}</p>'
     )
 
@@ -327,33 +261,8 @@ def _scoreboard() -> str:
         '<span class="scoreboard-unit" data-race-unit>DAYS</span>'
         "</span></button>"
         f'<p class="scoreboard-records">{html.escape(SCOREBOARD_RECORDS)}</p>'
-        '<p class="goals-line">Goals <span id="goals-count">0</span></p>'
-        f'<p class="cursor-pace" id="cursor-pace">{html.escape(CURSOR_PACE_LABEL)}</p>'
         '<p class="scoreboard-call" id="scoreboard-call" hidden></p>'
         "</div>"
-    )
-
-
-def _lap_nav() -> str:
-    marks = []
-    for section_id, label in LAP_MARKS:
-        sid = html.escape(section_id, quote=True)
-        name = html.escape(label)
-        marks.append(
-            f'<a class="lap-mark" href="#{sid}" data-lap-target="{sid}" '
-            f'aria-label="{name}"><span class="lap-dot" aria-hidden="true"></span>'
-            f'<span class="lap-name">{name}</span></a>'
-        )
-    return (
-        '<nav class="lap" id="lap" aria-label="Page progress">'
-        '<div class="lap-track">'
-        '<span class="lap-oval" aria-hidden="true"></span>'
-        '<button type="button" class="lap-runner" id="lap-runner" '
-        'aria-label="The runner. Click it a few times.">'
-        '<span class="lap-runner-dot" aria-hidden="true"></span></button>'
-        f'<p class="false-start" id="false-start" hidden>{html.escape(FALSE_START)}</p>'
-        f'{"".join(marks)}'
-        "</div></nav>"
     )
 
 
@@ -376,6 +285,18 @@ def _contact_links() -> str:
             f"{html.escape(RESUME_LINK_LABEL)}</a>"
         )
     return f'<p class="contact-links reveal">{"".join(links)}</p>'
+
+
+def _room(section_id: str, number: str, heading: str, body: str) -> str:
+    sid = html.escape(section_id, quote=True)
+    return (
+        f'<section class="room" id="{sid}" aria-labelledby="{sid}-heading">'
+        f'<p class="lane-no">{html.escape(number)}</p>'
+        f'<div class="room-body">'
+        f'<h2 id="{sid}-heading">{html.escape(heading)}</h2>'
+        f"{body}"
+        "</div></section>"
+    )
 
 
 def home_main_html() -> str:
@@ -412,25 +333,8 @@ def home_main_html() -> str:
             f'<p>{html.escape(story["text"])}</p>'
             "</article>"
         )
-    columns = []
-    for item in FIELD:
-        photo = ""
-        if item["title"] == "Soccer":
-            photo = (
-                f'<figure class="field-photo">{_picture(DRIBBLE)}'
-                f"<figcaption>{html.escape(DRIBBLE_CAPTION)}</figcaption></figure>"
-                + _match_clip("goal-clip", GOAL_TITLE, GOAL_CAPTION, GOAL_VIDEO, GOAL_POSTER, 960, 540,
-                              "Chase Rose, number 5 in a dark blue away kit, scoring from a cross by number 11")
-                + _match_clip("assist-clip", ASSIST_TITLE, ASSIST_CAPTION, ASSIST_VIDEO, ASSIST_POSTER, 960, 718,
-                              "Chase Rose, number 5 in a dark blue away kit, beating a defender on the right wing and crossing for a teammate to score")
-            )
-        columns.append(
-            '<article class="field-card reveal">'
-            f"{photo}"
-            f'<h3>{html.escape(item["title"])}</h3>'
-            f'<p>{html.escape(item["text"])}</p>'
-            "</article>"
-        )
+    track = next(item for item in FIELD if item["title"] == "Track")
+    soccer = next(item for item in FIELD if item["title"] == "Soccer")
     quotes = []
     for quote in QUOTES:
         quotes.append(
@@ -448,44 +352,58 @@ def home_main_html() -> str:
         f"<p>{html.escape(VIDEO_PLACEHOLDER)}</p>"
         "</div>"
     )
+    running = (
+        f'<p class="room-lead">{html.escape(track["text"])}</p>'
+        + _scoreboard()
+        + _race_game()
+        + '<div class="photo-drag" id="photo-drag">'
+        '<p class="photo-drag-label">Drag across the line.</p>'
+        '<div class="photo-frame" id="photo-frame" hidden>'
+        '<p class="photo-kicker">Photo</p>'
+        '<p class="photo-time">50.9</p>'
+        "</div></div>"
+    )
+    soccer_body = (
+        f'<p class="room-lead">{html.escape(soccer["text"])}</p>'
+        f'<figure class="field-photo">{_picture(DRIBBLE)}'
+        f"<figcaption>{html.escape(DRIBBLE_CAPTION)}</figcaption></figure>"
+        + _match_clip(
+            "goal-clip", GOAL_TITLE, GOAL_CAPTION, GOAL_VIDEO, GOAL_POSTER, 960, 540,
+            "Chase Rose, number 5 in a dark blue away kit, scoring from a cross by number 11",
+        )
+        + _match_clip(
+            "assist-clip", ASSIST_TITLE, ASSIST_CAPTION, ASSIST_VIDEO, ASSIST_POSTER, 960, 718,
+            "Chase Rose, number 5 in a dark blue away kit, beating a defender on the right wing and crossing for a teammate to score",
+        )
+        + _pitch()
+    )
+    me = (
+        f'<div class="story-copy" id="origin-story">{origin}'
+        f'<p class="origin-aside">{html.escape(ORIGIN_ASIDE)}</p></div>'
+        + _photo_stories()
+        + f'<ul class="fun-facts" id="fun-facts">{"".join(facts)}</ul>'
+        + f'<p class="story-lead">{html.escape(STORIES_LEAD)}</p>'
+        + f'<div class="story-grid" id="stories">{"".join(stories)}</div>'
+        + f'<div id="video">{video}</div>'
+    )
     return (
-        '<main id="main"><div class="stadium" id="stadium">'
-        f"{_track_dock()}"
-        '<div class="infield-copy" id="infield-copy">'
-        '<div class="home-fold is-shown" id="hero" data-lap="Start">'
-        '<section class="hero">'
-        f'<h1 class="rise">{html.escape(NAME)}</h1>'
-        f'<p class="tagline rise d1">{html.escape(TAGLINE)}</p>'
-        '<div class="portrait-wrap">'
-        '<button type="button" class="portrait-btn" id="portrait-btn" '
-        'aria-expanded="false" aria-controls="portrait-note">'
-        f'<span class="home-portrait">{portrait}</span>'
-        "</button>"
-        f'<p class="portrait-note" id="portrait-note" hidden>{html.escape(PORTRAIT_NOTE)}</p>'
+        '<main id="main" class="page">'
+        '<header class="intro">'
+        '<div class="intro-copy">'
+        f"<h1>{html.escape(NAME)}</h1>"
+        f'<p class="tagline">{html.escape(TAGLINE)}</p>'
         "</div>"
-        "</section>"
-        '<div class="scroll-hint" aria-hidden="true">&#8595;</div>'
-        "</div>"
-        f'{_section("origin-story", ORIGIN_HEADING, f"<div class=\"story-copy stagger\">{origin}<p class=\"origin-aside\">{html.escape(ORIGIN_ASIDE)}</p></div>")}'
-        f'{_section("building", BUILDING_HEADING, _scoreboard() + _race_game() + _building_cards())}'
-        f'{_section("track-field", FIELD_HEADING, _pitch() + f"<div class=\"field-grid\">{"".join(columns)}</div>")}'
-        f'{_section("fun-facts", FUN_FACTS_HEADING, _photo_stories() + f"<ul class=\"fun-facts\">{"".join(facts)}</ul>")}'
-        + _section(
-            "stories",
-            STORIES_HEADING,
-            f'<p class="story-lead reveal">{html.escape(STORIES_LEAD)}</p>'
-            f'<div class="story-grid">{"".join(stories)}</div>',
-        )
-        + _section("video", VIDEO_HEADING, video)
-        + _section("quotes", QUOTES_HEADING, f'<div class="quotes stagger">{"".join(quotes)}</div>')
-        + _section(
-            "contact",
-            CONTACT_HEADING,
-            f'<p class="story-lead">{html.escape(CONTACT_LEAD)}</p>{_contact_links()}',
-        )
+        f'<figure class="portrait">{portrait}'
+        f"<figcaption>{html.escape(PORTRAIT_NOTE)}</figcaption></figure>"
+        "</header>"
+        + _room("running", "1", "Running", running)
+        + _room("soccer", "2", "Soccer", soccer_body)
+        + _room("building", "3", "Building", _building_cards())
+        + _room("me", "4", "Me", me)
+        + _room("quotes", "5", QUOTES_HEADING, f'<div class="quotes">{"".join(quotes)}</div>')
+        + _room("contact", "6", CONTACT_HEADING, f'<p class="story-lead">{html.escape(CONTACT_LEAD)}</p>{_contact_links()}')
         + _section("blooper", BLOOPER_HEADING, _blooper())
-        + '</div></div><div class="lap-scroll" id="lap-scroll">'
-        '<div id="lap-end" class="lap-end"></div></div></main>'
+        + "</main>"
         + _finish_gate()
     )
 

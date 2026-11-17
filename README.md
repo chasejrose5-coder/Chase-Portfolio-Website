@@ -1,6 +1,6 @@
 # Chase Rose
 
-Personal portfolio, run as a Streamlit app. Home is a short story: origin, what Chase is building, the track and the field, fun facts, stories, a video slot, quotes, and contact. Projects lists RIO and ProWash & Detail Co.
+Personal portfolio, run as a Streamlit app. Home is Chase: a starting gun, then running, soccer, building, and a few stories about him, and the tape at the end. Projects lists RIO and ProWash & Detail Co.
 
 ## Run locally
 

@@ -46,9 +46,10 @@ class HomeTests(unittest.TestCase):
 
     def test_section_order(self):
         ids = [
-            "origin-story",
+            "running",
+            "soccer",
             "building",
-            "track-field",
+            "origin-story",
             "fun-facts",
             "stories",
             "video",
@@ -103,8 +104,6 @@ class HomeTests(unittest.TestCase):
         self.assertIn("Break the tape", gate)
         self.assertIn("chase-finish-seen", gate)
         self.assertIn("position:fixed", gate)
-        self.assertIn('id="lap"', self.html)
-        self.assertIn('id="lap-runner"', self.html)
         self.assertIn("400m 50.9 · 800m 2:02.9", self.html)
         self.assertIn('class="scoreboard', self.html)
         self.assertIn('class="flip"', self.html)
@@ -119,7 +118,6 @@ class HomeTests(unittest.TestCase):
         self.assertIn('event.key === " "', script)
         self.assertIn("prefers-reduced-motion", script)
         self.assertIn("Tuxedo. A boat. The bridge is back there.", self.html)
-        self.assertIn("False start. Back on the line.", self.html)
         self.assertIn('id="scoreboard-hit"', self.html)
         self.assertIn('data-goal="1:55.0"', self.html)
         self.assertIn("the short version", self.html)
@@ -128,7 +126,7 @@ class HomeTests(unittest.TestCase):
         self.assertIn("On your marks", gun)
         self.assertNotIn(">Skip<", gun)
         self.assertIn("Enter", gun)
-        self.assertEqual(self.html.count('class="lane-btn"'), 8)
+        self.assertIn('class="lane-no"', self.html)
         self.assertIn('id="run-it"', self.html)
         self.assertIn("New PR!", self.html)
         self.assertIn("Chase still wins", self.html)
@@ -148,7 +146,8 @@ class HomeTests(unittest.TestCase):
         self.assertIn('preload="none"', self.html)
         self.assertIn("goal-loop.mp4", self.html)
         self.assertIn("assist-loop.mp4", self.html)
-        self.assertIn('id="oval-svg"', self.html)
+        self.assertNotIn('id="oval-svg"', self.html)
+        self.assertNotIn("bay-skyline", self.html)
         self.assertGreater(GHOST_800_PACE_SECONDS, 0)
         meet = (ROOT / "js" / "meet.js").read_text(encoding="utf-8")
         self.assertIn('event.key === "Enter"', meet)
@@ -156,14 +155,12 @@ class HomeTests(unittest.TestCase):
         self.assertIn("is-smoking", meet)
         self.assertIn('id="pitch"', self.html)
         self.assertIn('id="goals-count"', self.html)
-        self.assertIn('id="whistle"', self.html)
-        self.assertIn('id="infield-copy"', self.html)
+        self.assertNotIn('id="whistle"', self.html)
+        self.assertNotIn('id="infield-copy"', self.html)
         self.assertIn("prefers-reduced-motion", meet)
-        self.assertIn('id="cursor-pace"', self.html)
-        self.assertIn('id="baton-pass"', self.html)
+        self.assertNotIn('id="cursor-pace"', self.html)
+        self.assertNotIn('id="baton-pass"', self.html)
         self.assertIn('id="photo-frame"', self.html)
-        self.assertIn("Pass the baton", self.html)
-        self.assertIn("Your hand", self.html)
         self.assertIn("showPhoto", meet)
 
     def test_fun_facts_and_placeholders(self):
